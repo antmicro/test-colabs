@@ -43,7 +43,7 @@ jobs:
         run: |
           export NEW_BRANCH=bot-$(date +%F_%H-%M)
           git checkout -b $NEW_BRANCH
-          git add examples/*/*.ipynb
+          git add test.ipynb
           if [ -n "$(git status --porcelain)" ]; then
             git commit -m "Generate ipynb files";
             git push -u https://$GH_SERVICE_ACCOUNT_NAME:$GH_SERVICE_ACCOUNT_TOKEN@github.com/antmicro/test-colabs.git $NEW_BRANCH
