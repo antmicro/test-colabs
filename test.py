@@ -20,24 +20,18 @@
 """
 
 # %%
-!pip install -q git+https://github.com/antmicro/pyrenode.git git+https://github.com/antmicro/renode-colab-tools.git git+https://github.com/antmicro/renode-run.git
-!pip install -q -r renode/tests/requirements.txt
+! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
+! pip install -q git+https://github.com/antmicro/renode-run.git
 
 import os
 from renode_colab_tools import metrics
 os.environ['PATH'] = os.getcwd()+"/renode:"+os.environ['PATH']
 
-# %%
-!mkdir -p binaries
-!cd binaries
-!wget https://zephyr-dashboard.renode.io/hifive1_revb-philosophers.zip
-!unzip hifive1_revb-philosophers.zip
-
 # %% [markdown]
 """## Run the philosophers example in Renode"""
 
 # %%
-!renode-run test -- artifacts/hifive1_revb-philosophers.robot
+! renode-run demo -b philosophers hifive1_revb && sleep 5 && exit
 
 # %% [markdown]
 """## Renode metrics analysis"""
