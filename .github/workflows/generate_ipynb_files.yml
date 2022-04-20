@@ -1,7 +1,7 @@
 name: Generate ipynb files
 on:
   push:
-    branches: [ master ]
+    branches: [ testing ]
     paths:
     - 'test.py'
     - '.github/workflows/generate_ipynb_files.yml'
