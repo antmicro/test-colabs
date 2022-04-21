@@ -23,9 +23,8 @@
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
 ! pip install -q git+https://github.com/antmicro/renode-run.git@testing
 
-import os
-from renode_colab_tools import metrics
-os.environ['PATH'] = os.getcwd()+"/renode:"+os.environ['PATH']
+import sys
+sys.path.append('/root/.config/renode/renode-run.download/renode_1.12.0+20220421git03004859_portable')
 
 # %% [markdown]
 """## Run the philosophers example in Renode"""
@@ -37,9 +36,10 @@ os.environ['PATH'] = os.getcwd()+"/renode:"+os.environ['PATH']
 """## Renode metrics analysis"""
 
 # %%
-from renode.tools.metrics_analyzer.metrics_parser import MetricsParser
+from renode_colab_tools import metrics
+from tools.metrics_analyzer.metrics_parser import MetricsParser
 metrics.init_notebook_mode(connected=False)
-parser = MetricsParser('renode/metrics.dump')
+parser = MetricsParser('/tmp/metrics.dump')
 
 # %%
 metrics.configure_plotly_browser_state()
