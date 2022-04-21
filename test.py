@@ -21,7 +21,7 @@
 
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
-! pip install -q git+https://github.com/antmicro/renode-run.git
+! pip install -q git+https://github.com/antmicro/renode-run.git@testing
 
 import os
 from renode_colab_tools import metrics
@@ -31,7 +31,7 @@ os.environ['PATH'] = os.getcwd()+"/renode:"+os.environ['PATH']
 """## Run the philosophers example in Renode"""
 
 # %%
-! renode-run demo -b philosophers hifive1_revb && sleep 5 && exit
+! renode-run demo -b philosophers hifive1_revb
 
 # %% [markdown]
 """## Renode metrics analysis"""
