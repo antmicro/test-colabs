@@ -21,7 +21,7 @@
 
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
-! pip install -q git+https://github.com/antmicro/renode-run.git@testing
+! pip install -q git+https://github.com/antmicro/renode-run.git
 
 import sys
 from pathlib import Path
