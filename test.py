@@ -31,7 +31,7 @@ sys.path.append(Path('~/.config/renode/renode-run.path').read_text())
 """## Run the philosophers example in Renode"""
 
 # %%
-! renode-run demo --binary philosophers hifive1_revb -- --console -e "machine EnableProfiler @/tmp/metrics.dump; emulation RunFor 0.3"
+! renode-run demo --board hifive1_revb philosophers -- --console -e "machine EnableProfiler @/tmp/metrics.dump; emulation RunFor 0.3"
 
 # %% [markdown]
 """## Renode metrics analysis"""
