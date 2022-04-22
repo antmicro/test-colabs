@@ -24,13 +24,14 @@
 ! pip install -q git+https://github.com/antmicro/renode-run.git@testing
 
 import sys
-sys.path.append('/root/.config/renode/renode-run.download/renode_1.12.0+20220421git03004859_portable')
+from pathlib import Path
+sys.path.append(Path('~/.config/renode/renode-run.path').read_text())
 
 # %% [markdown]
 """## Run the philosophers example in Renode"""
 
 # %%
-! renode-run demo -b philosophers hifive1_revb
+! renode-run demo --binary philosophers hifive1_revb -- --console -e "machine EnableProfiler @/tmp/metrics.dump; emulation RunFor 0.3"
 
 # %% [markdown]
 """## Renode metrics analysis"""
