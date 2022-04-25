@@ -1,6 +1,6 @@
 # %% [markdown]
 """
-![Renode](https://dl.antmicro.com/projects/renode/renode.png)
+![Renode](https://dl.antmicro.com/projects/renode/renode.svg)
 <table align="left">
   <td>
     <a target="_blank" href="https://colab.research.google.com/github/antmicro/test-colabs/blob/master/test.ipynb"><img src="https://raw.githubusercontent.com/antmicro/test-colabs/master/.static/view-in-colab.png" />Run in Google Colab</a>
