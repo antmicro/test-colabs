@@ -23,10 +23,6 @@
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
 ! pip install -q git+https://github.com/antmicro/renode-run.git
 
-import sys
-from pathlib import Path
-sys.path.append(Path('~/.config/renode/renode-run.path').read_text())
-
 # %% [markdown]
 """## Run the philosophers example in Renode"""
 
@@ -37,6 +33,10 @@ sys.path.append(Path('~/.config/renode/renode-run.path').read_text())
 """## Renode metrics analysis"""
 
 # %%
+import sys
+from pathlib import Path
+sys.path.append(Path('~/.config/renode/renode-run.path').read_text())
+
 from renode_colab_tools import metrics
 from tools.metrics_analyzer.metrics_parser import MetricsParser
 metrics.init_notebook_mode(connected=False)
