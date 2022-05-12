@@ -29,7 +29,6 @@
 """## Start Renode"""
 
 # %%
-from msilib.schema import ReserveCost
 from pyrenode import connect_renode, get_keywords
 connect_renode(robot_port=3456)
 get_keywords()
@@ -41,18 +40,17 @@ get_keywords()
 %%writefile script.resc
 
 using sysbus
-$name?="{{zephyr_platform}}"
+$name?="m2gl025_miv"
 mach create $name
 
-machine LoadPlatformDescription @{{zephyr_platform}}-{{sample_name}}.repl
+machine LoadPlatformDescription @artifacts/m2gl025_miv-philosophers.repl
 
-showAnalyzer {{uart_name}}
-{{uart_name}} RecordToAsciinema @{{zephyr_platform}}-{{sample_name}}-asciinema
+showAnalyzer uart0
+uart0 RecordToAsciinema @artifacts/m2gl025_miv-philosophers-asciinema
 
 macro reset
 """
-    sysbus LoadELF $ORIGIN/{{zephyr_platform}}-zephyr-{{sample_name}}.elf
-    {{ script }}
+    sysbus LoadELF @artifacts/m2gl025_miv-zephyr-philosophers.elf
 """
 
 runMacro $reset
@@ -62,14 +60,14 @@ runMacro $reset
 
 # %%
 ExecuteCommand("include @script.resc")
-CreateTerminalTester("{{uart_name}}", timeout=5)
+CreateTerminalTester("uart0", timeout=5)
 StartEmulation()
 
 WaitForLineOnUart("Philosopher 0.*THINKING", treatAsRegex=True)
 WaitForLineOnUart("Philosopher 0.*HOLDING", treatAsRegex=True)
 WaitForLineOnUart("Philosopher 0.*EATING", treatAsRegex=True)
 
-ExecuteCommand("{{uart_name}} DumpHistoryBuffer")
+ExecuteCommand("uart0 DumpHistoryBuffer")
 
 
 # %% [markdown]
