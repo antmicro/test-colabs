@@ -21,9 +21,10 @@
 
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
-! pip install -q git+https://github.com/antmicro/renode-run.git
-! pip install -q git+https://github.com/antmicro/pyrenode.git@2.0
+! pip install -q git+https://github.com/antmicro/renode-run.git@new-features
+! pip install -q git+https://github.com/antmicro/pyrenode.git@renode-run-experiments
 ! pip install -q robotframework==4.0.1
+! renode-run download
 
 # %% [markdown]
 """## Start Renode"""
@@ -43,14 +44,14 @@ using sysbus
 $name?="m2gl025_miv"
 mach create $name
 
-machine LoadPlatformDescription @artifacts/m2gl025_miv-philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/m2gl025_miv-philosophers.repl
+machine EnableProfiler @metrics.dump
 
 showAnalyzer uart0
-uart0 RecordToAsciinema @artifacts/m2gl025_miv-philosophers-asciinema
 
 macro reset
 """
-    sysbus LoadELF @artifacts/m2gl025_miv-zephyr-philosophers.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/m2gl025_miv-zephyr-philosophers.elf
 """
 
 runMacro $reset
@@ -60,16 +61,15 @@ runMacro $reset
 
 # %%
 ExecuteCommand("include @script.resc")
-CreateTerminalTester("uart0", timeout=5)
+CreateTerminalTester("sysbus.uart0", timeout=5)
 StartEmulation()
 
 WaitForLineOnUart("Philosopher 0.*THINKING", treatAsRegex=True)
 WaitForLineOnUart("Philosopher 0.*HOLDING", treatAsRegex=True)
 WaitForLineOnUart("Philosopher 0.*EATING", treatAsRegex=True)
+print(ExecuteCommand("sysbus.uart0 DumpHistoryBuffer"))
 
-ExecuteCommand("uart0 DumpHistoryBuffer")
-
-
+ResetEmulation()
 # %% [markdown]
 """## Renode metrics analysis"""
 
@@ -81,7 +81,7 @@ sys.path.append(Path('/root/.config/renode/renode-run.path').read_text())
 from renode_colab_tools import metrics
 from tools.metrics_analyzer.metrics_parser import MetricsParser
 metrics.init_notebook_mode(connected=False)
-parser = MetricsParser('/tmp/metrics.dump')
+parser = MetricsParser('metrics.dump')
 
 # %%
 metrics.configure_plotly_browser_state()
