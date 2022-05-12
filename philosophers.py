@@ -22,12 +22,55 @@
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
 ! pip install -q git+https://github.com/antmicro/renode-run.git
+! pip install -q git+https://github.com/antmicro/pyrenode.git@2.0
+! pip install -q robotframework==4.0.1
 
 # %% [markdown]
-"""## Run the philosophers example in Renode"""
+"""## Start Renode"""
 
 # %%
-! renode-run demo --board hifive1_revb philosophers -- --console -e 'machine EnableProfiler @/tmp/metrics.dump; emulation RunFor "0.3"; q'
+from msilib.schema import ReserveCost
+from pyrenode import connect_renode, get_keywords
+connect_renode(robot_port=3456)
+get_keywords()
+
+# %% [markdown]
+"""## Setup a script"""
+
+# %% 
+%%writefile script.resc
+
+using sysbus
+$name?="{{zephyr_platform}}"
+mach create $name
+
+machine LoadPlatformDescription @{{zephyr_platform}}-{{sample_name}}.repl
+
+showAnalyzer {{uart_name}}
+{{uart_name}} RecordToAsciinema @{{zephyr_platform}}-{{sample_name}}-asciinema
+
+macro reset
+"""
+    sysbus LoadELF $ORIGIN/{{zephyr_platform}}-zephyr-{{sample_name}}.elf
+    {{ script }}
+"""
+
+runMacro $reset
+
+# %% [markdown]
+"""## Run the sample"""
+
+# %%
+ExecuteCommand("include @script.resc")
+CreateTerminalTester("{{uart_name}}", timeout=5)
+StartEmulation()
+
+WaitForLineOnUart("Philosopher 0.*THINKING", treatAsRegex=True)
+WaitForLineOnUart("Philosopher 0.*HOLDING", treatAsRegex=True)
+WaitForLineOnUart("Philosopher 0.*EATING", treatAsRegex=True)
+
+ExecuteCommand("{{uart_name}} DumpHistoryBuffer")
+
 
 # %% [markdown]
 """## Renode metrics analysis"""
