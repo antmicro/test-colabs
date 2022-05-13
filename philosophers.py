@@ -41,17 +41,18 @@ get_keywords()
 %%writefile script.resc
 
 using sysbus
-$name?="m2gl025_miv"
+$name?="{{zephyr_platform}}"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/m2gl025_miv-philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/{{zephyr_platform}}-philosophers.repl
 machine EnableProfiler @metrics.dump
 
-showAnalyzer uart0
+showAnalyzer {{uart_name}}
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/m2gl025_miv-zephyr-philosophers.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/{{zephyr_platform}}-zephyr-philosophers.elf
+    {{script}}
 """
 
 runMacro $reset
@@ -61,13 +62,13 @@ runMacro $reset
 
 # %%
 ExecuteCommand("include @script.resc")
-CreateTerminalTester("sysbus.uart0", timeout=5)
+CreateTerminalTester("{{uart_name}}", timeout=5)
 StartEmulation()
 
 WaitForLineOnUart("Philosopher 0.*THINKING", treatAsRegex=True)
 WaitForLineOnUart("Philosopher 0.*HOLDING", treatAsRegex=True)
 WaitForLineOnUart("Philosopher 0.*EATING", treatAsRegex=True)
-print(ExecuteCommand("sysbus.uart0 DumpHistoryBuffer"))
+print(ExecuteCommand("{{uart_name}} DumpHistoryBuffer"))
 
 ResetEmulation()
 # %% [markdown]
