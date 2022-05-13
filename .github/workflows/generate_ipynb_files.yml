@@ -4,6 +4,10 @@ on:
     branches: [ main ]
     paths:
     - 'philosophers.py'
+    - 'hello_world.py'
+    - 'micropython.py'
+    - 'shell_module.py'
+    - 'tensorflow_lite_micro.py'
     - '.github/workflows/generate_ipynb_files.yml'
   workflow_dispatch:
 
@@ -25,10 +29,38 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install jupytext
+          pip install jinja-cli
+          apt-get install jq
 
-      - name: Generate philosophers ipynb
+      - name: Generate py demos
         run: |
-          jupytext --to ipynb philosophers.py
+          demos=(philosophers hello_world tensorflow_lite_micro shell_module micropython)
+          SCRIPT="cpu0 VectorTableOffset \`sysbus GetSymbolAddress \"_vector_table\"\`"
+          for i in "${!demos[@]}"
+          do
+            wget https://zephyr-dashboard.renode.io/results-"${demos[i]}"_all.json
+            board_names=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .board_name' results-"${demos[i]}"_all.json))
+            board_path=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .board_path' results-"${demos[i]}"_all.json))
+            uart_names=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .uart_name' results-"${demos[i]}"_all.json))
+            readarray -t cpus < <(jq -r ' .[] | select(.status | contains("PASSED")) | .cpu' results-"${demos[i]}"_all.json)
+            for j in "${!board_path[@]}"
+            do
+                if [ ! -d "${board_path[j]}" ] ; then
+                    mkdir -p ${board_path[j]%/*}
+                fi
+                if echo ${cpus[j]##*-> } | grep 'arm/armv.-m' ; then
+                  jinja -D zephyr_platform ${board_names[j]} -D board_path ${board_path[j]} -D uart_name ${uart_names[j]} -D script $SCRIPT -o "${board_path[j]}"_"${demos[i]}".py "${demos[i]}".py
+                else
+                  jinja -D zephyr_platform ${board_names[j]} -D board_path ${board_path[j]} -D uart_name ${uart_names[j]} -o "${board_path[j]}"_"${demos[i]}".py "${demos[i]}".py
+                fi
+            done
+          done
+
+      - name: Generate ipynb
+        run: |
+          cd boards
+          find . -type f -exec jupytext --to ipynb {} \;
+          cd ..
 
       - name: Configure git
         run: |
@@ -43,7 +75,7 @@ jobs:
         run: |
           export NEW_BRANCH=bot-$(date +%F_%H-%M)
           git checkout -b $NEW_BRANCH
-          git add philosophers.ipynb
+          git add boards/
           if [ -n "$(git status --porcelain)" ]; then
             git commit -m "Generate ipynb files";
             git push -u https://$GH_SERVICE_ACCOUNT_NAME:$GH_SERVICE_ACCOUNT_TOKEN@github.com/antmicro/test-colabs.git $NEW_BRANCH
