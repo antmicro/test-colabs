@@ -47,7 +47,7 @@ mach create $name
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/{{zephyr_platform}}-philosophers.repl
 machine EnableProfiler @metrics.dump
 
-showAnalyzer {{uart_name}}
+showAnalyzer sysbus.{{uart_name}}
 
 macro reset
 """
@@ -62,13 +62,13 @@ runMacro $reset
 
 # %%
 ExecuteCommand("include @script.resc")
-CreateTerminalTester("{{uart_name}}", timeout=5)
+CreateTerminalTester("sysbus.{{uart_name}}", timeout=5)
 StartEmulation()
 
 WaitForLineOnUart("Philosopher 0.*THINKING", treatAsRegex=True)
 WaitForLineOnUart("Philosopher 0.*HOLDING", treatAsRegex=True)
 WaitForLineOnUart("Philosopher 0.*EATING", treatAsRegex=True)
-print(ExecuteCommand("{{uart_name}} DumpHistoryBuffer"))
+print(ExecuteCommand("sysbus.{{uart_name}} DumpHistoryBuffer"))
 
 ResetEmulation()
 # %% [markdown]
