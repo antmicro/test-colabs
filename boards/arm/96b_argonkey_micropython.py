@@ -45,7 +45,7 @@ $name?="96b_argonkey"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/96b_argonkey-micropython.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
 

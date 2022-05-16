@@ -45,7 +45,7 @@ $name?="nrf52840_mdk"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/nrf52840_mdk-micropython.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
 

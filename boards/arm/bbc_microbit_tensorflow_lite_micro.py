@@ -45,7 +45,7 @@ $name?="bbc_microbit"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/bbc_microbit-tensorflow_lite_micro.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
 

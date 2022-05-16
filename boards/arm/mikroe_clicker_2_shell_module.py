@@ -45,7 +45,7 @@ $name?="mikroe_clicker_2"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/mikroe_clicker_2-shell_module.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart4
 

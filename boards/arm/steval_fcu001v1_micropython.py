@@ -45,7 +45,7 @@ $name?="steval_fcu001v1"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/steval_fcu001v1-micropython.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
 

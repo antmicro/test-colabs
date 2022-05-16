@@ -45,7 +45,7 @@ $name?="google_kukui"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/google_kukui-hello_world.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
 

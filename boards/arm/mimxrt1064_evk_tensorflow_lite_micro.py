@@ -45,7 +45,7 @@ $name?="mimxrt1064_evk"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/mimxrt1064_evk-tensorflow_lite_micro.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.lpuart1
 
