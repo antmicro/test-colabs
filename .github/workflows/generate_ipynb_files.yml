@@ -45,10 +45,11 @@ jobs:
             readarray -t cpus < <(jq -r ' .[] | select(.status | contains("PASSED")) | .cpu' results-"${demos[i]}"_all.json)
             for j in "${!board_path[@]}"
             do
+                echo "${demos[i]} ${board_path[j]}"
                 if [ ! -d "${board_path[j]}" ] ; then
                     mkdir -p ${board_path[j]%/*}
                 fi
-                if echo ${cpus[j]##*-> } | grep 'arm/armv.-m' ; then
+                if echo ${cpus[j]##*-> } | grep -q 'arm/armv.-m' ; then
                   jinja -D zephyr_platform ${board_names[j]} -D board_path ${board_path[j]} -D uart_name ${uart_names[j]} -D script "$SCRIPT" -o "${board_path[j]}"_"${demos[i]}".py "${demos[i]}".py
                 else
                   jinja -D zephyr_platform ${board_names[j]} -D board_path ${board_path[j]} -D uart_name ${uart_names[j]} -o "${board_path[j]}"_"${demos[i]}".py "${demos[i]}".py
