@@ -45,7 +45,7 @@ $name?="nucleo_l152re"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/nucleo_l152re-shell_module.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart2
 

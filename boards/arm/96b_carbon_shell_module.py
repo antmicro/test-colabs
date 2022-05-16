@@ -45,7 +45,7 @@ $name?="96b_carbon"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/96b_carbon-shell_module.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
 

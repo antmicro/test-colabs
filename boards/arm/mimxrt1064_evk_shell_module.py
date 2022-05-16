@@ -45,7 +45,7 @@ $name?="mimxrt1064_evk"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/mimxrt1064_evk-shell_module.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.lpuart1
 

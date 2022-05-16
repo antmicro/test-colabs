@@ -45,7 +45,7 @@ $name?="stm32f072b_disco"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/stm32f072b_disco-hello_world.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
 

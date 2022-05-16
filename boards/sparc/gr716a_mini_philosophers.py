@@ -45,7 +45,7 @@ $name?="gr716a_mini"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/gr716a_mini-philosophers.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
 

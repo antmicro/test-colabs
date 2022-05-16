@@ -45,7 +45,7 @@ $name?="hifive1_revb"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/hifive1_revb-shell_module.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
 

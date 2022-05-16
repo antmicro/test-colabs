@@ -45,7 +45,7 @@ $name?="legend"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/legend-hello_world.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
 

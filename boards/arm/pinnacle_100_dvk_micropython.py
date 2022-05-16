@@ -45,7 +45,7 @@ $name?="pinnacle_100_dvk"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/pinnacle_100_dvk-micropython.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
 

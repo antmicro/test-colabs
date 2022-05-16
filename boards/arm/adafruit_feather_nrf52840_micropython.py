@@ -45,7 +45,7 @@ $name?="adafruit_feather_nrf52840"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/adafruit_feather_nrf52840-micropython.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
 

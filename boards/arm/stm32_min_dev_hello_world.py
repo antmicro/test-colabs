@@ -45,7 +45,7 @@ $name?="stm32_min_dev_blue"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/stm32_min_dev_blue-hello_world.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
 

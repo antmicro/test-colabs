@@ -45,7 +45,7 @@ $name?="stm3210c_eval"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/stm3210c_eval-shell_module.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart2
 

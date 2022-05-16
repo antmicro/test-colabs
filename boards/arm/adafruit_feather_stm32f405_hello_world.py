@@ -45,7 +45,7 @@ $name?="adafruit_feather_stm32f405"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/adafruit_feather_stm32f405-hello_world.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart3
 
