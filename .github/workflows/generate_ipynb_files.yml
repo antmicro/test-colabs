@@ -30,7 +30,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install jupytext
           pip install jinja-cli
-          apt-get install jq
+          sudo apt install -y jq
 
       - name: Generate py demos
         run: |
