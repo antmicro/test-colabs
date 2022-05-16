@@ -45,7 +45,7 @@ $name?="{{zephyr_platform}}"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/{{zephyr_platform}}-tensorflow_lite_micro.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.{{uart_name}}
 
