@@ -45,7 +45,7 @@ $name?="waveshare_open103z"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/waveshare_open103z-philosophers.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
 

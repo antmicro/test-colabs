@@ -45,7 +45,7 @@ $name?="black_f407ve"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/black_f407ve-tensorflow_lite_micro.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart2
 

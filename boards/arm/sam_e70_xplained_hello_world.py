@@ -45,7 +45,7 @@ $name?="sam_e70b_xplained"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/sam_e70b_xplained-hello_world.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
 

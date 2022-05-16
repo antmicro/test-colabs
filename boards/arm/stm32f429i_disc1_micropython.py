@@ -45,7 +45,7 @@ $name?="stm32f429i_disc1"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/stm32f429i_disc1-micropython.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
 

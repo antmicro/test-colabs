@@ -45,7 +45,7 @@ $name?="sam_v71b_xult"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/sam_v71b_xult-tensorflow_lite_micro.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
 

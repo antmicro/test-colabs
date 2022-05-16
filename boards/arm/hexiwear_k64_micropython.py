@@ -45,7 +45,7 @@ $name?="hexiwear_k64"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/hexiwear_k64-micropython.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
 
