@@ -34,6 +34,8 @@ jobs:
 
       - name: Generate py demos
         run: |
+          #delete ipynb files to make run a bit faster
+          find . -name *.ipynb -delete
           demos=(philosophers hello_world tensorflow_lite_micro shell_module micropython)
           SCRIPT="cpu0 VectorTableOffset \`sysbus GetSymbolAddress \"_vector_table\"\`"
           for i in "${!demos[@]}"
