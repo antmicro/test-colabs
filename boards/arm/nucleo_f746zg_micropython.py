@@ -45,7 +45,7 @@ $name?="nucleo_f746zg"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/nucleo_f746zg-micropython.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart3
 

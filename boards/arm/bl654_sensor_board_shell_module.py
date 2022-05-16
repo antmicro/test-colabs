@@ -45,7 +45,7 @@ $name?="bl654_sensor_board"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/bl654_sensor_board-shell_module.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
 

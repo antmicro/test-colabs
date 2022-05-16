@@ -45,7 +45,7 @@ $name?="nrf51_blenano"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/nrf51_blenano-shell_module.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
 

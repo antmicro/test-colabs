@@ -45,7 +45,7 @@ $name?="mikroe_mini_m4_for_stm32"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/mikroe_mini_m4_for_stm32-shell_module.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart2
 

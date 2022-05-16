@@ -45,7 +45,7 @@ $name?="nucleo_f031k6"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/nucleo_f031k6-hello_world.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
 

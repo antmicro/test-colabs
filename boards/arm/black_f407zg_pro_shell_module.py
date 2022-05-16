@@ -45,7 +45,7 @@ $name?="black_f407zg_pro"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/black_f407zg_pro-shell_module.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart2
 

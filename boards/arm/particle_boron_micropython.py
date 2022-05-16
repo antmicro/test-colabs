@@ -45,7 +45,7 @@ $name?="particle_boron"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/particle_boron-micropython.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
 

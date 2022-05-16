@@ -45,7 +45,7 @@ $name?="96b_nitrogen"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/96b_nitrogen-micropython.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
 
