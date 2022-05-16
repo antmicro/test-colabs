@@ -45,7 +45,7 @@ $name?="ubx_evkninab4_nrf52833"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/ubx_evkninab4_nrf52833-shell_module.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
 

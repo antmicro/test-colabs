@@ -45,7 +45,7 @@ $name?="nucleo_f429zi"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/nucleo_f429zi-tensorflow_lite_micro.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart3
 

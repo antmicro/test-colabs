@@ -45,7 +45,7 @@ $name?="nrf52833dk_nrf52820"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/nrf52833dk_nrf52820-hello_world.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
 

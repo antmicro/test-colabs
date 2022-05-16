@@ -45,7 +45,7 @@ $name?="stm32f030_demo"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/stm32f030_demo-hello_world.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
 

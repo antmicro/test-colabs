@@ -45,7 +45,7 @@ $name?="olimex_stm32_p405"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/olimex_stm32_p405-micropython.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart2
 

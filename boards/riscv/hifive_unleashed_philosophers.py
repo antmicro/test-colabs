@@ -45,7 +45,7 @@ $name?="hifive_unleashed"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/hifive_unleashed-philosophers.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
 

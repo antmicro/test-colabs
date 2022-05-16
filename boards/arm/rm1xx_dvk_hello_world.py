@@ -45,7 +45,7 @@ $name?="rm1xx_dvk"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/rm1xx_dvk-hello_world.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
 

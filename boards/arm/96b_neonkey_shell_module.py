@@ -45,7 +45,7 @@ $name?="96b_neonkey"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/96b_neonkey-shell_module.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
 

@@ -45,7 +45,7 @@ $name?="96b_stm32_sensor_mez"
 mach create $name
 
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/96b_stm32_sensor_mez-tensorflow_lite_micro.repl
-machine EnableProfiler @metrics.dump
+machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart4
 
