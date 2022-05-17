@@ -31,7 +31,7 @@
 
 # %%
 from pyrenode import connect_renode, get_keywords
-connect_renode(robot_port=3456)
+connect_renode()
 get_keywords()
 
 # %% [markdown]
