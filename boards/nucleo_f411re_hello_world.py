@@ -62,11 +62,11 @@ runMacro $reset
 
 # %%
 ExecuteCommand("include @script.resc")
-CreateTerminalTester("sysbus.{{uart_name}}", timeout=5)
+CreateTerminalTester("sysbus.usart2", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! {{zephyr_platform}}")
-print(ExecuteCommand("sysbus.{{uart_name}} DumpHistoryBuffer"))
+WaitForLineOnUart("Hello World! nucleo_f411re")
+print(ExecuteCommand("sysbus.usart2 DumpHistoryBuffer"))
 
 ResetEmulation()
 

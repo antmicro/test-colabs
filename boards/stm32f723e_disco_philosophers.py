@@ -62,13 +62,13 @@ runMacro $reset
 
 # %%
 ExecuteCommand("include @script.resc")
-CreateTerminalTester("sysbus.{{uart_name}}", timeout=5)
+CreateTerminalTester("sysbus.usart6", timeout=5)
 StartEmulation()
 
 WaitForLineOnUart("Philosopher 0.*THINKING", treatAsRegex=True)
 WaitForLineOnUart("Philosopher 0.*HOLDING", treatAsRegex=True)
 WaitForLineOnUart("Philosopher 0.*EATING", treatAsRegex=True)
-print(ExecuteCommand("sysbus.{{uart_name}} DumpHistoryBuffer"))
+print(ExecuteCommand("sysbus.usart6 DumpHistoryBuffer"))
 
 ResetEmulation()
 
