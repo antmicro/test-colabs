@@ -20,7 +20,7 @@
 """
 
 # %%
-! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
+! pip install -q git+https://github.com/antmicro/renode-colab-tools.git@tabbed-metrics
 ! pip install -q git+https://github.com/antmicro/renode-run.git@new-features
 ! pip install -q git+https://github.com/antmicro/pyrenode.git@renode-run-experiments
 ! pip install -q robotframework==4.0.1
@@ -93,17 +93,4 @@ metrics.init_notebook_mode(connected=False)
 parser = MetricsParser('metrics.dump')
 
 # %%
-metrics.configure_plotly_browser_state()
-metrics.show_executed_instructions(parser)
-
-# %%
-metrics.configure_plotly_browser_state()
-metrics.show_memory_access(parser)
-
-# %%
-metrics.configure_plotly_browser_state()
-metrics.show_exceptions(parser)
-
-# %%
-metrics.configure_plotly_browser_state()
-metrics.show_peripheral_access(parser)
+metrics.display_metrics(parser)
