@@ -3,11 +3,12 @@ on:
   push:
     branches: [ main ]
     paths:
-    - 'philosophers.py'
-    - 'hello_world.py'
-    - 'micropython.py'
-    - 'shell_module.py'
-    - 'tensorflow_lite_micro.py'
+    - 'philosophers'
+    - 'hello_world'
+    - 'micropython'
+    - 'shell_module'
+    - 'tensorflow_lite_micro'
+    - 'template.py'
     - '.github/workflows/generate_ipynb_files.yml'
   workflow_dispatch:
 
