@@ -62,18 +62,19 @@ runMacro $reset
 
 # %%
 ExecuteCommand("include @script.resc")
-CreateTerminalTester("sysbus.usart2", timeout=5)
+CreateTerminalTester("sysbus.{{uart_name}}", timeout=5)
 StartEmulation()
 
 WaitForPromptOnUart("uart:~$")
 WriteLineToUart("")
 WaitForPromptOnUart("uart:~$")
 WriteLineToUart("demo board")
-WaitForLineOnUart("mikroe_mini_m4_for_stm32")
+WaitForLineOnUart("{{zephyr_platform}}")
 
-print(ExecuteCommand("sysbus.usart2 DumpHistoryBuffer"))
+print(ExecuteCommand("sysbus.{{uart_name}} DumpHistoryBuffer"))
 
 ResetEmulation()
+
 # %% [markdown]
 """## Renode metrics analysis"""
 
