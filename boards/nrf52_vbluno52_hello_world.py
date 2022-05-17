@@ -83,5 +83,4 @@ from tools.metrics_analyzer.metrics_parser import MetricsParser
 metrics.init_notebook_mode(connected=False)
 parser = MetricsParser('metrics.dump')
 
-# %%
 metrics.display_metrics(parser)
