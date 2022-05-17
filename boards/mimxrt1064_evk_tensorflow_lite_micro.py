@@ -62,7 +62,7 @@ runMacro $reset
 
 # %%
 ExecuteCommand("include @script.resc")
-CreateTerminalTester("sysbus.lpuart1", timeout=15)
+CreateTerminalTester("sysbus.{{uart_name}}", timeout=15)
 StartEmulation()
 
 WaitForLineOnUart("x_value: .* y_value: .*", treatAsRegex=True)
@@ -70,9 +70,10 @@ WaitForLineOnUart("x_value: .* y_value: .*", treatAsRegex=True)
 WaitForLineOnUart("x_value: .* y_value: .*", treatAsRegex=True)
 WaitForLineOnUart("x_value: .* y_value: .*", treatAsRegex=True)
 
-print(ExecuteCommand("sysbus.lpuart1 DumpHistoryBuffer"))
+print(ExecuteCommand("sysbus.{{uart_name}} DumpHistoryBuffer"))
 
 ResetEmulation()
+
 # %% [markdown]
 """## Renode metrics analysis"""
 

@@ -62,13 +62,14 @@ runMacro $reset
 
 # %%
 ExecuteCommand("include @script.resc")
-CreateTerminalTester("sysbus.usart0", timeout=5)
+CreateTerminalTester("sysbus.{{uart_name}}", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! efr32mg_sltb004a")
-print(ExecuteCommand("sysbus.usart0 DumpHistoryBuffer"))
+WaitForLineOnUart("Hello World! {{zephyr_platform}}")
+print(ExecuteCommand("sysbus.{{uart_name}} DumpHistoryBuffer"))
 
 ResetEmulation()
+
 # %% [markdown]
 """## Renode metrics analysis"""
 

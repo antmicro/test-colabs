@@ -62,7 +62,7 @@ runMacro $reset
 
 # %%
 ExecuteCommand("include @script.resc")
-CreateTerminalTester("sysbus.usart6", timeout=5)
+CreateTerminalTester("sysbus.{{uart_name}}", timeout=5)
 StartEmulation()
 
 WaitForPromptOnUart(">>>")
@@ -76,9 +76,10 @@ WaitForLineOnUart("True")
 WriteLineToUart("compare(2.2, 5.8)")
 WaitForLineOnUart("False")
 
-print(ExecuteCommand("sysbus.usart6 DumpHistoryBuffer"))
+print(ExecuteCommand("sysbus.{{uart_name}} DumpHistoryBuffer"))
 
 ResetEmulation()
+
 # %% [markdown]
 """## Renode metrics analysis"""
 
