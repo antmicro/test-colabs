@@ -1,0 +1,19 @@
+ExecuteCommand("include @script.resc")
+CreateTerminalTester("sysbus.{{uart_name}}", timeout=5)
+StartEmulation()
+
+WaitForPromptOnUart(">>>")
+WaitForLineOnUart("2+2")
+WriteLineToUart("")
+WaitForLineOnUart("4")
+WriteLineToUart("def compare(a, b): return True if a > b else False")
+WriteLineToUart("")
+WriteLineToUart("compare(3.2, 2.4)")
+WaitForLineOnUart("True")
+WriteLineToUart("compare(2.2, 5.8)")
+WaitForLineOnUart("False")
+
+print(ExecuteCommand("sysbus.{{uart_name}} DumpHistoryBuffer"))
+
+ResetEmulation()
+
