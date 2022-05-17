@@ -35,7 +35,8 @@ jobs:
       - name: Generate py demos
         run: |
           #delete ipynb files to make run a bit faster
-          find . -name *.ipynb -delete
+          mkdir -p boards/
+          rm -rf boards/*
           demos=(philosophers hello_world tensorflow_lite_micro shell_module micropython)
           SCRIPT="cpu0 VectorTableOffset \`sysbus GetSymbolAddress \"_vector_table\"\`"
           for i in "${!demos[@]}"
@@ -47,14 +48,12 @@ jobs:
             readarray -t cpus < <(jq -r ' .[] | select(.status | contains("PASSED")) | .cpu' /tmp/results-"${demos[i]}"_all.json)
             for j in "${!board_path[@]}"
             do
-                echo "${demos[i]} ${board_path[j]}"
-                if [ ! -d "${board_path[j]}" ] ; then
-                    mkdir -p ${board_path[j]%/*}
-                fi
+                echo "${demos[i]} ${board_names[j]}"
+                board_path="boards/${board_names[j]}"
                 if echo ${cpus[j]##*-> } | grep -q 'arm/armv.-m' ; then
-                  jinja -D zephyr_platform ${board_names[j]} -D board_path ${board_path[j]} -D uart_name ${uart_names[j]} -D script "$SCRIPT" -o "${board_path[j]}"_"${demos[i]}".py "${demos[i]}".py
+                  jinja -D zephyr_platform ${board_names[j]} -D board_path ${board_path} -D uart_name ${uart_names[j]} -D script "$SCRIPT" -o "${board_path}"_"${demos[i]}".py "${demos[i]}".py
                 else
-                  jinja -D zephyr_platform ${board_names[j]} -D board_path ${board_path[j]} -D uart_name ${uart_names[j]} -o "${board_path[j]}"_"${demos[i]}".py "${demos[i]}".py
+                  jinja -D zephyr_platform ${board_names[j]} -D board_path ${board_path} -D uart_name ${uart_names[j]} -o "${board_path}"_"${demos[i]}".py "${demos[i]}".py
                 fi
             done
           done
