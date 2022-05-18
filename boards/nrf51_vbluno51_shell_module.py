@@ -1,17 +1,8 @@
 # %% [markdown]
 """
-![Renode](https://dl.antmicro.com/projects/renode/renode.svg)
-<table align="left">
-  <td>
-    <a target="_blank" href="https://colab.research.google.com/github/antmicro/test-colabs/blob/main/boards/nrf51_vbluno51_shell_module.ipynb"><img src="https://raw.githubusercontent.com/antmicro/test-colabs/main/.static/view-in-colab.png" />Run in Google Colab</a>
-  </td>
-  <td>
-    <a target="_blank" href="https://github.com/antmicro/test-colabs/blob/main/boards/nrf51_vbluno51_shell_module.ipynb"><img src="https://raw.githubusercontent.com/antmicro/test-colabs/main/.static/view-ipynb.png" />View ipynb on GitHub</a>
-  </td>
-  <td>
-    <a target="_blank" href="https://github.com/antmicro/test-colabs/blob/main/boards/nrf51_vbluno51_shell_module.py"><img src="https://raw.githubusercontent.com/antmicro/test-colabs/main/.static/view-source.png" />View Python source on GitHub</a>
-  </td>
-</table>
+[![Renode](https://dl.antmicro.com/projects/renode/renode.svg)](https://renode.io)
+
+[![Run in Google Colab](https://img.shields.io/badge/-Run%20in%20Google%20colab-%23007ded?logo=google-colab&logoColor=white&style=for-the-badge)](https://colab.research.google.com/github/antmicro/test-colabs/blob/main/boards/{board_name}_{sample_name}.ipynb) [![View ipynb](https://img.shields.io/badge/-View%20ipynb%20source-%23007ded?logo=jupyter&logoColor=white&style=for-the-badge)](https://github.com/antmicro/test-colabs/blob/main/boards/{board_name}_{sample_name}.ipynb) [![View Python source](https://img.shields.io/badge/-View%20Python%20source-%23007ded?logo=python&logoColor=white&style=for-the-badge)](https://github.com/antmicro/test-colabs/blob/main/boards/{board_name}_{sample_name}.py)
 """
 
 # %% [markdown]
