@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-#delete ipynb files to make run a bit faster
 mkdir -p boards/
-rm -rf boards/*
 
 demos=(philosophers hello_world tensorflow_lite_micro shell_module micropython)
 SCRIPT="cpu0 VectorTableOffset \`sysbus GetSymbolAddress \"_vector_table\"\`"
