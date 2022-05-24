@@ -39,6 +39,7 @@ machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/hifive1_revb
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
+sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
@@ -62,9 +63,14 @@ WaitForPromptOnUart("uart:~$")
 WriteLineToUart("demo board")
 WaitForLineOnUart("hifive1_revb")
 
-print(ExecuteCommand("sysbus.uart0 DumpHistoryBuffer"))
-
 ResetEmulation()
+
+# %% [markdown]
+"""## UART output"""
+
+# %%
+from renode_colab_tools import asciinema
+asciinema.display_asciicast('output.asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""

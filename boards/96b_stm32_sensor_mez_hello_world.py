@@ -39,6 +39,7 @@ machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/96b_stm32_se
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart4
+sysbus.uart4 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
@@ -57,9 +58,15 @@ CreateTerminalTester("sysbus.uart4", timeout=5)
 StartEmulation()
 
 WaitForLineOnUart("Hello World! 96b_stm32_sensor_mez")
-print(ExecuteCommand("sysbus.uart4 DumpHistoryBuffer"))
 
 ResetEmulation()
+
+# %% [markdown]
+"""## UART output"""
+
+# %%
+from renode_colab_tools import asciinema
+asciinema.display_asciicast('output.asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""

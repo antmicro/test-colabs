@@ -39,6 +39,7 @@ machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/efr32mg_sltb
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart0
+sysbus.usart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
@@ -57,9 +58,15 @@ CreateTerminalTester("sysbus.usart0", timeout=5)
 StartEmulation()
 
 WaitForLineOnUart("Hello World! efr32mg_sltb004a")
-print(ExecuteCommand("sysbus.usart0 DumpHistoryBuffer"))
 
 ResetEmulation()
+
+# %% [markdown]
+"""## UART output"""
+
+# %%
+from renode_colab_tools import asciinema
+asciinema.display_asciicast('output.asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""

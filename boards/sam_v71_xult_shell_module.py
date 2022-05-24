@@ -39,6 +39,7 @@ machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/sam_v71_xult
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
+sysbus.usart1 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
@@ -62,9 +63,14 @@ WaitForPromptOnUart("uart:~$")
 WriteLineToUart("demo board")
 WaitForLineOnUart("sam_v71_xult")
 
-print(ExecuteCommand("sysbus.usart1 DumpHistoryBuffer"))
-
 ResetEmulation()
+
+# %% [markdown]
+"""## UART output"""
+
+# %%
+from renode_colab_tools import asciinema
+asciinema.display_asciicast('output.asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""
