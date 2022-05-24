@@ -39,6 +39,7 @@ machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/{{zephyr_pla
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.{{uart_name}}
+sysbus.{{uart_name}} RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
@@ -53,6 +54,13 @@ runMacro $reset
 
 # %%
 {{sample}}
+
+# %% [markdown]
+"""## UART output"""
+
+# %%
+from renode_colab_tools import asciinema
+asciinema.display_asciicast('output.asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""
