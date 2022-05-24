@@ -53,7 +53,7 @@ runMacro $reset
 """## Run the sample"""
 
 # %%
-ExecuteCommand("include @script.resc")
+ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart7", timeout=5)
 StartEmulation()
 
