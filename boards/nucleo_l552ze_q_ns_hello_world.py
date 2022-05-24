@@ -39,6 +39,7 @@ machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/nucleo_l552z
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.lpuart1
+sysbus.lpuart1 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
@@ -57,9 +58,15 @@ CreateTerminalTester("sysbus.lpuart1", timeout=5)
 StartEmulation()
 
 WaitForLineOnUart("Hello World! nucleo_l552ze_q_ns")
-print(ExecuteCommand("sysbus.lpuart1 DumpHistoryBuffer"))
 
 ResetEmulation()
+
+# %% [markdown]
+"""## UART output"""
+
+# %%
+from renode_colab_tools import asciinema
+asciinema.display_asciicast('output.asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""

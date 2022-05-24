@@ -39,6 +39,7 @@ machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/black_f407ve
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart2
+sysbus.usart2 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
@@ -57,9 +58,15 @@ CreateTerminalTester("sysbus.usart2", timeout=5)
 StartEmulation()
 
 WaitForLineOnUart("Hello World! black_f407ve")
-print(ExecuteCommand("sysbus.usart2 DumpHistoryBuffer"))
 
 ResetEmulation()
+
+# %% [markdown]
+"""## UART output"""
+
+# %%
+from renode_colab_tools import asciinema
+asciinema.display_asciicast('output.asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""

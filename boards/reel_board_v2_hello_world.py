@@ -39,6 +39,7 @@ machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/reel_board_v
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
+sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
@@ -57,9 +58,15 @@ CreateTerminalTester("sysbus.uart0", timeout=5)
 StartEmulation()
 
 WaitForLineOnUart("Hello World! reel_board_v2")
-print(ExecuteCommand("sysbus.uart0 DumpHistoryBuffer"))
 
 ResetEmulation()
+
+# %% [markdown]
+"""## UART output"""
+
+# %%
+from renode_colab_tools import asciinema
+asciinema.display_asciicast('output.asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""

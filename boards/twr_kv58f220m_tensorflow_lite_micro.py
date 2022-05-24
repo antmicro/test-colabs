@@ -39,6 +39,7 @@ machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/twr_kv58f220
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
+sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
@@ -61,9 +62,14 @@ WaitForLineOnUart("x_value: .* y_value: .*", treatAsRegex=True)
 WaitForLineOnUart("x_value: .* y_value: .*", treatAsRegex=True)
 WaitForLineOnUart("x_value: .* y_value: .*", treatAsRegex=True)
 
-print(ExecuteCommand("sysbus.uart0 DumpHistoryBuffer"))
-
 ResetEmulation()
+
+# %% [markdown]
+"""## UART output"""
+
+# %%
+from renode_colab_tools import asciinema
+asciinema.display_asciicast('output.asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""

@@ -39,6 +39,7 @@ machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/rm1xx_dvk-ph
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
+sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
@@ -59,9 +60,15 @@ StartEmulation()
 WaitForLineOnUart("Philosopher 0.*THINKING", treatAsRegex=True)
 WaitForLineOnUart("Philosopher 0.*HOLDING", treatAsRegex=True)
 WaitForLineOnUart("Philosopher 0.*EATING", treatAsRegex=True)
-print(ExecuteCommand("sysbus.uart0 DumpHistoryBuffer"))
 
 ResetEmulation()
+
+# %% [markdown]
+"""## UART output"""
+
+# %%
+from renode_colab_tools import asciinema
+asciinema.display_asciicast('output.asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""

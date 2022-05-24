@@ -39,6 +39,7 @@ machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/stm32f469i_d
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart3
+sysbus.usart3 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
@@ -57,9 +58,15 @@ CreateTerminalTester("sysbus.usart3", timeout=5)
 StartEmulation()
 
 WaitForLineOnUart("Hello World! stm32f469i_disco")
-print(ExecuteCommand("sysbus.usart3 DumpHistoryBuffer"))
 
 ResetEmulation()
+
+# %% [markdown]
+"""## UART output"""
+
+# %%
+from renode_colab_tools import asciinema
+asciinema.display_asciicast('output.asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""
