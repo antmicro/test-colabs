@@ -1,4 +1,4 @@
-ExecuteCommand("include @script.resc")
+ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.{{uart_name}}", timeout=5)
 StartEmulation()
 
