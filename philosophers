@@ -5,7 +5,6 @@ StartEmulation()
 WaitForLineOnUart("Philosopher 0.*THINKING", treatAsRegex=True)
 WaitForLineOnUart("Philosopher 0.*HOLDING", treatAsRegex=True)
 WaitForLineOnUart("Philosopher 0.*EATING", treatAsRegex=True)
-print(ExecuteCommand("sysbus.{{uart_name}} DumpHistoryBuffer"))
 
 ResetEmulation()
 

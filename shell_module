@@ -8,7 +8,5 @@ WaitForPromptOnUart("uart:~$")
 WriteLineToUart("demo board")
 WaitForLineOnUart("{{zephyr_platform}}")
 
-print(ExecuteCommand("sysbus.{{uart_name}} DumpHistoryBuffer"))
-
 ResetEmulation()
 
