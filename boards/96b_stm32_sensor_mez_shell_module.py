@@ -35,7 +35,7 @@ using sysbus
 $name?="96b_stm32_sensor_mez"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/96b_stm32_sensor_mez-shell_module.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/96b_stm32_sensor_mez-shell_module/96b_stm32_sensor_mez-shell_module.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart4
@@ -43,7 +43,7 @@ sysbus.uart4 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/96b_stm32_sensor_mez-zephyr-shell_module.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/96b_stm32_sensor_mez-shell_module/96b_stm32_sensor_mez-zephyr-shell_module.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

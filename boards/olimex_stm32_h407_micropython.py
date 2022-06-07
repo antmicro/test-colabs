@@ -35,7 +35,7 @@ using sysbus
 $name?="olimex_stm32_h407"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/olimex_stm32_h407-micropython.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/olimex_stm32_h407-micropython/olimex_stm32_h407-micropython.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart2
@@ -43,7 +43,7 @@ sysbus.usart2 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/olimex_stm32_h407-zephyr-micropython.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/olimex_stm32_h407-micropython/olimex_stm32_h407-zephyr-micropython.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

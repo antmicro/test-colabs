@@ -35,7 +35,7 @@ using sysbus
 $name?="adafruit_feather_stm32f405"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/adafruit_feather_stm32f405-micropython.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/adafruit_feather_stm32f405-micropython/adafruit_feather_stm32f405-micropython.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart3
@@ -43,7 +43,7 @@ sysbus.usart3 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/adafruit_feather_stm32f405-zephyr-micropython.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/adafruit_feather_stm32f405-micropython/adafruit_feather_stm32f405-zephyr-micropython.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

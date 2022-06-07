@@ -35,7 +35,7 @@ using sysbus
 $name?="nucleo_f746zg"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/nucleo_f746zg-tensorflow_lite_micro.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/nucleo_f746zg-tensorflow_lite_micro/nucleo_f746zg-tensorflow_lite_micro.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart3
@@ -43,7 +43,7 @@ sysbus.usart3 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/nucleo_f746zg-zephyr-tensorflow_lite_micro.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/nucleo_f746zg-tensorflow_lite_micro/nucleo_f746zg-zephyr-tensorflow_lite_micro.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

@@ -35,7 +35,7 @@ using sysbus
 $name?="hifive_unleashed"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/hifive_unleashed-philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/hifive_unleashed-philosophers/hifive_unleashed-philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
@@ -43,7 +43,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/hifive_unleashed-zephyr-philosophers.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/hifive_unleashed-philosophers/hifive_unleashed-zephyr-philosophers.elf
     
 """
 

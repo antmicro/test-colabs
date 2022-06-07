@@ -35,7 +35,7 @@ using sysbus
 $name?="efr32mg_sltb004a"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/efr32mg_sltb004a-philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/efr32mg_sltb004a-philosophers/efr32mg_sltb004a-philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart0
@@ -43,7 +43,7 @@ sysbus.usart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/efr32mg_sltb004a-zephyr-philosophers.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/efr32mg_sltb004a-philosophers/efr32mg_sltb004a-zephyr-philosophers.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

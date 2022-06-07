@@ -35,7 +35,7 @@ using sysbus
 $name?="quick_feather"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/quick_feather-hello_world.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/quick_feather-hello_world/quick_feather-hello_world.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
@@ -43,7 +43,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/quick_feather-zephyr-hello_world.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/quick_feather-hello_world/quick_feather-zephyr-hello_world.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

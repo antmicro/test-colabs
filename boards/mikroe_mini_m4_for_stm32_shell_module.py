@@ -35,7 +35,7 @@ using sysbus
 $name?="mikroe_mini_m4_for_stm32"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/mikroe_mini_m4_for_stm32-shell_module.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/mikroe_mini_m4_for_stm32-shell_module/mikroe_mini_m4_for_stm32-shell_module.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart2
@@ -43,7 +43,7 @@ sysbus.usart2 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/mikroe_mini_m4_for_stm32-zephyr-shell_module.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/mikroe_mini_m4_for_stm32-shell_module/mikroe_mini_m4_for_stm32-zephyr-shell_module.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

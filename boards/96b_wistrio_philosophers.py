@@ -12,7 +12,7 @@
 
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
-! pip install -q git+https://github.com/antmicro/renode-run.git@new-features
+! pip install -q git+https://github.com/antmicro/renode-run.git
 ! pip install -q git+https://github.com/antmicro/pyrenode.git
 ! pip install -q robotframework==4.0.1
 ! renode-run download
@@ -35,7 +35,7 @@ using sysbus
 $name?="96b_wistrio"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/96b_wistrio-philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/96b_wistrio-philosophers/96b_wistrio-philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
@@ -43,7 +43,7 @@ sysbus.usart1 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/96b_wistrio-zephyr-philosophers.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/96b_wistrio-philosophers/96b_wistrio-zephyr-philosophers.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

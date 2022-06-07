@@ -35,7 +35,7 @@ using sysbus
 $name?="waveshare_open103z"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/waveshare_open103z-shell_module.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/waveshare_open103z-shell_module/waveshare_open103z-shell_module.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
@@ -43,7 +43,7 @@ sysbus.usart1 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/waveshare_open103z-zephyr-shell_module.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/waveshare_open103z-shell_module/waveshare_open103z-zephyr-shell_module.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

@@ -35,7 +35,7 @@ using sysbus
 $name?="particle_argon"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/particle_argon-tensorflow_lite_micro.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/particle_argon-tensorflow_lite_micro/particle_argon-tensorflow_lite_micro.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
@@ -43,7 +43,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/particle_argon-zephyr-tensorflow_lite_micro.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/particle_argon-tensorflow_lite_micro/particle_argon-zephyr-tensorflow_lite_micro.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

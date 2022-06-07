@@ -35,7 +35,7 @@ using sysbus
 $name?="blueclover_plt_demo_v2_nrf52832"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/blueclover_plt_demo_v2_nrf52832-micropython.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/blueclover_plt_demo_v2_nrf52832-micropython/blueclover_plt_demo_v2_nrf52832-micropython.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
@@ -43,7 +43,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/blueclover_plt_demo_v2_nrf52832-zephyr-micropython.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/blueclover_plt_demo_v2_nrf52832-micropython/blueclover_plt_demo_v2_nrf52832-zephyr-micropython.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 
