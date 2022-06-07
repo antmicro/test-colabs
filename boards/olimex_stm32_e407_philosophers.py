@@ -35,7 +35,7 @@ using sysbus
 $name?="olimex_stm32_e407"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/olimex_stm32_e407-philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/olimex_stm32_e407-philosophers/olimex_stm32_e407-philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
@@ -43,7 +43,7 @@ sysbus.usart1 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/olimex_stm32_e407-zephyr-philosophers.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/olimex_stm32_e407-philosophers/olimex_stm32_e407-zephyr-philosophers.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

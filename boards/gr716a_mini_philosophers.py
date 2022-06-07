@@ -35,7 +35,7 @@ using sysbus
 $name?="gr716a_mini"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/gr716a_mini-philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/gr716a_mini-philosophers/gr716a_mini-philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
@@ -43,7 +43,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/gr716a_mini-zephyr-philosophers.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/gr716a_mini-philosophers/gr716a_mini-zephyr-philosophers.elf
     
 """
 

@@ -35,7 +35,7 @@ using sysbus
 $name?="arduino_nicla_sense_me"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/arduino_nicla_sense_me-micropython.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/arduino_nicla_sense_me-micropython/arduino_nicla_sense_me-micropython.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
@@ -43,7 +43,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/arduino_nicla_sense_me-zephyr-micropython.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/arduino_nicla_sense_me-micropython/arduino_nicla_sense_me-zephyr-micropython.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

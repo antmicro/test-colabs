@@ -35,7 +35,7 @@ using sysbus
 $name?="beaglev_starlight_jh7100"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/beaglev_starlight_jh7100-philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/beaglev_starlight_jh7100-philosophers/beaglev_starlight_jh7100-philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart3
@@ -43,7 +43,7 @@ sysbus.uart3 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/beaglev_starlight_jh7100-zephyr-philosophers.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/beaglev_starlight_jh7100-philosophers/beaglev_starlight_jh7100-zephyr-philosophers.elf
     
 """
 

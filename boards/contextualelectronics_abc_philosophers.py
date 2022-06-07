@@ -35,7 +35,7 @@ using sysbus
 $name?="contextualelectronics_abc"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/contextualelectronics_abc-philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/contextualelectronics_abc-philosophers/contextualelectronics_abc-philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
@@ -43,7 +43,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/contextualelectronics_abc-zephyr-philosophers.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/contextualelectronics_abc-philosophers/contextualelectronics_abc-zephyr-philosophers.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

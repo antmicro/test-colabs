@@ -35,7 +35,7 @@ using sysbus
 $name?="google_kukui"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/google_kukui-shell_module.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/google_kukui-shell_module/google_kukui-shell_module.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
@@ -43,7 +43,7 @@ sysbus.usart1 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/google_kukui-zephyr-shell_module.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/google_kukui-shell_module/google_kukui-zephyr-shell_module.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

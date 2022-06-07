@@ -35,7 +35,7 @@ using sysbus
 $name?="sam_v71_xult"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/sam_v71_xult-hello_world.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/sam_v71_xult-hello_world/sam_v71_xult-hello_world.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
@@ -43,7 +43,7 @@ sysbus.usart1 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/sam_v71_xult-zephyr-hello_world.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/sam_v71_xult-hello_world/sam_v71_xult-zephyr-hello_world.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

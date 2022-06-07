@@ -35,7 +35,7 @@ using sysbus
 $name?="stm32f103_mini"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/stm32f103_mini-micropython.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/stm32f103_mini-micropython/stm32f103_mini-micropython.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
@@ -43,7 +43,7 @@ sysbus.usart1 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/stm32f103_mini-zephyr-micropython.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/stm32f103_mini-micropython/stm32f103_mini-zephyr-micropython.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

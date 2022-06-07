@@ -12,7 +12,7 @@
 
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
-! pip install -q git+https://github.com/antmicro/renode-run.git@new-features
+! pip install -q git+https://github.com/antmicro/renode-run.git
 ! pip install -q git+https://github.com/antmicro/pyrenode.git
 ! pip install -q robotframework==4.0.1
 ! renode-run download
@@ -35,7 +35,7 @@ using sysbus
 $name?="litex_vexriscv"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/litex_vexriscv-philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/litex_vexriscv-philosophers/litex_vexriscv-philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
@@ -43,7 +43,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/litex_vexriscv-zephyr-philosophers.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/litex_vexriscv-philosophers/litex_vexriscv-zephyr-philosophers.elf
     
 """
 

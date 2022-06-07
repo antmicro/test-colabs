@@ -35,7 +35,7 @@ using sysbus
 $name?="hifive1"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/hifive1-tensorflow_lite_micro.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/hifive1-tensorflow_lite_micro/hifive1-tensorflow_lite_micro.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
@@ -43,7 +43,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/hifive1-zephyr-tensorflow_lite_micro.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/hifive1-tensorflow_lite_micro/hifive1-zephyr-tensorflow_lite_micro.elf
     
 """
 

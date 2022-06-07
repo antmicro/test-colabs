@@ -35,7 +35,7 @@ using sysbus
 $name?="stm32f412g_disco"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/stm32f412g_disco-micropython.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/stm32f412g_disco-micropython/stm32f412g_disco-micropython.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart2
@@ -43,7 +43,7 @@ sysbus.usart2 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/stm32f412g_disco-zephyr-micropython.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/stm32f412g_disco-micropython/stm32f412g_disco-zephyr-micropython.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

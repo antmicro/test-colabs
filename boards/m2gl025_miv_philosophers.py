@@ -35,7 +35,7 @@ using sysbus
 $name?="m2gl025_miv"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/m2gl025_miv-philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/m2gl025_miv-philosophers/m2gl025_miv-philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
@@ -43,7 +43,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/m2gl025_miv-zephyr-philosophers.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/m2gl025_miv-philosophers/m2gl025_miv-zephyr-philosophers.elf
     
 """
 
