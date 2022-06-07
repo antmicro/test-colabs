@@ -35,7 +35,7 @@ using sysbus
 $name?="{{zephyr_platform}}"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/{{zephyr_platform}}-{{sample_name}}.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/{{zephyr_platform}}-{{sample_name}}/{{zephyr_platform}}-{{sample_name}}.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.{{uart_name}}
@@ -43,7 +43,7 @@ sysbus.{{uart_name}} RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/{{zephyr_platform}}-zephyr-{{sample_name}}.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/{{zephyr_platform}}-{{sample_name}}/{{zephyr_platform}}-zephyr-{{sample_name}}.elf
     {{script}}
 """
 
