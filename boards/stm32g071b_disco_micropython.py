@@ -2,7 +2,7 @@
 """
 [![Renode](https://dl.antmicro.com/projects/renode/renode.svg)](https://renode.io)
 
-[![Run in Google Colab](https://img.shields.io/badge/-Run%20in%20Google%20colab-%23007ded?logo=google-colab&logoColor=white&style=for-the-badge)](https://colab.research.google.com/github/antmicro/test-colabs/blob/main/boards/nucleo_f429zi_micropython.ipynb) [![View ipynb](https://img.shields.io/badge/-View%20ipynb%20source-%23007ded?logo=jupyter&logoColor=white&style=for-the-badge)](https://github.com/antmicro/test-colabs/blob/main/boards/nucleo_f429zi_micropython.ipynb) [![View Python source](https://img.shields.io/badge/-View%20Python%20source-%23007ded?logo=python&logoColor=white&style=for-the-badge)](https://github.com/antmicro/test-colabs/blob/main/boards/nucleo_f429zi_micropython.py)
+[![Run in Google Colab](https://img.shields.io/badge/-Run%20in%20Google%20colab-%23007ded?logo=google-colab&logoColor=white&style=for-the-badge)](https://colab.research.google.com/github/antmicro/test-colabs/blob/main/boards/stm32g071b_disco_micropython.ipynb) [![View ipynb](https://img.shields.io/badge/-View%20ipynb%20source-%23007ded?logo=jupyter&logoColor=white&style=for-the-badge)](https://github.com/antmicro/test-colabs/blob/main/boards/stm32g071b_disco_micropython.ipynb) [![View Python source](https://img.shields.io/badge/-View%20Python%20source-%23007ded?logo=python&logoColor=white&style=for-the-badge)](https://github.com/antmicro/test-colabs/blob/main/boards/stm32g071b_disco_micropython.py)
 """
 
 # %% [markdown]
@@ -32,10 +32,10 @@ get_keywords()
 %%writefile script.resc
 
 using sysbus
-$name?="nucleo_f429zi"
+$name?="stm32g071b_disco"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/nucleo_f429zi-micropython/nucleo_f429zi-micropython.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/stm32g071b_disco-micropython/stm32g071b_disco-micropython.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart3
@@ -43,7 +43,7 @@ sysbus.usart3 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/nucleo_f429zi-micropython/nucleo_f429zi-zephyr-micropython.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/stm32g071b_disco-micropython/stm32g071b_disco-zephyr-micropython.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

@@ -2,7 +2,7 @@
 """
 [![Renode](https://dl.antmicro.com/projects/renode/renode.svg)](https://renode.io)
 
-[![Run in Google Colab](https://img.shields.io/badge/-Run%20in%20Google%20colab-%23007ded?logo=google-colab&logoColor=white&style=for-the-badge)](https://colab.research.google.com/github/antmicro/test-colabs/blob/main/boards/nucleo_f429zi_micropython.ipynb) [![View ipynb](https://img.shields.io/badge/-View%20ipynb%20source-%23007ded?logo=jupyter&logoColor=white&style=for-the-badge)](https://github.com/antmicro/test-colabs/blob/main/boards/nucleo_f429zi_micropython.ipynb) [![View Python source](https://img.shields.io/badge/-View%20Python%20source-%23007ded?logo=python&logoColor=white&style=for-the-badge)](https://github.com/antmicro/test-colabs/blob/main/boards/nucleo_f429zi_micropython.py)
+[![Run in Google Colab](https://img.shields.io/badge/-Run%20in%20Google%20colab-%23007ded?logo=google-colab&logoColor=white&style=for-the-badge)](https://colab.research.google.com/github/antmicro/test-colabs/blob/main/boards/dragino_lsn50_philosophers.ipynb) [![View ipynb](https://img.shields.io/badge/-View%20ipynb%20source-%23007ded?logo=jupyter&logoColor=white&style=for-the-badge)](https://github.com/antmicro/test-colabs/blob/main/boards/dragino_lsn50_philosophers.ipynb) [![View Python source](https://img.shields.io/badge/-View%20Python%20source-%23007ded?logo=python&logoColor=white&style=for-the-badge)](https://github.com/antmicro/test-colabs/blob/main/boards/dragino_lsn50_philosophers.py)
 """
 
 # %% [markdown]
@@ -32,18 +32,18 @@ get_keywords()
 %%writefile script.resc
 
 using sysbus
-$name?="nucleo_f429zi"
+$name?="dragino_lsn50"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/nucleo_f429zi-micropython/nucleo_f429zi-micropython.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/dragino_lsn50-philosophers/dragino_lsn50-philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
-showAnalyzer sysbus.usart3
-sysbus.usart3 RecordToAsciinema $ORIGIN/output.asciinema
+showAnalyzer sysbus.usart1
+sysbus.usart1 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/nucleo_f429zi-micropython/nucleo_f429zi-zephyr-micropython.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/dragino_lsn50-philosophers/dragino_lsn50-zephyr-philosophers.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 
@@ -54,19 +54,12 @@ runMacro $reset
 
 # %%
 ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.usart3", timeout=5)
+CreateTerminalTester("sysbus.usart1", timeout=5)
 StartEmulation()
 
-WaitForPromptOnUart(">>>")
-WaitForLineOnUart("2+2")
-WriteLineToUart("")
-WaitForLineOnUart("4")
-WriteLineToUart("def compare(a, b): return True if a > b else False")
-WriteLineToUart("")
-WriteLineToUart("compare(3.2, 2.4)")
-WaitForLineOnUart("True")
-WriteLineToUart("compare(2.2, 5.8)")
-WaitForLineOnUart("False")
+WaitForLineOnUart("Philosopher 0.*THINKING", treatAsRegex=True)
+WaitForLineOnUart("Philosopher 0.*HOLDING", treatAsRegex=True)
+WaitForLineOnUart("Philosopher 0.*EATING", treatAsRegex=True)
 
 ResetEmulation()
 
