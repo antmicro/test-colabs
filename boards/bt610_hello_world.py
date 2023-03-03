@@ -44,7 +44,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://zephyr-dashboard.renode.io/bt610-hello_world/bt610-zephyr-hello_world.elf
-    cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
+    
 """
 
 runMacro $reset

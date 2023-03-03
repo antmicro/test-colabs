@@ -44,7 +44,7 @@ sysbus.sercom5 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://zephyr-dashboard.renode.io/arduino_zero-philosophers/arduino_zero-zephyr-philosophers.elf
-    cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
+    
 """
 
 runMacro $reset

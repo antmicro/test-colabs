@@ -44,7 +44,7 @@ sysbus.sercom0 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://zephyr-dashboard.renode.io/adafruit_feather_m0_basic_proto-tensorflow_lite_micro/adafruit_feather_m0_basic_proto-zephyr-tensorflow_lite_micro.elf
-    cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
+    
 """
 
 runMacro $reset
