@@ -1,0 +1,15 @@
+ExecuteScript("script.resc")
+CreateTerminalTester("sysbus.{{uart_name}}", timeout=5)
+ExecuteCommand('emulation CreateLEDTester "led_tester" "sysbus.{{gpio_led_name}}"')
+StartEmulation()
+
+WaitForLineOnUart("Booting Zephyr OS", treatAsRegex=True)
+ExecuteCommand("led_tester AssertState true 1")
+ExecuteCommand("led_tester AssertState false 1")
+ExecuteCommand("led_tester AssertState true 1")
+ExecuteCommand("led_tester AssertState false 1")
+ExecuteCommand("led_tester AssertState true 1")
+ExecuteCommand("led_tester AssertState false 1")
+
+ResetEmulation()
+
