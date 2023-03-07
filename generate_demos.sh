@@ -8,11 +8,11 @@ SCRIPT="cpu0 VectorTableOffset \`sysbus GetSymbolAddress \"_vector_table\"\`"
 for i in "${!demos[@]}"
 do
     # The JSON file created by Dashboard contains information on the board running the specified demo, test results, used serial port etc.
-    wget -P /tmp https://zephyr-dashboard.renode.io/results-"${demos[i]}"_all.json
-    board_names=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .board_name' /tmp/results-"${demos[i]}"_all.json))
-    board_path=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .board_path' /tmp/results-"${demos[i]}"_all.json))
-    uart_names=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .uart_name' /tmp/results-"${demos[i]}"_all.json))
-    readarray -t cpus < <(jq -r ' .[] | select(.status | contains("PASSED")) | .cpu' /tmp/results-"${demos[i]}"_all.json)
+    wget -P /tmp https://zephyr-dashboard.renode.io/results-"${demos[i]}"-all.json
+    board_names=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .board_name' /tmp/results-"${demos[i]}"-all.json))
+    board_path=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .board_path' /tmp/results-"${demos[i]}"-all.json))
+    uart_names=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .uart_name' /tmp/results-"${demos[i]}"-all.json))
+    readarray -t cpus < <(jq -r ' .[] | select(.status | contains("PASSED")) | .cpu' /tmp/results-"${demos[i]}"-all.json)
     for j in "${!board_path[@]}"
     do
         echo "${demos[i]} ${board_names[j]}"
