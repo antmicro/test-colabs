@@ -58,7 +58,7 @@ CreateTerminalTester("sysbus.sercom4", timeout=5)
 StartEmulation()
 
 WaitForPromptOnUart(">>>")
-WaitForLineOnUart("2+2")
+WriteLineToUart("2+2")
 WriteLineToUart("")
 WaitForLineOnUart("4")
 WriteLineToUart("def compare(a, b): return True if a > b else False")
