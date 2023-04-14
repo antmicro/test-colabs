@@ -15,7 +15,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     env:
       GH_SERVICE_ACCOUNT_NAME: "renode-bot"
       GH_SERVICE_ACCOUNT_EMAIL: "renode-bot@antmicro.com"
