@@ -14,7 +14,6 @@
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
 ! pip install -q git+https://github.com/antmicro/renode-run.git
 ! pip install -q git+https://github.com/antmicro/pyrenode.git
-! pip install -q robotframework==4.0.1
 ! renode-run download
 
 # %% [markdown]
