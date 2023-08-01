@@ -1,0 +1,10 @@
+ExecuteScript("script.resc")
+CreateTerminalTester("sysbus.{{uart_name}}", timeout=5)
+StartEmulation()
+
+WaitForLineOnUart(r"thread_a: Hello World from cpu \d on {{zephyr_platform}}", treatAsRegex=True)
+WaitForLineOnUart(r"thread_b: Hello World from cpu \d on {{zephyr_platform}}", treatAsRegex=True)
+WaitForLineOnUart(r"thread_a: Hello World from cpu \d on {{zephyr_platform}}", treatAsRegex=True)
+WaitForLineOnUart(r"thread_b: Hello World from cpu \d on {{zephyr_platform}}", treatAsRegex=True)
+
+ResetEmulation()

@@ -2,7 +2,7 @@
 
 mkdir -p boards/
 
-demos=(philosophers hello_world tensorflow_lite_micro shell_module micropython blinky)
+demos=(philosophers hello_world tensorflow_lite_micro shell_module micropython blinky hello_world_user synchronization lz4)
 SCRIPT="cpu0 VectorTableOffset \`sysbus GetSymbolAddress \"_vector_table\"\`"
 
 for i in "${!demos[@]}"

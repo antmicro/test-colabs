@@ -1,0 +1,11 @@
+ExecuteScript("script.resc")
+CreateTerminalTester("sysbus.{{uart_name}}", timeout=5)
+StartEmulation()
+
+WaitForLineOnUart(r"Original Data size: \d+", treatAsRegex=True)
+WaitForLineOnUart(r"Compressed Data size : \d+", treatAsRegex=True)
+WaitForLineOnUart("Successfully decompressed some data")
+WaitForLineOnUart("Validation done. The string we ended up with is:")
+WaitForLineOnUart(r".*", treatAsRegex=True)
+
+ResetEmulation()
