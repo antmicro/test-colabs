@@ -37,8 +37,8 @@ mach create $name
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/black_f407ve-philosophers/black_f407ve-philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
-showAnalyzer sysbus.usart2
-sysbus.usart2 RecordToAsciinema $ORIGIN/output.asciinema
+showAnalyzer sysbus.usart1
+sysbus.usart1 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
@@ -53,7 +53,7 @@ runMacro $reset
 
 # %%
 ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.usart2", timeout=5)
+CreateTerminalTester("sysbus.usart1", timeout=5)
 StartEmulation()
 
 WaitForLineOnUart("Philosopher 0.*THINKING", treatAsRegex=True)
