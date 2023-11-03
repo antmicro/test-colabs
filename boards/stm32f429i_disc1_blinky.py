@@ -54,7 +54,7 @@ runMacro $reset
 # %%
 ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.usart1", timeout=5)
-ExecuteCommand('emulation CreateLEDTester "led_tester" "sysbus.gpiog.greenled4"')
+ExecuteCommand('emulation CreateLEDTester "led_tester" "sysbus.gpiog.greenled3"')
 StartEmulation()
 
 WaitForLineOnUart("Booting Zephyr OS", treatAsRegex=True)
