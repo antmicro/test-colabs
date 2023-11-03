@@ -37,8 +37,8 @@ mach create $name
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/efm32gg_slwstk6121a-tensorflow_lite_micro/efm32gg_slwstk6121a-tensorflow_lite_micro.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
-showAnalyzer sysbus.usart0
-sysbus.usart0 RecordToAsciinema $ORIGIN/output.asciinema
+showAnalyzer sysbus.leuart0
+sysbus.leuart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
@@ -53,7 +53,7 @@ runMacro $reset
 
 # %%
 ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.usart0", timeout=15)
+CreateTerminalTester("sysbus.leuart0", timeout=15)
 StartEmulation()
 
 WaitForLineOnUart("x_value: .* y_value: .*", treatAsRegex=True)
