@@ -37,8 +37,8 @@ mach create $name
 machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/efr32_radio_brd4170a-synchronization/efr32_radio_brd4170a-synchronization.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
-showAnalyzer sysbus.leuart0
-sysbus.leuart0 RecordToAsciinema $ORIGIN/output.asciinema
+showAnalyzer sysbus.usart0
+sysbus.usart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
@@ -53,7 +53,7 @@ runMacro $reset
 
 # %%
 ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.leuart0", timeout=5)
+CreateTerminalTester("sysbus.usart0", timeout=5)
 StartEmulation()
 
 WaitForLineOnUart(r"thread_a: Hello World from cpu \d on efr32_radio_brd4170a", treatAsRegex=True)
