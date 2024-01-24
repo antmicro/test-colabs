@@ -42,7 +42,7 @@ sysbus.{{uart_name}} RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/{{zephyr_platform}}-{{sample_name}}/{{zephyr_platform}}-zephyr-{{sample_name}}.elf
+    sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/{{zephyr_version}}/{{zephyr_platform}}/{{sample_name}}/{{sample_name}}.elf
     {{script}}
 """
 
