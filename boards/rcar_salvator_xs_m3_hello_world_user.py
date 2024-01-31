@@ -42,7 +42,7 @@ sysbus.scif2 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/rcar_salvator_xs_m3-hello_world_user/rcar_salvator_xs_m3-zephyr-hello_world_user.elf
+    sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/3f655524463c8310943611fbeee34a66436b16ab/rcar_salvator_xs_m3/hello_world_user/hello_world_user.elf
     
 """
 

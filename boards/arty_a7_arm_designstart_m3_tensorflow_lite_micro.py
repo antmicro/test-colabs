@@ -42,7 +42,7 @@ sysbus.uartlite0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/arty_a7_arm_designstart_m3-tensorflow_lite_micro/arty_a7_arm_designstart_m3-zephyr-tensorflow_lite_micro.elf
+    sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/3f655524463c8310943611fbeee34a66436b16ab/arty_a7_arm_designstart_m3/tensorflow_lite_micro/tensorflow_lite_micro.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

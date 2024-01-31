@@ -42,7 +42,7 @@ sysbus.scif0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/rcar_spider_cr52-tensorflow_lite_micro/rcar_spider_cr52-zephyr-tensorflow_lite_micro.elf
+    sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/3f655524463c8310943611fbeee34a66436b16ab/rcar_spider_cr52/tensorflow_lite_micro/tensorflow_lite_micro.elf
     
 """
 
