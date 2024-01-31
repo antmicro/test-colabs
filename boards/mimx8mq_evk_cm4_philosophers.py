@@ -42,8 +42,8 @@ sysbus.uart2 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/mimx8mq_evk_cm4-philosophers/mimx8mq_evk_cm4-zephyr-philosophers.elf
-    
+    sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/3f655524463c8310943611fbeee34a66436b16ab/mimx8mq_evk_cm4/philosophers/philosophers.elf
+    cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 
 runMacro $reset

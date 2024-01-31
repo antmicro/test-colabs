@@ -42,8 +42,8 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/actinius_icarus_som_dk_ns-micropython/actinius_icarus_som_dk_ns-zephyr-micropython.elf
-    
+    sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/3f655524463c8310943611fbeee34a66436b16ab/actinius_icarus_som_dk_ns/micropython/micropython.elf
+    cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 
 runMacro $reset

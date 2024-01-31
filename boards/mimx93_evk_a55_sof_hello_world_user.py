@@ -42,7 +42,7 @@ sysbus.lpuart2 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/mimx93_evk_a55_sof-hello_world_user/mimx93_evk_a55_sof-zephyr-hello_world_user.elf
+    sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/3f655524463c8310943611fbeee34a66436b16ab/mimx93_evk_a55_sof/hello_world_user/hello_world_user.elf
     
 """
 

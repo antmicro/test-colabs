@@ -42,7 +42,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/sparkfun_red_v_things_plus-shell_module/sparkfun_red_v_things_plus-zephyr-shell_module.elf
+    sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/3f655524463c8310943611fbeee34a66436b16ab/sparkfun_red_v_things_plus/shell_module/shell_module.elf
     
 """
 

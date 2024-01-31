@@ -42,7 +42,7 @@ sysbus.lpuart1 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/ucans32k1sic-philosophers/ucans32k1sic-zephyr-philosophers.elf
+    sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/3f655524463c8310943611fbeee34a66436b16ab/ucans32k1sic/philosophers/philosophers.elf
     
 """
 

@@ -42,7 +42,7 @@ sysbus.uart1 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/npcx9m6f_evb-tensorflow_lite_micro/npcx9m6f_evb-zephyr-tensorflow_lite_micro.elf
+    sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/3f655524463c8310943611fbeee34a66436b16ab/npcx9m6f_evb/tensorflow_lite_micro/tensorflow_lite_micro.elf
     
 """
 

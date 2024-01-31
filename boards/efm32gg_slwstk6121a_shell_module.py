@@ -42,8 +42,8 @@ sysbus.usart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/efm32gg_slwstk6121a-shell_module/efm32gg_slwstk6121a-zephyr-shell_module.elf
-    
+    sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/3f655524463c8310943611fbeee34a66436b16ab/efm32gg_slwstk6121a/shell_module/shell_module.elf
+    cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 
 runMacro $reset
