@@ -2,7 +2,7 @@
 
 mkdir -p boards/
 
-demos=(philosophers hello_world tensorflow_lite_micro shell_module micropython blinky hello_world_user synchronization lz4)
+demos=(philosophers hello_world tensorflow_lite_micro shell_module micropython blinky hello_world_user synchronization lz4 rust-app)
 SCRIPT="cpu0 VectorTableOffset \`sysbus GetSymbolAddress \"_vector_table\"\`"
 ZEPHYR_VERSION="$(curl -s https://zephyr-dashboard.renode.io/zephyr.version)"
 
