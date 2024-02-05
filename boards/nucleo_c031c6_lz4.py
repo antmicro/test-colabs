@@ -42,7 +42,7 @@ sysbus.usart2 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/3f655524463c8310943611fbeee34a66436b16ab/nucleo_c031c6/lz4/lz4.elf
+    sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/044529d0cd06c9bcaf64a78ade7a123e7fb8c9a3/nucleo_c031c6/lz4/lz4.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 
