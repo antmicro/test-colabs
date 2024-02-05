@@ -20,7 +20,7 @@ do
         echo "${demos[i]} ${board_names[j]}"
         board_path="boards/${board_names[j]}"
         # First we replace Jinja templates in the demo-specific input. We'll use it later to fill out the Python template file
-        jinja -D zephyr_platform ${board_names[j]} -D uart_name ${uart_names[j]} -D gpio_led_name ${gpio_led_names[j]} -o "/tmp/${board_names[j]}_${demos[i]}" ${demos[i]}
+        jinja -D zephyr_platform ${board_names[j]} -D uart_name ${uart_names[j]} -D gpio_led_name ${gpio_led_names[j]} -D zephyr_version "$ZEPHYR_VERSION" -o "/tmp/${board_names[j]}_${demos[i]}" ${demos[i]}
         sample=`cat /tmp/${board_names[j]}_${demos[i]}`
         if echo ${cpus[j]##*-> } | grep -q 'arm/armv.-m' ; then
             # For ARM Cortex-M platforms we explicitly initialize VTOR in the script, as the OS build system can place it in various parts of the binary.

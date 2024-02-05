@@ -2,7 +2,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.{{uart_name}}", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("*** Booting Zephyr OS build {{project_commit}} ***")
+WaitForLineOnUart("*** Booting Zephyr OS build {{zephyr_version[:12]}} ***")
 WaitForLineOnUart("Next call will crash if userspace is working")
 WaitForLineOnUart(r".*ZEPHYR FATAL ERROR.*", treatAsRegex=True)
 
