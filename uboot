@@ -1,0 +1,11 @@
+ExecuteScript("script.resc")
+CreateTerminalTester("sysbus.{{uart_name}}", timeout=5)
+StartEmulation()
+
+WaitForPromptOnUart("Hit any key to stop autoboot")
+SendKeyToUart(ord('a'))
+WaitForPromptOnUart(">")
+WriteLineToUart("version")
+WaitForLineOnUart("U-Boot")
+
+ResetEmulation()
