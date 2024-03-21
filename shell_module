@@ -6,7 +6,7 @@ WaitForPromptOnUart("uart:~$")
 WriteLineToUart("")
 WaitForPromptOnUart("uart:~$")
 WriteLineToUart("demo board")
-WaitForLineOnUart("{{zephyr_platform}}")
+WaitForLineOnUart("{{platform}}")
 
 ResetEmulation()
 

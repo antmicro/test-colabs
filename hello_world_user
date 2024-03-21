@@ -2,6 +2,6 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.{{uart_name}}", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World from UserSpace! ({{zephyr_platform}})")
+WaitForLineOnUart("Hello World from UserSpace! ({{platform}})")
 
 ResetEmulation()

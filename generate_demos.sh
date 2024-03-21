@@ -2,32 +2,44 @@
 
 mkdir -p boards/
 
-demos=(philosophers hello_world tensorflow_lite_micro shell_module micropython blinky hello_world_user synchronization lz4 rust-app)
-SCRIPT="cpu0 VectorTableOffset \`sysbus GetSymbolAddress \"_vector_table\"\`"
-ZEPHYR_VERSION="$(curl -s https://zephyr-dashboard.renode.io/zephyr.version)"
+zephyr_DEMOS=(philosophers hello_world tensorflow_lite_micro shell_module micropython blinky hello_world_user synchronization lz4 rust-app)
+zephyr_DASHBOARD=https://zephyr-dashboard.renode.io
+zephyr_VERSION="$(curl -s $zephyr_DASHBOARD/zephyr.version)"
 
-for i in "${!demos[@]}"
-do
-    # The JSON file created by Dashboard contains information on the board running the specified demo, test results, used serial port etc.
-    wget -P /tmp https://zephyr-dashboard.renode.io/results-"${demos[i]}"-all.json
-    board_names=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .platform' /tmp/results-"${demos[i]}"-all.json))
-    board_path=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .board_dir' /tmp/results-"${demos[i]}"-all.json))
-    uart_names=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .uart_name' /tmp/results-"${demos[i]}"-all.json))
-    gpio_led_names=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .peripherals["gpio-led"] | (.name + "." + .led_name)' /tmp/results-"${demos[i]}"-all.json))
-    readarray -t cpus < <(jq -r ' .[] | select(.status | contains("PASSED")) | .dts_include_chain | join(",")' /tmp/results-"${demos[i]}"-all.json)
-    for j in "${!board_path[@]}"
+SCRIPT="cpu0 VectorTableOffset \`sysbus GetSymbolAddress \"_vector_table\"\`"
+
+generate_demos() {
+    demos="${1}_DEMOS[@]"
+    dashboard="${1}_DASHBOARD"
+    version="${1}_VERSION"
+    for demo in "${!demos}"
     do
-        echo "${demos[i]} ${board_names[j]}"
-        board_path="boards/${board_names[j]}"
-        # First we replace Jinja templates in the demo-specific input. We'll use it later to fill out the Python template file
-        jinja -D zephyr_platform ${board_names[j]} -D uart_name ${uart_names[j]} -D gpio_led_name ${gpio_led_names[j]} -D zephyr_version "$ZEPHYR_VERSION" -o "/tmp/${board_names[j]}_${demos[i]}" ${demos[i]}
-        sample=`cat /tmp/${board_names[j]}_${demos[i]}`
-        if echo ${cpus[j]##*-> } | grep -q 'arm/armv.-m' ; then
-            # For ARM Cortex-M platforms we explicitly initialize VTOR in the script, as the OS build system can place it in various parts of the binary.
-            jinja -D sample_name ${demos[i]} -D sample "${sample}" -D zephyr_platform ${board_names[j]} -D board_path ${board_path} -D uart_name ${uart_names[j]} -D script "$SCRIPT" -D zephyr_version "$ZEPHYR_VERSION" -o "${board_path}"_"${demos[i]}".py template.py
-        else
-            # For other platforms we simply replace template placeholders for basic demo data
-            jinja -D sample_name ${demos[i]} -D sample "${sample}" -D zephyr_platform ${board_names[j]} -D board_path ${board_path} -D uart_name ${uart_names[j]} -D zephyr_version "$ZEPHYR_VERSION" -o "${board_path}"_"${demos[i]}".py template.py
-        fi
+        # The JSON file created by Dashboard contains information on the board running the specified demo, test results, used serial port etc.
+        wget -P /tmp "${!dashboard}"/results-"${demo}"-all.json
+        board_names=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .platform' /tmp/results-"${demo}"-all.json))
+        board_path=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .board_dir' /tmp/results-"${demo}"-all.json))
+        uart_names=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .uart_name' /tmp/results-"${demo}"-all.json))
+        gpio_led_names=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .peripherals["gpio-led"] | (.name + "." + .led_name)' /tmp/results-"${demo}"-all.json))
+        readarray -t cpus < <(jq -r ' .[] | select(.status | contains("PASSED")) | .dts_include_chain | join(",")' /tmp/results-"${demo}"-all.json)
+        for j in "${!board_path[@]}"
+        do
+            platform="${board_names[j]}"
+            echo "${demo} ${platform}"
+            board_path="boards/${platform}"
+            repl="${!dashboard}/${platform}-${demo}/${platform}-${demo}.repl"
+            elf="https://new-zephyr-dashboard.renode.io/zephyr/${!version}/${platform}/${demo}/${demo}.elf"
+            # First we replace Jinja templates in the demo-specific input. We'll use it later to fill out the Python template file
+            jinja -D platform ${platform} -D uart_name ${uart_names[j]} -D gpio_led_name ${gpio_led_names[j]} -D software_version "${!version}" -o "/tmp/${platform}_${demo}" ${demo}
+            sample=`cat /tmp/${platform}_${demo}`
+            if echo ${cpus[j]##*-> } | grep -q 'arm/armv.-m' ; then
+                # For ARM Cortex-M platforms we explicitly initialize VTOR in the script, as the OS build system can place it in various parts of the binary.
+                jinja -D sample_name ${demo} -D sample "${sample}" -D platform ${platform} -D board_path ${board_path} -D uart_name ${uart_names[j]} -D script "$SCRIPT" -D software_version "${!version}" -D repl "$repl" -D elf "$elf" -o "${board_path}"_"${demo}".py template.py
+            else
+                # For other platforms we simply replace template placeholders for basic demo data
+                jinja -D sample_name ${demo} -D sample "${sample}" -D platform ${platform} -D board_path ${board_path} -D uart_name ${uart_names[j]} -D software_version "${!version}" -D repl "$repl" -D elf "$elf" -o "${board_path}"_"${demo}".py template.py
+            fi
+        done
     done
-done
+}
+
+generate_demos zephyr

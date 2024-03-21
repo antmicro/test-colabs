@@ -2,7 +2,7 @@
 """
 [![Renode](https://dl.antmicro.com/projects/renode/renode.svg)](https://renode.io)
 
-[![Run in Google Colab](https://img.shields.io/badge/-Run%20in%20Google%20colab-%23007ded?logo=google-colab&logoColor=white&style=for-the-badge)](https://colab.research.google.com/github/antmicro/test-colabs/blob/main/boards/{{zephyr_platform}}_{{sample_name}}.ipynb) [![View ipynb](https://img.shields.io/badge/-View%20ipynb%20source-%23007ded?logo=jupyter&logoColor=white&style=for-the-badge)](https://github.com/antmicro/test-colabs/blob/main/boards/{{zephyr_platform}}_{{sample_name}}.ipynb) [![View Python source](https://img.shields.io/badge/-View%20Python%20source-%23007ded?logo=python&logoColor=white&style=for-the-badge)](https://github.com/antmicro/test-colabs/blob/main/boards/{{zephyr_platform}}_{{sample_name}}.py)
+[![Run in Google Colab](https://img.shields.io/badge/-Run%20in%20Google%20colab-%23007ded?logo=google-colab&logoColor=white&style=for-the-badge)](https://colab.research.google.com/github/antmicro/test-colabs/blob/main/boards/{{platform}}_{{sample_name}}.ipynb) [![View ipynb](https://img.shields.io/badge/-View%20ipynb%20source-%23007ded?logo=jupyter&logoColor=white&style=for-the-badge)](https://github.com/antmicro/test-colabs/blob/main/boards/{{platform}}_{{sample_name}}.ipynb) [![View Python source](https://img.shields.io/badge/-View%20Python%20source-%23007ded?logo=python&logoColor=white&style=for-the-badge)](https://github.com/antmicro/test-colabs/blob/main/boards/{{platform}}_{{sample_name}}.py)
 """
 
 # %% [markdown]
@@ -31,10 +31,10 @@ get_keywords()
 %%writefile script.resc
 
 using sysbus
-$name?="{{zephyr_platform}}"
+$name?="{{platform}}"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/{{zephyr_platform}}-{{sample_name}}/{{zephyr_platform}}-{{sample_name}}.repl
+machine LoadPlatformDescription @{{repl}}
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.{{uart_name}}
@@ -42,7 +42,7 @@ sysbus.{{uart_name}} RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/{{zephyr_version}}/{{zephyr_platform}}/{{sample_name}}/{{sample_name}}.elf
+    sysbus LoadELF @{{elf}}
     {{script}}
 """
 
