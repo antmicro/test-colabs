@@ -2,7 +2,7 @@
 
 mkdir -p boards/
 
-zephyr_DEMOS=(philosophers hello_world tensorflow_lite_micro shell_module micropython blinky hello_world_user synchronization lz4 rust-app)
+zephyr_DEMOS=(philosophers hello_world tensorflow_lite_micro shell_module micropython blinky hello_world_user synchronization lz4 rust-app kenning-zephyr-runtime-microtvm kenning-zephyr-runtime-tflitemicro)
 zephyr_DASHBOARD=https://zephyr-dashboard.renode.io
 zephyr_VERSION="$(curl -s $zephyr_DASHBOARD/zephyr.version)"
 uboot_DEMOS=(uboot)
