@@ -55,7 +55,7 @@ runMacro $reset
 ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.sercom4", timeout=5)
 
-WaitForLineOnUart("*** Booting Zephyr OS build 3723493f60a1 ***")
+WaitForLineOnUart("\*\*\* Booting Zephyr OS build.+3723493f60a1 \*\*\*", treatAsRegex=True)
 
 WaitForLineOnUart("I: model output: [wing: 1.000000, ring: 0.000000, slope: 0.000000, negative: 0.000000]")
 WaitForLineOnUart("I: model output: [wing: 0.000000, ring: 0.000000, slope: 0.000000, negative: 1.000000]")
