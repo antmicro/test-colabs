@@ -43,7 +43,9 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://u-boot-dashboard.renode.io/hc2910_2aghd05--hi3798mv200-hc2910-2aghd05-uboot/hc2910_2aghd05--hi3798mv200-hc2910-2aghd05-uboot.elf
-    
+    cpu1 IsHalted true
+    cpu2 IsHalted true
+    cpu3 IsHalted true
 """
 
 runMacro $reset

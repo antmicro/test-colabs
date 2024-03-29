@@ -43,7 +43,9 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://u-boot-dashboard.renode.io/db-mv784mp-gp--armada-xp-gp-uboot/db-mv784mp-gp--armada-xp-gp-uboot.elf
-    
+    cpu1 IsHalted true
+    cpu2 IsHalted true
+    cpu3 IsHalted true
 """
 
 runMacro $reset

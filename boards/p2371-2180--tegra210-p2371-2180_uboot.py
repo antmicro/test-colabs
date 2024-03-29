@@ -43,7 +43,9 @@ sysbus.uarta RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://u-boot-dashboard.renode.io/p2371-2180--tegra210-p2371-2180-uboot/p2371-2180--tegra210-p2371-2180-uboot.elf
-    
+    cpu1 IsHalted true
+    cpu2 IsHalted true
+    cpu3 IsHalted true
 """
 
 runMacro $reset

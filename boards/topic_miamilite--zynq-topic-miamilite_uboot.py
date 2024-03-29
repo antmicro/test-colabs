@@ -43,7 +43,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://u-boot-dashboard.renode.io/topic_miamilite--zynq-topic-miamilite-uboot/topic_miamilite--zynq-topic-miamilite-uboot.elf
-    
+    cpu1 IsHalted true
 """
 
 runMacro $reset

@@ -43,6 +43,7 @@ sysbus.scb5 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/3723493f60a10f17d8d117fb8288a75da20cdd74/cy8cproto_062_4343w/synchronization/synchronization.elf
+    cpu1 IsHalted true
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

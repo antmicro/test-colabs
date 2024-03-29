@@ -43,6 +43,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/3723493f60a10f17d8d117fb8288a75da20cdd74/rpi_pico_rp2040_w/hello_world/hello_world.elf
+    cpu1 IsHalted true
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

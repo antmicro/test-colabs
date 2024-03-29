@@ -43,7 +43,13 @@ sysbus.v2mserial0 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://u-boot-dashboard.renode.io/vexpress_aemv8a_semi--fvp-base-revc-uboot/vexpress_aemv8a_semi--fvp-base-revc-uboot.elf
-    
+    cpu1 IsHalted true
+    cpu2 IsHalted true
+    cpu3 IsHalted true
+    cpu4 IsHalted true
+    cpu5 IsHalted true
+    cpu6 IsHalted true
+    cpu7 IsHalted true
 """
 
 runMacro $reset

@@ -43,7 +43,7 @@ sysbus.uart1 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://u-boot-dashboard.renode.io/pico-imx6--imx6dl-pico-uboot/pico-imx6--imx6dl-pico-uboot.elf
-    
+    cpu1 IsHalted true
 """
 
 runMacro $reset

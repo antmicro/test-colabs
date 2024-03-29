@@ -43,7 +43,9 @@ sysbus.uart1 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://u-boot-dashboard.renode.io/xilinx_zynqmp_virt--zynqmp-sm-k26-revA-uboot/xilinx_zynqmp_virt--zynqmp-sm-k26-revA-uboot.elf
-    
+    cpu1 IsHalted true
+    cpu2 IsHalted true
+    cpu3 IsHalted true
 """
 
 runMacro $reset

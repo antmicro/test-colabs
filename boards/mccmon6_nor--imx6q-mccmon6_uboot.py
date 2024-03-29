@@ -43,7 +43,9 @@ sysbus.uart1 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://u-boot-dashboard.renode.io/mccmon6_nor--imx6q-mccmon6-uboot/mccmon6_nor--imx6q-mccmon6-uboot.elf
-    
+    cpu1 IsHalted true
+    cpu2 IsHalted true
+    cpu3 IsHalted true
 """
 
 runMacro $reset
