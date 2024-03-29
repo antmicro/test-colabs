@@ -43,7 +43,13 @@ sysbus.uart1 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/3723493f60a10f17d8d117fb8288a75da20cdd74/adp_xc7k_ae350/tensorflow_lite_micro/tensorflow_lite_micro.elf
-    
+    cpu1 IsHalted true
+    cpu2 IsHalted true
+    cpu3 IsHalted true
+    cpu4 IsHalted true
+    cpu5 IsHalted true
+    cpu6 IsHalted true
+    cpu7 IsHalted true
 """
 
 runMacro $reset

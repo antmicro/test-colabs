@@ -43,7 +43,7 @@ sysbus.uart1 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://u-boot-dashboard.renode.io/bitmain_antminer_s9--bitmain-antminer-s9-uboot/bitmain_antminer_s9--bitmain-antminer-s9-uboot.elf
-    
+    cpu1 IsHalted true
 """
 
 runMacro $reset

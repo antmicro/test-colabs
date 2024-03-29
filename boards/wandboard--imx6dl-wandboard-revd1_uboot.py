@@ -43,7 +43,7 @@ sysbus.uart1 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://u-boot-dashboard.renode.io/wandboard--imx6dl-wandboard-revd1-uboot/wandboard--imx6dl-wandboard-revd1-uboot.elf
-    
+    cpu1 IsHalted true
 """
 
 runMacro $reset

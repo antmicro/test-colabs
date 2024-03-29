@@ -43,7 +43,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://u-boot-dashboard.renode.io/xilinx_zynq_virt--zynq-cc108-uboot/xilinx_zynq_virt--zynq-cc108-uboot.elf
-    
+    cpu1 IsHalted true
 """
 
 runMacro $reset

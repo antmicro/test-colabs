@@ -43,7 +43,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://u-boot-dashboard.renode.io/helios4--armada-388-helios4-uboot/helios4--armada-388-helios4-uboot.elf
-    
+    cpu1 IsHalted true
 """
 
 runMacro $reset

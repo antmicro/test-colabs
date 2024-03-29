@@ -43,7 +43,7 @@ sysbus.uart1 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/3723493f60a10f17d8d117fb8288a75da20cdd74/zybo/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.elf
-    
+    cpu1 IsHalted true
 """
 
 runMacro $reset

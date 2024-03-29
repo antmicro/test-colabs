@@ -43,7 +43,7 @@ sysbus.uart1 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://u-boot-dashboard.renode.io/mx6sabresd--imx6dl-sabresd-uboot/mx6sabresd--imx6dl-sabresd-uboot.elf
-    
+    cpu1 IsHalted true
 """
 
 runMacro $reset

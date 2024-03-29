@@ -43,7 +43,7 @@ sysbus.uart1 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://u-boot-dashboard.renode.io/colibri_imx6--imx6dl-colibri-eval-v3-uboot/colibri_imx6--imx6dl-colibri-eval-v3-uboot.elf
-    
+    cpu1 IsHalted true
 """
 
 runMacro $reset

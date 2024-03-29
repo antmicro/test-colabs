@@ -43,7 +43,13 @@ sysbus.uart4 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://u-boot-dashboard.renode.io/evb-px5--rk3368-px5-evb-uboot/evb-px5--rk3368-px5-evb-uboot.elf
-    
+    cpu1 IsHalted true
+    cpu2 IsHalted true
+    cpu3 IsHalted true
+    cpu4 IsHalted true
+    cpu5 IsHalted true
+    cpu6 IsHalted true
+    cpu7 IsHalted true
 """
 
 runMacro $reset

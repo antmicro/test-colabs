@@ -43,7 +43,13 @@ sysbus.uart1 RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/3723493f60a10f17d8d117fb8288a75da20cdd74/adp_xc7k_ae350/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.elf
-    
+    cpu1 IsHalted true
+    cpu2 IsHalted true
+    cpu3 IsHalted true
+    cpu4 IsHalted true
+    cpu5 IsHalted true
+    cpu6 IsHalted true
+    cpu7 IsHalted true
 """
 
 runMacro $reset
@@ -55,7 +61,7 @@ runMacro $reset
 ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart1", timeout=5)
 
-WaitForLineOnUart("*** Booting Zephyr OS build 3723493f60a1 ***")
+WaitForLineOnUart("\*\*\* Booting Zephyr OS build.+3723493f60a1 \*\*\*", treatAsRegex=True)
 
 WaitForLineOnUart("I: model output: [wing: 1.000000, ring: 0.000000, slope: 0.000000, negative: 0.000000]")
 WaitForLineOnUart("I: model output: [wing: 0.000000, ring: 0.000000, slope: 0.000000, negative: 1.000000]")
