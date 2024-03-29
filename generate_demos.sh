@@ -9,7 +9,7 @@ uboot_DEMOS=(uboot)
 uboot_DASHBOARD=https://u-boot-dashboard.renode.io
 uboot_VERSION="$(curl -s $uboot_DASHBOARD/uboot.version)"
 
-SCRIPT="cpu0 VectorTableOffset \`sysbus GetSymbolAddress \"_vector_table\"\`"
+SET_VTOR="cpu0 VectorTableOffset \`sysbus GetSymbolAddress \"_vector_table\"\`"
 
 tmp="$(mktemp --tmpdir -d renodepedia-colabs-XXXXXXXXXX)"
 cleanup() {
@@ -21,6 +21,9 @@ generate_demos() {
     demos="${1}_DEMOS[@]"
     dashboard="${1}_DASHBOARD"
     version="${1}_VERSION"
+    # Get Renode platform description files for all boards (and demos)
+    mkdir "$tmp/$1"
+    wget "${!dashboard}"/replkit.tar.xz -O - | tar xJ -C "$tmp/$1"
     for demo in "${!demos}"
     do
         # The JSON file created by Dashboard contains information on the board running the specified demo, test results, used serial port etc.
@@ -34,6 +37,8 @@ generate_demos() {
         do
             platform="${board_names[j]}"
             echo "${demo} ${platform}"
+            # Generate a script that halts every CPU except cpu0, if any are present
+            script="$(grep -Po '^.*(?=:\s+CPU\.)' "$tmp/${1}/$platform-$demo.repl" | { grep -Fxv cpu0 || :; } | while read -r c; do echo "$c IsHalted true"; done)"
             board_path="boards/${platform}"
             repl="${!dashboard}/${platform}-${demo}/${platform}-${demo}.repl"
             elf="${!dashboard}/${platform}-${demo}/${platform}-${demo}.elf"
@@ -46,11 +51,9 @@ generate_demos() {
             sample=`cat "${tmp}"/${platform}_${demo}`
             if [ "$1" = zephyr ] && echo ${dts_chain[j]##*-> } | grep -q 'arm/armv.-m' ; then
                 # For ARM Cortex-M platforms we explicitly initialize VTOR in the script, as the OS build system can place it in various parts of the binary.
-                jinja -D sample_name ${demo} -D sample "${sample}" -D platform ${platform} -D board_path ${board_path} -D uart_name ${uart_names[j]} -D script "$SCRIPT" -D software_version "${!version}" -D repl "$repl" -D elf "$elf" -o "${board_path}"_"${demo}".py template.py
-            else
-                # For other platforms we simply replace template placeholders for basic demo data
-                jinja -D sample_name ${demo} -D sample "${sample}" -D platform ${platform} -D board_path ${board_path} -D uart_name ${uart_names[j]} -D software_version "${!version}" -D repl "$repl" -D elf "$elf" -o "${board_path}"_"${demo}".py template.py
+                script="$script${script:+$'\n'}$SET_VTOR"
             fi
+            jinja -D sample_name ${demo} -D sample "${sample}" -D platform ${platform} -D board_path ${board_path} -D uart_name ${uart_names[j]} -D script "$script" -D software_version "${!version}" -D repl "$repl" -D elf "$elf" -o "${board_path}"_"${demo}".py template.py
         done
     done
 }

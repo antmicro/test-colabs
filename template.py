@@ -43,7 +43,7 @@ sysbus.{{uart_name}} RecordToAsciinema $ORIGIN/output.asciinema
 macro reset
 """
     sysbus LoadELF @{{elf}}
-    {{script}}
+    {{script | indent(4)}}
 """
 
 runMacro $reset
