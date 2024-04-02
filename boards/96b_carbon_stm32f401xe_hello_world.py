@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.usart1", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! 96b_carbon_stm32f401xe")
+WaitForLineOnUart("Hello World! 96b_carbon/stm32f401xe")
 
 ResetEmulation()
 

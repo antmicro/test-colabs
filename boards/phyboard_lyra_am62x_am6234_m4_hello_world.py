@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart0", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! phyboard_lyra_am62x_am6234_m4")
+WaitForLineOnUart("Hello World! phyboard_lyra_am62x/am6234/m4")
 
 ResetEmulation()
 

@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart0", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! actinius_icarus_som_dk_nrf9160")
+WaitForLineOnUart("Hello World! actinius_icarus_som_dk/nrf9160")
 
 ResetEmulation()
 

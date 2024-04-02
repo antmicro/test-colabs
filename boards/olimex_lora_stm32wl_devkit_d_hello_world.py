@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.usart1", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! olimex_lora_stm32wl_devkit_d")
+WaitForLineOnUart("Hello World! olimex_lora_stm32wl_devkit@D")
 
 ResetEmulation()
 

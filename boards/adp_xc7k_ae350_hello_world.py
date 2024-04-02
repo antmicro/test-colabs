@@ -62,7 +62,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart1", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! adp_xc7k_ae350")
+WaitForLineOnUart("Hello World! adp_xc7k/ae350")
 
 ResetEmulation()
 

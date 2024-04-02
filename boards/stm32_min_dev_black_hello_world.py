@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.usart1", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! stm32_min_dev_black")
+WaitForLineOnUart("Hello World! stm32_min_dev@black")
 
 ResetEmulation()
 

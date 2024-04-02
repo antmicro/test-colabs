@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.usart1", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! stm32h747i_disco_stm32h747xx_m7")
+WaitForLineOnUart("Hello World! stm32h747i_disco/stm32h747xx/m7")
 
 ResetEmulation()
 

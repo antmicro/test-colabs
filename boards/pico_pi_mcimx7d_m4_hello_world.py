@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart6", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! pico_pi_mcimx7d_m4")
+WaitForLineOnUart("Hello World! pico_pi/mcimx7d/m4")
 
 ResetEmulation()
 

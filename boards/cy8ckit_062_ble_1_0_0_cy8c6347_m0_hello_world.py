@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart2", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! cy8ckit_062_ble_1_0_0_cy8c6347_m0")
+WaitForLineOnUart("Hello World! cy8ckit_062_ble@1.0.0/cy8c6347/m0")
 
 ResetEmulation()
 

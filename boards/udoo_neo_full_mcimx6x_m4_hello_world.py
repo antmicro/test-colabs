@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart5", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! udoo_neo_full_mcimx6x_m4")
+WaitForLineOnUart("Hello World! udoo_neo_full/mcimx6x/m4")
 
 ResetEmulation()
 

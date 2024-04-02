@@ -58,7 +58,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart9", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! s32z2xxdc2_d_s32z270_rtu1")
+WaitForLineOnUart("Hello World! s32z2xxdc2@D/s32z270/rtu1")
 
 ResetEmulation()
 

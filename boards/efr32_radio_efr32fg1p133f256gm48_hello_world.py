@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.usart0", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! efr32_radio_efr32fg1p133f256gm48")
+WaitForLineOnUart("Hello World! efr32_radio/efr32fg1p133f256gm48")
 
 ResetEmulation()
 

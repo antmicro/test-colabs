@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uartlite0", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! arty_a7_designstart_fpga_cortex_m1")
+WaitForLineOnUart("Hello World! arty_a7/designstart_fpga_cortex_m1")
 
 ResetEmulation()
 

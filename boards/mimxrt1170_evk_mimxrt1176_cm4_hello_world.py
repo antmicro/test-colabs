@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.lpuart1", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! mimxrt1170_evk_mimxrt1176_cm4")
+WaitForLineOnUart("Hello World! mimxrt1170_evk/mimxrt1176/cm4")
 
 ResetEmulation()
 

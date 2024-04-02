@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart0", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! sparkfun_thing_plus_nrf9160")
+WaitForLineOnUart("Hello World! sparkfun_thing_plus/nrf9160")
 
 ResetEmulation()
 

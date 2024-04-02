@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.usart3", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! nucleo_h745zi_q_stm32h745xx_m7")
+WaitForLineOnUart("Hello World! nucleo_h745zi_q/stm32h745xx/m7")
 
 ResetEmulation()
 

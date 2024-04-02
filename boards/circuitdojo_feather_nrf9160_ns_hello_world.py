@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart0", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! circuitdojo_feather_nrf9160_ns")
+WaitForLineOnUart("Hello World! circuitdojo_feather/nrf9160/ns")
 
 ResetEmulation()
 

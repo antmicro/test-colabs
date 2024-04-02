@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.usart1", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! arduino_portenta_h7_stm32h747xx_m7")
+WaitForLineOnUart("Hello World! arduino_portenta_h7/stm32h747xx/m7")
 
 ResetEmulation()
 

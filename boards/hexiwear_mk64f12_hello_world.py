@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart0", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! hexiwear_mk64f12")
+WaitForLineOnUart("Hello World! hexiwear/mk64f12")
 
 ResetEmulation()
 

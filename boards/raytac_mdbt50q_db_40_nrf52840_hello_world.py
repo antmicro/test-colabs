@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart0", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! raytac_mdbt50q_db_40_nrf52840")
+WaitForLineOnUart("Hello World! raytac_mdbt50q_db_40/nrf52840")
 
 ResetEmulation()
 

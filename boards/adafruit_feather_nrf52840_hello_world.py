@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart0", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! adafruit_feather_nrf52840")
+WaitForLineOnUart("Hello World! adafruit_feather/nrf52840")
 
 ResetEmulation()
 

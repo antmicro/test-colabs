@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.scif2", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! rcar_h3ulcb_r8a77951_a57")
+WaitForLineOnUart("Hello World! rcar_h3ulcb/r8a77951/a57")
 
 ResetEmulation()
 

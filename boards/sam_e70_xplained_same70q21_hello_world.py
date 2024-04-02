@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.usart1", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! sam_e70_xplained_same70q21")
+WaitForLineOnUart("Hello World! sam_e70_xplained/same70q21")
 
 ResetEmulation()
 

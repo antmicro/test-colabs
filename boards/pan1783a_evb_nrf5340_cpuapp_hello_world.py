@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart0", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! pan1783a_evb_nrf5340_cpuapp")
+WaitForLineOnUart("Hello World! pan1783a_evb/nrf5340/cpuapp")
 
 ResetEmulation()
 
