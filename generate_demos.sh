@@ -30,6 +30,7 @@ generate_demos() {
         # The JSON file created by Dashboard contains information on the board running the specified demo, test results, used serial port etc.
         wget -P "$tmp" "${!dashboard}"/results-"${demo}"-all.json
         board_names=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .platform' "$tmp"/results-"${demo}"-all.json))
+        original_names=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .platform_original' "$tmp"/results-"${demo}"-all.json))
         board_path=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .board_dir' "$tmp"/results-"${demo}"-all.json))
         uart_names=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .uart_name' "$tmp"/results-"${demo}"-all.json))
         gpio_led_names=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .peripherals["gpio-led"] | (.name + "." + .led_name)' "$tmp"/results-"${demo}"-all.json))
@@ -37,6 +38,7 @@ generate_demos() {
         for j in "${!board_path[@]}"
         do
             platform="${board_names[j]}"
+            platform_original="${original_names[j]}"
             echo "${demo} ${platform}"
             # Generate a script that halts every CPU except cpu0, if any are present
             script="$(grep -Po '^.*(?=:\s+CPU\.)' "$tmp/${1}/$platform-$demo.repl" | { grep -Fxv cpu0 || :; } | while read -r c; do echo "$c IsHalted true"; done)"
@@ -48,13 +50,13 @@ generate_demos() {
                 elf="https://new-zephyr-dashboard.renode.io/zephyr/${!version}/${platform}/${demo}/${demo}.elf"
             fi
             # First we replace Jinja templates in the demo-specific input. We'll use it later to fill out the Python template file
-            jinja -D platform ${platform} -D uart_name ${uart_names[j]} -D gpio_led_name ${gpio_led_names[j]} -D software_version "${!version}" -o "$tmp/${platform}_${demo}" ${demo}
+            jinja -D platform ${platform} -D platform_original ${platform_original} -D uart_name ${uart_names[j]} -D gpio_led_name ${gpio_led_names[j]} -D software_version "${!version}" -o "$tmp/${platform}_${demo}" ${demo}
             sample=`cat "${tmp}"/${platform}_${demo}`
             if [ "$1" = zephyr ] && echo ${dts_chain[j]##*-> } | grep -q 'arm/armv.-m' ; then
                 # For ARM Cortex-M platforms we explicitly initialize VTOR in the script, as the OS build system can place it in various parts of the binary.
                 script="$script${script:+$'\n'}$SET_VTOR"
             fi
-            jinja -D sample_name ${demo} -D sample "${sample}" -D platform ${platform} -D board_path ${board_path} -D uart_name ${uart_names[j]} -D script "$script" -D software_version "${!version}" -D repl "$repl" -D elf "$elf" -o "${board_path}"_"${demo}".py template.py
+            jinja -D sample_name ${demo} -D sample "${sample}" -D platform ${platform} -D platform_original ${platform_original} -D board_path ${board_path} -D uart_name ${uart_names[j]} -D script "$script" -D software_version "${!version}" -D repl "$repl" -D elf "$elf" -o "${board_path}"_"${demo}".py template.py
         done
     done
 }
