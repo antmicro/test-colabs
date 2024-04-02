@@ -57,7 +57,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart0", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! rpi_pico_rp2040_w")
+WaitForLineOnUart("Hello World! rpi_pico/rp2040/w")
 
 ResetEmulation()
 

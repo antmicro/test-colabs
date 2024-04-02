@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart0", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! mps2_an521_cpu1")
+WaitForLineOnUart("Hello World! mps2/an521/cpu1")
 
 ResetEmulation()
 

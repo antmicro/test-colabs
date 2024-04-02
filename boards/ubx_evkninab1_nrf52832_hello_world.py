@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart0", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! ubx_evkninab1_nrf52832")
+WaitForLineOnUart("Hello World! ubx_evkninab1/nrf52832")
 
 ResetEmulation()
 

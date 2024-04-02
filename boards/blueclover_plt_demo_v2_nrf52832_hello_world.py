@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart0", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! blueclover_plt_demo_v2_nrf52832")
+WaitForLineOnUart("Hello World! blueclover_plt_demo_v2/nrf52832")
 
 ResetEmulation()
 

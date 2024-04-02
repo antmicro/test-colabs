@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.usart2", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! arduino_giga_r1_stm32h747xx_m4")
+WaitForLineOnUart("Hello World! arduino_giga_r1/stm32h747xx/m4")
 
 ResetEmulation()
 

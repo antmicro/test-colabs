@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.usart1", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! b_u585i_iot02a_stm32u585xx_ns")
+WaitForLineOnUart("Hello World! b_u585i_iot02a/stm32u585xx/ns")
 
 ResetEmulation()
 

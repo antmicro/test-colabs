@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart0", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! qemu_cortex_a53_qemu_cortex_a53_xip")
+WaitForLineOnUart("Hello World! qemu_cortex_a53/qemu_cortex_a53/xip")
 
 ResetEmulation()
 

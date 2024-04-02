@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.usart0", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! efm32pg_stk3402a_efm32jg12b500f1024gl125")
+WaitForLineOnUart("Hello World! efm32pg_stk3402a/efm32jg12b500f1024gl125")
 
 ResetEmulation()
 

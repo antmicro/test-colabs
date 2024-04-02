@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.usart2", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! nucleo_l452re_stm32l452xx_p")
+WaitForLineOnUart("Hello World! nucleo_l452re/stm32l452xx/p")
 
 ResetEmulation()
 

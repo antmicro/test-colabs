@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.lpuart1", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! mimxrt1060_evk_hyperflash")
+WaitForLineOnUart("Hello World! mimxrt1060_evk@hyperflash")
 
 ResetEmulation()
 

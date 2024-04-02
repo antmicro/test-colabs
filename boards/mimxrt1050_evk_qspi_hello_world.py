@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.lpuart1", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! mimxrt1050_evk_qspi")
+WaitForLineOnUart("Hello World! mimxrt1050_evk@qspi")
 
 ResetEmulation()
 

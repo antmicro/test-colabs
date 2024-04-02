@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart2", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! warp7_mcimx7d_m4")
+WaitForLineOnUart("Hello World! warp7/mcimx7d/m4")
 
 ResetEmulation()
 

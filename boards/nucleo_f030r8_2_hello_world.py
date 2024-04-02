@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.usart2", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! nucleo_f030r8_2")
+WaitForLineOnUart("Hello World! nucleo_f030r8@2")
 
 ResetEmulation()
 

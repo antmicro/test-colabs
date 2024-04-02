@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart0", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! reel_board_2")
+WaitForLineOnUart("Hello World! reel_board@2")
 
 ResetEmulation()
 

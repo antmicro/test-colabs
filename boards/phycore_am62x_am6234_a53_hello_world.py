@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart0", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! phycore_am62x_am6234_a53")
+WaitForLineOnUart("Hello World! phycore_am62x/am6234/a53")
 
 ResetEmulation()
 

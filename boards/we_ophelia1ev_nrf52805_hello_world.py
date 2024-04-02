@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart0", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! we_ophelia1ev_nrf52805")
+WaitForLineOnUart("Hello World! we_ophelia1ev/nrf52805")
 
 ResetEmulation()
 

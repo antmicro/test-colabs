@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart0", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! nrf9151dk_nrf9151_ns")
+WaitForLineOnUart("Hello World! nrf9151dk/nrf9151/ns")
 
 ResetEmulation()
 

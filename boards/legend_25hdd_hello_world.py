@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.usart1", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! legend_25hdd")
+WaitForLineOnUart("Hello World! legend@25hdd")
 
 ResetEmulation()
 

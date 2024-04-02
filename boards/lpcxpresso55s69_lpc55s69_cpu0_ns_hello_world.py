@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.flexcomm0", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("Hello World! lpcxpresso55s69_lpc55s69_cpu0_ns")
+WaitForLineOnUart("Hello World! lpcxpresso55s69/lpc55s69/cpu0/ns")
 
 ResetEmulation()
 
