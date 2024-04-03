@@ -18,6 +18,10 @@ cleanup() {
 }
 trap cleanup EXIT
 
+wget() {
+    command wget --retry-connrefused --waitretry=1 --read-timeout=10 --timeout=10 --tries 3 "$@"
+}
+
 generate_demos() {
     demos="${1}_DEMOS[@]"
     dashboard="${1}_DASHBOARD"
