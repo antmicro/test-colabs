@@ -34,7 +34,7 @@ using sysbus
 $name?="ubx_evkninab3_nrf52840"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/ubx_evkninab3_nrf52840-synchronization/ubx_evkninab3_nrf52840-synchronization.repl
+machine LoadPlatformDescription @https://new-zephyr-dashboard.renode.io/zephyr_sim/3723493f60a10f17d8d117fb8288a75da20cdd74/36b60de1af1f7047573c8085a0c298f743270043/ubx_evkninab3_nrf52840/synchronization/synchronization.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0

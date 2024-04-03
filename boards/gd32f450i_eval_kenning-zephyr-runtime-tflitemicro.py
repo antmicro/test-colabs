@@ -34,7 +34,7 @@ using sysbus
 $name?="gd32f450i_eval"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/gd32f450i_eval-kenning-zephyr-runtime-tflitemicro/gd32f450i_eval-kenning-zephyr-runtime-tflitemicro.repl
+machine LoadPlatformDescription @https://new-zephyr-dashboard.renode.io/zephyr_sim/3723493f60a10f17d8d117fb8288a75da20cdd74/36b60de1af1f7047573c8085a0c298f743270043/gd32f450i_eval/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart0

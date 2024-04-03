@@ -34,7 +34,7 @@ using sysbus
 $name?="v2m_musca_s1_musca_s1"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/v2m_musca_s1_musca_s1-kenning-zephyr-runtime-tflitemicro/v2m_musca_s1_musca_s1-kenning-zephyr-runtime-tflitemicro.repl
+machine LoadPlatformDescription @https://new-zephyr-dashboard.renode.io/zephyr_sim/3723493f60a10f17d8d117fb8288a75da20cdd74/36b60de1af1f7047573c8085a0c298f743270043/v2m_musca_s1_musca_s1/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart1

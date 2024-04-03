@@ -34,7 +34,7 @@ using sysbus
 $name?="mec1501modular_assy6885"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/mec1501modular_assy6885-micropython/mec1501modular_assy6885-micropython.repl
+machine LoadPlatformDescription @https://new-zephyr-dashboard.renode.io/zephyr_sim/3723493f60a10f17d8d117fb8288a75da20cdd74/36b60de1af1f7047573c8085a0c298f743270043/mec1501modular_assy6885/micropython/micropython.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart1

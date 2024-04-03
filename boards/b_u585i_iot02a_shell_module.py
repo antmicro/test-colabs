@@ -34,7 +34,7 @@ using sysbus
 $name?="b_u585i_iot02a"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/b_u585i_iot02a-shell_module/b_u585i_iot02a-shell_module.repl
+machine LoadPlatformDescription @https://new-zephyr-dashboard.renode.io/zephyr_sim/3723493f60a10f17d8d117fb8288a75da20cdd74/36b60de1af1f7047573c8085a0c298f743270043/b_u585i_iot02a/shell_module/shell_module.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1

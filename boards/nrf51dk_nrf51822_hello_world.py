@@ -34,7 +34,7 @@ using sysbus
 $name?="nrf51dk_nrf51822"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/nrf51dk_nrf51822-hello_world/nrf51dk_nrf51822-hello_world.repl
+machine LoadPlatformDescription @https://new-zephyr-dashboard.renode.io/zephyr_sim/3723493f60a10f17d8d117fb8288a75da20cdd74/36b60de1af1f7047573c8085a0c298f743270043/nrf51dk_nrf51822/hello_world/hello_world.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
