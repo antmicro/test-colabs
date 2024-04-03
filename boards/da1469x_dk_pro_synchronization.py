@@ -34,7 +34,7 @@ using sysbus
 $name?="da1469x_dk_pro"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/da1469x_dk_pro-synchronization/da1469x_dk_pro-synchronization.repl
+machine LoadPlatformDescription @https://new-zephyr-dashboard.renode.io/zephyr_sim/3723493f60a10f17d8d117fb8288a75da20cdd74/36b60de1af1f7047573c8085a0c298f743270043/da1469x_dk_pro/synchronization/synchronization.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart

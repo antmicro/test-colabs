@@ -34,7 +34,7 @@ using sysbus
 $name?="bl5340_dvk_nrf5340_cpuapp"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/bl5340_dvk_nrf5340_cpuapp-philosophers/bl5340_dvk_nrf5340_cpuapp-philosophers.repl
+machine LoadPlatformDescription @https://new-zephyr-dashboard.renode.io/zephyr_sim/3723493f60a10f17d8d117fb8288a75da20cdd74/36b60de1af1f7047573c8085a0c298f743270043/bl5340_dvk_nrf5340_cpuapp/philosophers/philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0

@@ -34,7 +34,7 @@ using sysbus
 $name?="dragino_nbsn95"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/dragino_nbsn95-shell_module/dragino_nbsn95-shell_module.repl
+machine LoadPlatformDescription @https://new-zephyr-dashboard.renode.io/zephyr_sim/3723493f60a10f17d8d117fb8288a75da20cdd74/36b60de1af1f7047573c8085a0c298f743270043/dragino_nbsn95/shell_module/shell_module.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart2

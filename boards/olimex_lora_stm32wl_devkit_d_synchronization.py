@@ -34,7 +34,7 @@ using sysbus
 $name?="olimex_lora_stm32wl_devkit_d"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/olimex_lora_stm32wl_devkit_d-synchronization/olimex_lora_stm32wl_devkit_d-synchronization.repl
+machine LoadPlatformDescription @https://new-zephyr-dashboard.renode.io/zephyr_sim/3723493f60a10f17d8d117fb8288a75da20cdd74/36b60de1af1f7047573c8085a0c298f743270043/olimex_lora_stm32wl_devkit_d/synchronization/synchronization.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1

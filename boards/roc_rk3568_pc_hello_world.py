@@ -34,7 +34,7 @@ using sysbus
 $name?="roc_rk3568_pc"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/roc_rk3568_pc-hello_world/roc_rk3568_pc-hello_world.repl
+machine LoadPlatformDescription @https://new-zephyr-dashboard.renode.io/zephyr_sim/3723493f60a10f17d8d117fb8288a75da20cdd74/36b60de1af1f7047573c8085a0c298f743270043/roc_rk3568_pc/hello_world/hello_world.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart2

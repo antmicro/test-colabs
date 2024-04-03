@@ -34,7 +34,7 @@ using sysbus
 $name?="rpi_pico"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/rpi_pico-micropython/rpi_pico-micropython.repl
+machine LoadPlatformDescription @https://new-zephyr-dashboard.renode.io/zephyr_sim/3723493f60a10f17d8d117fb8288a75da20cdd74/36b60de1af1f7047573c8085a0c298f743270043/rpi_pico/micropython/micropython.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
