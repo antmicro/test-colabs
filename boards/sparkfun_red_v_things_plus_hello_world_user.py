@@ -34,7 +34,7 @@ using sysbus
 $name?="sparkfun_red_v_things_plus"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/sparkfun_red_v_things_plus-hello_world_user/sparkfun_red_v_things_plus-hello_world_user.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/25812289779f471143cf1a2cc34c245c603bd941/a62db5c9be07ce1bc43c383460194ee0fbc9ee72/sparkfun_red_v_things_plus/hello_world_user/hello_world_user.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
@@ -42,7 +42,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/044529d0cd06c9bcaf64a78ade7a123e7fb8c9a3/sparkfun_red_v_things_plus/hello_world_user/hello_world_user.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/25812289779f471143cf1a2cc34c245c603bd941/sparkfun_red_v_things_plus/hello_world_user/hello_world_user.elf
     
 """
 

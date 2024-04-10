@@ -34,7 +34,7 @@ using sysbus
 $name?="adafruit_qt_py_rp2040"
 mach create $name
 
-machine LoadPlatformDescription @https://new-zephyr-dashboard.renode.io/zephyr_sim/3723493f60a10f17d8d117fb8288a75da20cdd74/36b60de1af1f7047573c8085a0c298f743270043/adafruit_qt_py_rp2040/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/25812289779f471143cf1a2cc34c245c603bd941/a62db5c9be07ce1bc43c383460194ee0fbc9ee72/adafruit_qt_py_rp2040/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart1
@@ -42,7 +42,7 @@ sysbus.uart1 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/3723493f60a10f17d8d117fb8288a75da20cdd74/adafruit_qt_py_rp2040/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/25812289779f471143cf1a2cc34c245c603bd941/adafruit_qt_py_rp2040/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.elf
     cpu1 IsHalted true
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
@@ -56,7 +56,7 @@ runMacro $reset
 ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart1", timeout=5)
 
-WaitForLineOnUart("\*\*\* Booting Zephyr OS build.+3723493f60a1 \*\*\*", treatAsRegex=True)
+WaitForLineOnUart("\*\*\* Booting Zephyr OS build.+25812289779f \*\*\*", treatAsRegex=True)
 
 WaitForLineOnUart("I: model output: [wing: 1.000000, ring: 0.000000, slope: 0.000000, negative: 0.000000]")
 WaitForLineOnUart("I: model output: [wing: 0.000000, ring: 0.000000, slope: 0.000000, negative: 1.000000]")

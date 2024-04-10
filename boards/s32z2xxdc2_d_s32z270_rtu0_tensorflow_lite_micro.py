@@ -34,7 +34,7 @@ using sysbus
 $name?="s32z2xxdc2_d_s32z270_rtu0"
 mach create $name
 
-machine LoadPlatformDescription @https://new-zephyr-dashboard.renode.io/zephyr_sim/3723493f60a10f17d8d117fb8288a75da20cdd74/36b60de1af1f7047573c8085a0c298f743270043/s32z2xxdc2_d_s32z270_rtu0/tensorflow_lite_micro/tensorflow_lite_micro.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/25812289779f471143cf1a2cc34c245c603bd941/a62db5c9be07ce1bc43c383460194ee0fbc9ee72/s32z2xxdc2_d_s32z270_rtu0/tensorflow_lite_micro/tensorflow_lite_micro.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart9
@@ -42,7 +42,7 @@ sysbus.uart9 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/3723493f60a10f17d8d117fb8288a75da20cdd74/s32z2xxdc2_d_s32z270_rtu0/tensorflow_lite_micro/tensorflow_lite_micro.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/25812289779f471143cf1a2cc34c245c603bd941/s32z2xxdc2_d_s32z270_rtu0/tensorflow_lite_micro/tensorflow_lite_micro.elf
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
