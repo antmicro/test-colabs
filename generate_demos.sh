@@ -3,7 +3,7 @@ set -euo pipefail
 
 mkdir -p boards/
 
-zephyr_DEMOS=(philosophers hello_world tensorflow_lite_micro shell_module micropython blinky hello_world_user synchronization lz4 rust-app kenning-zephyr-runtime-microtvm kenning-zephyr-runtime-tflitemicro)
+zephyr_DEMOS=(philosophers hello_world tensorflow_lite_micro shell_module micropython blinky hello_world_user synchronization lz4 rust-app kenning-zephyr-runtime-microtvm kenning-zephyr-runtime-tflitemicro kenning-zephyr-runtime-iree)
 zephyr_dashboard_base=https://new-zephyr-dashboard.renode.io
 zephyr_VERSION="$(curl -s $zephyr_dashboard_base/zephyr_sim/latest)"
 zephyr_renode_version="$(curl -s $zephyr_dashboard_base/zephyr_sim/$zephyr_VERSION/latest)"
