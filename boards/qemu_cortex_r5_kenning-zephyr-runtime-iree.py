@@ -34,7 +34,7 @@ using sysbus
 $name?="qemu_cortex_r5"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/25812289779f471143cf1a2cc34c245c603bd941/a62db5c9be07ce1bc43c383460194ee0fbc9ee72/qemu_cortex_r5/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/99adbadad5a2ccd70ed7e7a483b7615bd043d999/b672f64553038487a18982117c723859240f277e/qemu_cortex_r5/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
@@ -42,7 +42,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/25812289779f471143cf1a2cc34c245c603bd941/qemu_cortex_r5/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/99adbadad5a2ccd70ed7e7a483b7615bd043d999/qemu_cortex_r5/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.elf
     
 """
 
@@ -55,7 +55,7 @@ runMacro $reset
 ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart0", timeout=5)
 
-WaitForLineOnUart("\*\*\* Booting Zephyr OS build.+25812289779f \*\*\*", treatAsRegex=True)
+WaitForLineOnUart("\*\*\* Booting Zephyr OS build.+99adbadad5a2 \*\*\*", treatAsRegex=True)
 
 WaitForLineOnUart("I: model output: [wing: 213.957657, ring: 80.423126, slope: 113.229385, negative: 158.669312]")
 WaitForLineOnUart("I: model output: [wing: 162.148727, ring: 140.959763, slope: 149.957062, negative: 236.156754]")
@@ -83,8 +83,8 @@ asciinema.display_asciicast('output.asciinema')
 
 # %%
 import sys
-from pathlib import Path
-sys.path.append(Path('/root/.config/renode/renode-run.path').read_text())
+from renode_run import get_default_renode_path
+sys.path.append(get_default_renode_path())
 
 from renode_colab_tools import metrics
 from tools.metrics_analyzer.metrics_parser import MetricsParser

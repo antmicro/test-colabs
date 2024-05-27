@@ -34,7 +34,7 @@ using sysbus
 $name?="hifive_unmatched"
 mach create $name
 
-machine LoadPlatformDescription @https://new-zephyr-dashboard.renode.io/zephyr_sim/3723493f60a10f17d8d117fb8288a75da20cdd74/36b60de1af1f7047573c8085a0c298f743270043/hifive_unmatched/micropython/micropython.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/99adbadad5a2ccd70ed7e7a483b7615bd043d999/b672f64553038487a18982117c723859240f277e/hifive_unmatched/micropython/micropython.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
@@ -42,15 +42,11 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/3723493f60a10f17d8d117fb8288a75da20cdd74/hifive_unmatched/micropython/micropython.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/99adbadad5a2ccd70ed7e7a483b7615bd043d999/hifive_unmatched/micropython/micropython.elf
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
     cpu4 IsHalted true
-    u74_1 IsHalted true
-    u74_2 IsHalted true
-    u74_3 IsHalted true
-    u74_4 IsHalted true
 """
 
 runMacro $reset
@@ -88,8 +84,8 @@ asciinema.display_asciicast('output.asciinema')
 
 # %%
 import sys
-from pathlib import Path
-sys.path.append(Path('/root/.config/renode/renode-run.path').read_text())
+from renode_run import get_default_renode_path
+sys.path.append(get_default_renode_path())
 
 from renode_colab_tools import metrics
 from tools.metrics_analyzer.metrics_parser import MetricsParser

@@ -34,7 +34,7 @@ using sysbus
 $name?="roc_rk3568_pc"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/25812289779f471143cf1a2cc34c245c603bd941/a62db5c9be07ce1bc43c383460194ee0fbc9ee72/roc_rk3568_pc/lz4/lz4.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/99adbadad5a2ccd70ed7e7a483b7615bd043d999/b672f64553038487a18982117c723859240f277e/roc_rk3568_pc/lz4/lz4.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart2
@@ -42,7 +42,7 @@ sysbus.uart2 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/25812289779f471143cf1a2cc34c245c603bd941/roc_rk3568_pc/lz4/lz4.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/99adbadad5a2ccd70ed7e7a483b7615bd043d999/roc_rk3568_pc/lz4/lz4.elf
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
@@ -78,8 +78,8 @@ asciinema.display_asciicast('output.asciinema')
 
 # %%
 import sys
-from pathlib import Path
-sys.path.append(Path('/root/.config/renode/renode-run.path').read_text())
+from renode_run import get_default_renode_path
+sys.path.append(get_default_renode_path())
 
 from renode_colab_tools import metrics
 from tools.metrics_analyzer.metrics_parser import MetricsParser

@@ -34,7 +34,7 @@ using sysbus
 $name?="mimxrt1170_evk_mimxrt1176_cm4"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/25812289779f471143cf1a2cc34c245c603bd941/a62db5c9be07ce1bc43c383460194ee0fbc9ee72/mimxrt1170_evk_mimxrt1176_cm4/rust-app/rust-app.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/99adbadad5a2ccd70ed7e7a483b7615bd043d999/b672f64553038487a18982117c723859240f277e/mimxrt1170_evk_mimxrt1176_cm4/rust-app/rust-app.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.lpuart1
@@ -42,7 +42,7 @@ sysbus.lpuart1 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/25812289779f471143cf1a2cc34c245c603bd941/mimxrt1170_evk_mimxrt1176_cm4/rust-app/rust-app.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/99adbadad5a2ccd70ed7e7a483b7615bd043d999/mimxrt1170_evk_mimxrt1176_cm4/rust-app/rust-app.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 
@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.lpuart1", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("*** Booting Zephyr OS build 25812289779f ***")
+WaitForLineOnUart("*** Booting Zephyr OS build 99adbadad5a2 ***")
 WaitForLineOnUart("Next call will crash if userspace is working")
 WaitForLineOnUart(r".*ZEPHYR FATAL ERROR.*", treatAsRegex=True)
 
@@ -74,8 +74,8 @@ asciinema.display_asciicast('output.asciinema')
 
 # %%
 import sys
-from pathlib import Path
-sys.path.append(Path('/root/.config/renode/renode-run.path').read_text())
+from renode_run import get_default_renode_path
+sys.path.append(get_default_renode_path())
 
 from renode_colab_tools import metrics
 from tools.metrics_analyzer.metrics_parser import MetricsParser
