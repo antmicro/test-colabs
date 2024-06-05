@@ -34,7 +34,7 @@ using sysbus
 $name?="verdin_imx8mp_mimx8ml8_m7_ddr"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/99adbadad5a2ccd70ed7e7a483b7615bd043d999/b672f64553038487a18982117c723859240f277e/verdin_imx8mp_mimx8ml8_m7_ddr/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/a70bf0e488c5327ad67512c2854987d113318c79/39825dfac1127ddb969d5fea99613f72ad37c639/verdin_imx8mp_mimx8ml8_m7_ddr/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart4
@@ -42,7 +42,7 @@ sysbus.uart4 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/99adbadad5a2ccd70ed7e7a483b7615bd043d999/verdin_imx8mp_mimx8ml8_m7_ddr/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/a70bf0e488c5327ad67512c2854987d113318c79/verdin_imx8mp_mimx8ml8_m7_ddr/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 
@@ -55,7 +55,7 @@ runMacro $reset
 ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart4", timeout=5)
 
-WaitForLineOnUart("\*\*\* Booting Zephyr OS build.+99adbadad5a2 \*\*\*", treatAsRegex=True)
+WaitForLineOnUart("\*\*\* Booting Zephyr OS build.+a70bf0e488c5 \*\*\*", treatAsRegex=True)
 
 WaitForLineOnUart("I: model output: [wing: 1.000000, ring: 0.000000, slope: 0.000000, negative: 0.000000]")
 WaitForLineOnUart("I: model output: [wing: 0.000000, ring: 0.000000, slope: 0.000000, negative: 1.000000]")

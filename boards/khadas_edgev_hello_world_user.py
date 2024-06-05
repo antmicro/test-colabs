@@ -34,7 +34,7 @@ using sysbus
 $name?="khadas_edgev"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/99adbadad5a2ccd70ed7e7a483b7615bd043d999/b672f64553038487a18982117c723859240f277e/khadas_edgev/hello_world_user/hello_world_user.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/a70bf0e488c5327ad67512c2854987d113318c79/39825dfac1127ddb969d5fea99613f72ad37c639/khadas_edgev/hello_world_user/hello_world_user.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart2
@@ -42,7 +42,7 @@ sysbus.uart2 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/99adbadad5a2ccd70ed7e7a483b7615bd043d999/khadas_edgev/hello_world_user/hello_world_user.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/a70bf0e488c5327ad67512c2854987d113318c79/khadas_edgev/hello_world_user/hello_world_user.elf
     
 """
 

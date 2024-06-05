@@ -34,7 +34,7 @@ using sysbus
 $name?="frdm_k64f"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/99adbadad5a2ccd70ed7e7a483b7615bd043d999/b672f64553038487a18982117c723859240f277e/frdm_k64f/philosophers/philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/a70bf0e488c5327ad67512c2854987d113318c79/39825dfac1127ddb969d5fea99613f72ad37c639/frdm_k64f/philosophers/philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
@@ -42,7 +42,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/99adbadad5a2ccd70ed7e7a483b7615bd043d999/frdm_k64f/philosophers/philosophers.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/a70bf0e488c5327ad67512c2854987d113318c79/frdm_k64f/philosophers/philosophers.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

@@ -34,7 +34,7 @@ using sysbus
 $name?="adp_xc7k_ae350"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/adp_xc7k_ae350-kenning-zephyr-runtime-microtvm/adp_xc7k_ae350-kenning-zephyr-runtime-microtvm.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/a70bf0e488c5327ad67512c2854987d113318c79/39825dfac1127ddb969d5fea99613f72ad37c639/adp_xc7k_ae350/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart1
@@ -42,7 +42,7 @@ sysbus.uart1 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/3723493f60a10f17d8d117fb8288a75da20cdd74/adp_xc7k_ae350/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/a70bf0e488c5327ad67512c2854987d113318c79/adp_xc7k_ae350/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.elf
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
@@ -61,7 +61,7 @@ runMacro $reset
 ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart1", timeout=5)
 
-WaitForLineOnUart("\*\*\* Booting Zephyr OS build.+3723493f60a1 \*\*\*", treatAsRegex=True)
+WaitForLineOnUart("\*\*\* Booting Zephyr OS build.+a70bf0e488c5 \*\*\*", treatAsRegex=True)
 
 WaitForLineOnUart("I: model output: [wing: 1.000000, ring: 0.000000, slope: 0.000000, negative: 0.000000]")
 WaitForLineOnUart("I: model output: [wing: 0.000000, ring: 0.000000, slope: 0.000000, negative: 1.000000]")
@@ -90,7 +90,8 @@ asciinema.display_asciicast('output.asciinema')
 # %%
 import sys
 from pathlib import Path
-sys.path.append(Path('/root/.config/renode/renode-run.path').read_text())
+from renode_run import get_default_renode_path
+sys.path.append(str(Path(get_default_renode_path()).parent))
 
 from renode_colab_tools import metrics
 from tools.metrics_analyzer.metrics_parser import MetricsParser
