@@ -8,9 +8,14 @@ zephyr_dashboard_base=https://zephyr-dashboard.renode.io
 zephyr_VERSION="$(curl -s $zephyr_dashboard_base/zephyr_sim/latest)"
 zephyr_renode_version="$(curl -s $zephyr_dashboard_base/zephyr_sim/$zephyr_VERSION/latest)"
 zephyr_DASHBOARD="$zephyr_dashboard_base/zephyr_sim/$zephyr_VERSION/$zephyr_renode_version"
+zephyr_DASHBOARD_BUILD="$zephyr_dashboard_base/zephyr/$zephyr_VERSION"
+
 uboot_DEMOS=(uboot)
-uboot_DASHBOARD=https://u-boot-dashboard.renode.io
-uboot_VERSION="$(curl -s $uboot_DASHBOARD/uboot.version)"
+uboot_dashboard_base=https://u-boot-dashboard.renode.io
+uboot_VERSION="$(curl -s $uboot_dashboard_base/uboot_sim/latest)"
+uboot_renode_version="$(curl -s $uboot_dashboard_base/uboot_sim/$uboot_VERSION/latest)"
+uboot_DASHBOARD="$uboot_dashboard_base/uboot_sim/$uboot_VERSION/$uboot_renode_version"
+uboot_DASHBOARD_BUILD="$uboot_dashboard_base/uboot/$uboot_VERSION"
 
 SET_VTOR="cpu0 VectorTableOffset \`sysbus GetSymbolAddress \"_vector_table\"\`"
 
@@ -27,13 +32,14 @@ wget() {
 generate_demos() {
     demos="${1}_DEMOS[@]"
     dashboard="${1}_DASHBOARD"
+    build_dashboard="${1}_DASHBOARD_BUILD"
     version="${1}_VERSION"
     # Get Renode platform description files for all boards (and demos)
     mkdir "$tmp/$1"
-    wget -P "$tmp" "${!dashboard}"/renodekit.tar.xz
+    wget -P "$tmp" "${!dashboard}"/replkit.tar.xz
     # Assumption: no two boards with different architectures will have the same name
-    tar xf "$tmp/renodekit.tar.xz" -C "$tmp/$1" --wildcards '*.repl' --transform 's:.*/::g'
-    rm "$tmp/renodekit.tar.xz"
+    tar xf "$tmp/replkit.tar.xz" -C "$tmp/$1" --wildcards '*.repl' --transform 's:.*/::g'
+    rm "$tmp/replkit.tar.xz"
     for demo in "${!demos}"
     do
         # The JSON file created by Dashboard contains information on the board running the specified demo, test results, used serial port etc.
@@ -49,18 +55,15 @@ generate_demos() {
             platform="${board_names[j]}"
             platform_original="${original_names[j]}"
             echo "${demo} ${platform}"
+
             # Generate a script that halts every CPU except cpu0, if any are present
-            repl_path="$tmp/${1}/$platform.repl"
+            repl_path="$tmp/${1}/$platform-$demo.repl"
             script="$(grep -Po '^.*(?=:\s+CPU\.)' "$repl_path" | { grep -Fxv cpu0 || :; } | while read -r c; do echo "$c IsHalted true"; done)"
+
             board_path="boards/${platform}"
-            repl="${!dashboard}/${platform}-${demo}/${platform}-${demo}.repl"
-            elf="${!dashboard}/${platform}-${demo}/${platform}-${demo}.elf"
-            # On the Zephyr dashboard, the locations are different
-            if [ "$1" = zephyr ]; then
-                repl="${!dashboard}/${platform}/${demo}/${demo}.repl"
-                # The binary is stored in a separate directory
-                elf="$zephyr_dashboard_base/zephyr/${!version}/${platform}/${demo}/${demo}.elf"
-            fi
+            repl="${!dashboard}/${platform}/${demo}/${demo}.repl"
+            elf="${!build_dashboard}/${platform}/${demo}/${demo}.elf"
+
             # First we replace Jinja templates in the demo-specific input. We'll use it later to fill out the Python template file
             jinja -D platform ${platform} -D platform_original ${platform_original} -D uart_name ${uart_names[j]} -D gpio_led_name ${gpio_led_names[j]} -D software_version "${!version}" -o "$tmp/${platform}_${demo}" ${demo}
             sample=`cat "${tmp}"/${platform}_${demo}`
