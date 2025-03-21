@@ -34,7 +34,7 @@ using sysbus
 $name?="sifive_unleashed--hifive-unleashed-a00"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/sifive_unleashed--hifive-unleashed-a00-uboot/sifive_unleashed--hifive-unleashed-a00-uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/728988758ca57c0a9486adf4f950b903c9203710/sifive_unleashed--hifive-unleashed-a00/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
@@ -42,10 +42,14 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://u-boot-dashboard.renode.io/sifive_unleashed--hifive-unleashed-a00-uboot/sifive_unleashed--hifive-unleashed-a00-uboot.elf
+    sysbus LoadELF @https://u-boot-dashboard.renode.io/uboot/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/sifive_unleashed--hifive-unleashed-a00/uboot/uboot.elf
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
+    u54_1 IsHalted true
+    u54_2 IsHalted true
+    u54_3 IsHalted true
+    u54_4 IsHalted true
 """
 
 runMacro $reset

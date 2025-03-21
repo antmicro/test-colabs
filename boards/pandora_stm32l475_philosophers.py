@@ -34,7 +34,7 @@ using sysbus
 $name?="pandora_stm32l475"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f9e3b65d3a9794ee2233aa88172346f887b48d04/1cfe00236a5b1483a5f4de2cf6fa5ca79cc05a7b/pandora_stm32l475/philosophers/philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/63623915af48461951476133f1dbc95c344a5ce0/dbdcd8ae83780281ea7519edc0cc11fe3953ab4f/pandora_stm32l475/philosophers/philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
@@ -42,7 +42,7 @@ sysbus.usart1 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/f9e3b65d3a9794ee2233aa88172346f887b48d04/pandora_stm32l475/philosophers/philosophers.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/63623915af48461951476133f1dbc95c344a5ce0/pandora_stm32l475/philosophers/philosophers.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

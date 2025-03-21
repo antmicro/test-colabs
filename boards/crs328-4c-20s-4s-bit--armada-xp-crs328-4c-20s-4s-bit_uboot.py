@@ -34,7 +34,7 @@ using sysbus
 $name?="crs328-4c-20s-4s-bit--armada-xp-crs328-4c-20s-4s-bit"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/crs328-4c-20s-4s-bit--armada-xp-crs328-4c-20s-4s-bit-uboot/crs328-4c-20s-4s-bit--armada-xp-crs328-4c-20s-4s-bit-uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/728988758ca57c0a9486adf4f950b903c9203710/crs328-4c-20s-4s-bit--armada-xp-crs328-4c-20s-4s-bit/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
@@ -42,7 +42,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://u-boot-dashboard.renode.io/crs328-4c-20s-4s-bit--armada-xp-crs328-4c-20s-4s-bit-uboot/crs328-4c-20s-4s-bit--armada-xp-crs328-4c-20s-4s-bit-uboot.elf
+    sysbus LoadELF @https://u-boot-dashboard.renode.io/uboot/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/crs328-4c-20s-4s-bit--armada-xp-crs328-4c-20s-4s-bit/uboot/uboot.elf
     
 """
 

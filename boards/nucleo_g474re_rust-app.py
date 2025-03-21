@@ -34,7 +34,7 @@ using sysbus
 $name?="nucleo_g474re"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f9e3b65d3a9794ee2233aa88172346f887b48d04/1cfe00236a5b1483a5f4de2cf6fa5ca79cc05a7b/nucleo_g474re/rust-app/rust-app.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/63623915af48461951476133f1dbc95c344a5ce0/dbdcd8ae83780281ea7519edc0cc11fe3953ab4f/nucleo_g474re/rust-app/rust-app.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.lpuart1
@@ -42,7 +42,7 @@ sysbus.lpuart1 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/f9e3b65d3a9794ee2233aa88172346f887b48d04/nucleo_g474re/rust-app/rust-app.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/63623915af48461951476133f1dbc95c344a5ce0/nucleo_g474re/rust-app/rust-app.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 
@@ -56,7 +56,7 @@ ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.lpuart1", timeout=5)
 StartEmulation()
 
-WaitForLineOnUart("*** Booting Zephyr OS build f9e3b65d3a97 ***")
+WaitForLineOnUart("*** Booting Zephyr OS build 63623915af48 ***")
 WaitForLineOnUart("Next call will crash if userspace is working")
 WaitForLineOnUart(r".*ZEPHYR FATAL ERROR.*", treatAsRegex=True)
 

@@ -34,7 +34,7 @@ using sysbus
 $name?="evb-px5--rk3368-px5-evb"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/evb-px5--rk3368-px5-evb-uboot/evb-px5--rk3368-px5-evb-uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/728988758ca57c0a9486adf4f950b903c9203710/evb-px5--rk3368-px5-evb/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart4
@@ -42,7 +42,7 @@ sysbus.uart4 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://u-boot-dashboard.renode.io/evb-px5--rk3368-px5-evb-uboot/evb-px5--rk3368-px5-evb-uboot.elf
+    sysbus LoadELF @https://u-boot-dashboard.renode.io/uboot/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/evb-px5--rk3368-px5-evb/uboot/uboot.elf
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true

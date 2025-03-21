@@ -34,7 +34,7 @@ using sysbus
 $name?="imx6dl_mamoj--imx6dl-mamoj"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/imx6dl_mamoj--imx6dl-mamoj-uboot/imx6dl_mamoj--imx6dl-mamoj-uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/728988758ca57c0a9486adf4f950b903c9203710/imx6dl_mamoj--imx6dl-mamoj/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart3
@@ -42,7 +42,7 @@ sysbus.uart3 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://u-boot-dashboard.renode.io/imx6dl_mamoj--imx6dl-mamoj-uboot/imx6dl_mamoj--imx6dl-mamoj-uboot.elf
+    sysbus LoadELF @https://u-boot-dashboard.renode.io/uboot/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/imx6dl_mamoj--imx6dl-mamoj/uboot/uboot.elf
     cpu1 IsHalted true
 """
 

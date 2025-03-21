@@ -34,7 +34,7 @@ using sysbus
 $name?="vexpress_aemv8a_semi--fvp-base-revc"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/vexpress_aemv8a_semi--fvp-base-revc-uboot/vexpress_aemv8a_semi--fvp-base-revc-uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/728988758ca57c0a9486adf4f950b903c9203710/vexpress_aemv8a_semi--fvp-base-revc/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.v2mserial0
@@ -42,7 +42,7 @@ sysbus.v2mserial0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://u-boot-dashboard.renode.io/vexpress_aemv8a_semi--fvp-base-revc-uboot/vexpress_aemv8a_semi--fvp-base-revc-uboot.elf
+    sysbus LoadELF @https://u-boot-dashboard.renode.io/uboot/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/vexpress_aemv8a_semi--fvp-base-revc/uboot/uboot.elf
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true

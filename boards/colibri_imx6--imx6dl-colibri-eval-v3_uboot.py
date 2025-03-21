@@ -34,7 +34,7 @@ using sysbus
 $name?="colibri_imx6--imx6dl-colibri-eval-v3"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/colibri_imx6--imx6dl-colibri-eval-v3-uboot/colibri_imx6--imx6dl-colibri-eval-v3-uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/728988758ca57c0a9486adf4f950b903c9203710/colibri_imx6--imx6dl-colibri-eval-v3/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart1
@@ -42,7 +42,7 @@ sysbus.uart1 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://u-boot-dashboard.renode.io/colibri_imx6--imx6dl-colibri-eval-v3-uboot/colibri_imx6--imx6dl-colibri-eval-v3-uboot.elf
+    sysbus LoadELF @https://u-boot-dashboard.renode.io/uboot/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/colibri_imx6--imx6dl-colibri-eval-v3/uboot/uboot.elf
     cpu1 IsHalted true
 """
 
@@ -77,7 +77,8 @@ asciinema.display_asciicast('output.asciinema')
 # %%
 import sys
 from pathlib import Path
-sys.path.append(Path('/root/.config/renode/renode-run.path').read_text())
+from renode_run import get_default_renode_path
+sys.path.append(str(Path(get_default_renode_path()).parent))
 
 from renode_colab_tools import metrics
 from tools.metrics_analyzer.metrics_parser import MetricsParser

@@ -34,16 +34,16 @@ using sysbus
 $name?="thingy53_nrf5340_cpuapp_ns"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/thingy53_nrf5340_cpuapp_ns-lz4/thingy53_nrf5340_cpuapp_ns-lz4.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/63623915af48461951476133f1dbc95c344a5ce0/dbdcd8ae83780281ea7519edc0cc11fe3953ab4f/thingy53_nrf5340_cpuapp_ns/lz4/lz4.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
-showAnalyzer sysbus.uart0
-sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
+showAnalyzer sysbus.boardcdcacmuart
+sysbus.boardcdcacmuart RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/thingy53_nrf5340_cpuapp_ns-lz4/thingy53_nrf5340_cpuapp_ns-zephyr-lz4.elf
-    
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/63623915af48461951476133f1dbc95c344a5ce0/thingy53_nrf5340_cpuapp_ns/lz4/lz4.elf
+    cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 
 runMacro $reset
@@ -53,7 +53,7 @@ runMacro $reset
 
 # %%
 ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.uart0", timeout=5)
+CreateTerminalTester("sysbus.boardcdcacmuart", timeout=5)
 StartEmulation()
 
 WaitForLineOnUart(r"Original Data size: \d+", treatAsRegex=True)
@@ -77,7 +77,8 @@ asciinema.display_asciicast('output.asciinema')
 # %%
 import sys
 from pathlib import Path
-sys.path.append(Path('/root/.config/renode/renode-run.path').read_text())
+from renode_run import get_default_renode_path
+sys.path.append(str(Path(get_default_renode_path()).parent))
 
 from renode_colab_tools import metrics
 from tools.metrics_analyzer.metrics_parser import MetricsParser

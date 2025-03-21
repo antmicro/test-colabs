@@ -34,7 +34,7 @@ using sysbus
 $name?="p2371-2180--tegra210-p2371-2180"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/p2371-2180--tegra210-p2371-2180-uboot/p2371-2180--tegra210-p2371-2180-uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/728988758ca57c0a9486adf4f950b903c9203710/p2371-2180--tegra210-p2371-2180/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uarta
@@ -42,7 +42,7 @@ sysbus.uarta RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://u-boot-dashboard.renode.io/p2371-2180--tegra210-p2371-2180-uboot/p2371-2180--tegra210-p2371-2180-uboot.elf
+    sysbus LoadELF @https://u-boot-dashboard.renode.io/uboot/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/p2371-2180--tegra210-p2371-2180/uboot/uboot.elf
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true

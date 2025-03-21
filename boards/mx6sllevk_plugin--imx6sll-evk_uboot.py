@@ -34,7 +34,7 @@ using sysbus
 $name?="mx6sllevk_plugin--imx6sll-evk"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/mx6sllevk_plugin--imx6sll-evk-uboot/mx6sllevk_plugin--imx6sll-evk-uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/728988758ca57c0a9486adf4f950b903c9203710/mx6sllevk_plugin--imx6sll-evk/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart1
@@ -42,7 +42,7 @@ sysbus.uart1 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://u-boot-dashboard.renode.io/mx6sllevk_plugin--imx6sll-evk-uboot/mx6sllevk_plugin--imx6sll-evk-uboot.elf
+    sysbus LoadELF @https://u-boot-dashboard.renode.io/uboot/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/mx6sllevk_plugin--imx6sll-evk/uboot/uboot.elf
     
 """
 

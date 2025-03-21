@@ -34,7 +34,7 @@ using sysbus
 $name?="w5500_evb_pico"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f9e3b65d3a9794ee2233aa88172346f887b48d04/1cfe00236a5b1483a5f4de2cf6fa5ca79cc05a7b/w5500_evb_pico/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/63623915af48461951476133f1dbc95c344a5ce0/dbdcd8ae83780281ea7519edc0cc11fe3953ab4f/w5500_evb_pico/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
@@ -42,7 +42,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/f9e3b65d3a9794ee2233aa88172346f887b48d04/w5500_evb_pico/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/63623915af48461951476133f1dbc95c344a5ce0/w5500_evb_pico/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.elf
     cpu1 IsHalted true
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
@@ -56,7 +56,7 @@ runMacro $reset
 ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart0", timeout=5)
 
-WaitForLineOnUart("\*\*\* Booting Zephyr OS build.+f9e3b65d3a97 \*\*\*", treatAsRegex=True)
+WaitForLineOnUart("\*\*\* Booting Zephyr OS build.+63623915af48 \*\*\*", treatAsRegex=True)
 
 WaitForLineOnUart("I: model output: [wing: 1.000000, ring: 0.000000, slope: 0.000000, negative: 0.000000]")
 WaitForLineOnUart("I: model output: [wing: 0.000000, ring: 0.000000, slope: 0.000000, negative: 1.000000]")

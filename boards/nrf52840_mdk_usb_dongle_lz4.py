@@ -34,15 +34,15 @@ using sysbus
 $name?="nrf52840_mdk_usb_dongle"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f9e3b65d3a9794ee2233aa88172346f887b48d04/1cfe00236a5b1483a5f4de2cf6fa5ca79cc05a7b/nrf52840_mdk_usb_dongle/lz4/lz4.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/63623915af48461951476133f1dbc95c344a5ce0/dbdcd8ae83780281ea7519edc0cc11fe3953ab4f/nrf52840_mdk_usb_dongle/lz4/lz4.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
-showAnalyzer sysbus.uart0
-sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
+showAnalyzer sysbus.boardcdcacmuart
+sysbus.boardcdcacmuart RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/f9e3b65d3a9794ee2233aa88172346f887b48d04/nrf52840_mdk_usb_dongle/lz4/lz4.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/63623915af48461951476133f1dbc95c344a5ce0/nrf52840_mdk_usb_dongle/lz4/lz4.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 
@@ -53,7 +53,7 @@ runMacro $reset
 
 # %%
 ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.uart0", timeout=5)
+CreateTerminalTester("sysbus.boardcdcacmuart", timeout=5)
 StartEmulation()
 
 WaitForLineOnUart(r"Original Data size: \d+", treatAsRegex=True)

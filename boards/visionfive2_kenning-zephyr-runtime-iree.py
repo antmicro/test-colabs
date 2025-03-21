@@ -34,7 +34,7 @@ using sysbus
 $name?="visionfive2"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/99adbadad5a2ccd70ed7e7a483b7615bd043d999/b672f64553038487a18982117c723859240f277e/visionfive2/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/63623915af48461951476133f1dbc95c344a5ce0/dbdcd8ae83780281ea7519edc0cc11fe3953ab4f/visionfive2/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
@@ -42,7 +42,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/99adbadad5a2ccd70ed7e7a483b7615bd043d999/visionfive2/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/63623915af48461951476133f1dbc95c344a5ce0/visionfive2/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.elf
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
@@ -58,7 +58,7 @@ runMacro $reset
 ExecuteScript("script.resc")
 CreateTerminalTester("sysbus.uart0", timeout=5)
 
-WaitForLineOnUart("\*\*\* Booting Zephyr OS build.+99adbadad5a2 \*\*\*", treatAsRegex=True)
+WaitForLineOnUart("\*\*\* Booting Zephyr OS build.+63623915af48 \*\*\*", treatAsRegex=True)
 
 WaitForLineOnUart("I: model output: [wing: 213.957657, ring: 80.423126, slope: 113.229385, negative: 158.669312]")
 WaitForLineOnUart("I: model output: [wing: 162.148727, ring: 140.959763, slope: 149.957062, negative: 236.156754]")
