@@ -34,7 +34,7 @@ using sysbus
 $name?="arduino_uno_r4_wifi"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/a70bf0e488c5327ad67512c2854987d113318c79/39825dfac1127ddb969d5fea99613f72ad37c639/arduino_uno_r4_wifi/synchronization/synchronization.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/63623915af48461951476133f1dbc95c344a5ce0/dbdcd8ae83780281ea7519edc0cc11fe3953ab4f/arduino_uno_r4_wifi/synchronization/synchronization.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart2
@@ -42,7 +42,7 @@ sysbus.uart2 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/a70bf0e488c5327ad67512c2854987d113318c79/arduino_uno_r4_wifi/synchronization/synchronization.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/63623915af48461951476133f1dbc95c344a5ce0/arduino_uno_r4_wifi/synchronization/synchronization.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
 """
 

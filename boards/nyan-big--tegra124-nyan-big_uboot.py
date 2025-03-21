@@ -34,7 +34,7 @@ using sysbus
 $name?="nyan-big--tegra124-nyan-big"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/nyan-big--tegra124-nyan-big-uboot/nyan-big--tegra124-nyan-big-uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/728988758ca57c0a9486adf4f950b903c9203710/nyan-big--tegra124-nyan-big/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uarta
@@ -42,7 +42,7 @@ sysbus.uarta RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://u-boot-dashboard.renode.io/nyan-big--tegra124-nyan-big-uboot/nyan-big--tegra124-nyan-big-uboot.elf
+    sysbus LoadELF @https://u-boot-dashboard.renode.io/uboot/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/nyan-big--tegra124-nyan-big/uboot/uboot.elf
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true

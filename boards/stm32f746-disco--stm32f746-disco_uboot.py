@@ -34,7 +34,7 @@ using sysbus
 $name?="stm32f746-disco--stm32f746-disco"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/stm32f746-disco--stm32f746-disco-uboot/stm32f746-disco--stm32f746-disco-uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/728988758ca57c0a9486adf4f950b903c9203710/stm32f746-disco--stm32f746-disco/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.usart1
@@ -42,7 +42,7 @@ sysbus.usart1 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://u-boot-dashboard.renode.io/stm32f746-disco--stm32f746-disco-uboot/stm32f746-disco--stm32f746-disco-uboot.elf
+    sysbus LoadELF @https://u-boot-dashboard.renode.io/uboot/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/stm32f746-disco--stm32f746-disco/uboot/uboot.elf
     
 """
 

@@ -34,7 +34,7 @@ using sysbus
 $name?="am43xx_hs_evm--am437x-sk-evm"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/am43xx_hs_evm--am437x-sk-evm-uboot/am43xx_hs_evm--am437x-sk-evm-uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/728988758ca57c0a9486adf4f950b903c9203710/am43xx_hs_evm--am437x-sk-evm/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
@@ -42,7 +42,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://u-boot-dashboard.renode.io/am43xx_hs_evm--am437x-sk-evm-uboot/am43xx_hs_evm--am437x-sk-evm-uboot.elf
+    sysbus LoadELF @https://u-boot-dashboard.renode.io/uboot/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/am43xx_hs_evm--am437x-sk-evm/uboot/uboot.elf
     
 """
 
