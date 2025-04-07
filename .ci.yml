@@ -1,0 +1,34 @@
+stages:
+  - build
+
+image: debian:bullseye
+
+build:
+  stage: build
+  variables:
+    SCALENODE_CPU: 4
+    SCALENODE_RAM: 2048
+    SCALENODE_DISK: 5
+    jupytext_metadata: '{ "jupytext": { "cell_metadata_filter": "-all", "main_language": "python", "notebook_metadata_filter": "-all" }, "language_info": { "name": "python" }, "kernelspec": { "name": "python3", "display_name": "Python 3" } }'
+  before_script:
+    - apt update -y > /dev/null
+    - apt install -y python3-venv python3 python3-pip jq curl wget tar git parallel > /dev/null
+    - python3 -m venv .venv/
+    - source .venv/bin/activate
+    - pip install jupytext jinja-cli
+    - git config --global user.name "RenodeBot"
+    - git config --global user.email "renode-bot@antmicro.com"
+  script:
+    - printenv
+    - source .venv/bin/activate
+    - ./generate_demos.sh
+    - pushd boards
+    - find . -type f -name "*.py" | parallel -j 100% "jupytext --update-metadata '$jupytext_metadata' --update --to ipynb"
+    - popd
+    - git checkout -b $CI_COMMIT_REF_NAME
+    - git add boards
+    - git commit -m "Automatic update of ipynb files"
+    - git push origin $CI_COMMIT_REF_NAME
+  artifacts:
+    paths:
+      - boards
