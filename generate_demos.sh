@@ -26,7 +26,7 @@ cleanup() {
 trap cleanup EXIT
 
 wget() {
-    command wget --retry-connrefused --waitretry=1 --read-timeout=10 --timeout=10 --tries 3 "$@"
+    command wget -nv --retry-connrefused --waitretry=1 --read-timeout=10 --timeout=10 --tries 3 "$@"
 }
 
 generate_demos() {
