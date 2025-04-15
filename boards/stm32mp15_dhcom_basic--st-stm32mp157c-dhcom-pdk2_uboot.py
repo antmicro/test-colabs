@@ -34,7 +34,7 @@ using sysbus
 $name?="stm32mp15_dhcom_basic--st-stm32mp157c-dhcom-pdk2"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/728988758ca57c0a9486adf4f950b903c9203710/stm32mp15_dhcom_basic--st-stm32mp157c-dhcom-pdk2/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/34820924edbc4ec7803eb89d9852f4b870fa760a/a690bcb2b437c2f152d4e99d91daaf7c2fceeff8/stm32mp15_dhcom_basic--st-stm32mp157c-dhcom-pdk2/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart4
@@ -42,7 +42,7 @@ sysbus.uart4 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://u-boot-dashboard.renode.io/uboot/ca3bea3fc415ce40dc58f1bea9327f6fa12928bb/stm32mp15_dhcom_basic--st-stm32mp157c-dhcom-pdk2/uboot/uboot.elf
+    sysbus LoadELF @https://u-boot-dashboard.renode.io/uboot/34820924edbc4ec7803eb89d9852f4b870fa760a/stm32mp15_dhcom_basic--st-stm32mp157c-dhcom-pdk2/uboot/uboot.elf
     cpu1 IsHalted true
 """
 
