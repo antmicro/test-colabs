@@ -19,7 +19,6 @@ build:
     - git config --global user.name "RenodeBot"
     - git config --global user.email "renode-bot@antmicro.com"
   script:
-    - printenv
     - source .venv/bin/activate
     - ./generate_demos.sh
     - pushd boards
@@ -27,7 +26,7 @@ build:
     - popd
     - git checkout -b $CI_COMMIT_REF_NAME
     - git add boards
-    - git commit -m "Automatic update of ipynb files"
+    - git commit -m "Automatic update of ipynb files" -m "[ci skip]"
     - git push origin $CI_COMMIT_REF_NAME
   artifacts:
     paths:
