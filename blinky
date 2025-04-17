@@ -1,15 +1,9 @@
-ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.{{uart_name}}", timeout=5)
-ExecuteCommand('emulation CreateLEDTester "led_tester" "sysbus.{{gpio_led_name}}"')
-StartEmulation()
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("{{platform}}")
+terminalTester = TerminalTester(machine.sysbus.{{uart_name}}, 15)
+ledTester = LEDTester(emulation, machine.sysbus.{{gpio_led_name}}, "ledTester", 0)
 
-WaitForLineOnUart("Booting Zephyr OS", treatAsRegex=True)
-ExecuteCommand("led_tester AssertState true 1")
-ExecuteCommand("led_tester AssertState false 1")
-ExecuteCommand("led_tester AssertState true 1")
-ExecuteCommand("led_tester AssertState false 1")
-ExecuteCommand("led_tester AssertState true 1")
-ExecuteCommand("led_tester AssertState false 1")
+terminalTester.WaitFor(String("Booting Zephyr OS"), treatAsRegex=True)
+ledTester.AssertIsBlinking(testDuration=4, onDuration=1, offDuration=1, pauseEmulation=True)
 
-ResetEmulation()
-
+emulation.Dispose()

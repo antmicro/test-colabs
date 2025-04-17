@@ -1,17 +1,20 @@
-ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.{{uart_name}}", timeout=5)
-StartEmulation()
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("{{platform}}")
+terminalTester = TerminalTester(machine.sysbus.{{uart_name}}, 15)
 
-WaitForPromptOnUart(">>>")
-WriteLineToUart("2+2")
-WriteLineToUart("")
-WaitForLineOnUart("4")
-WriteLineToUart("def compare(a, b): return True if a > b else False")
-WriteLineToUart("")
-WriteLineToUart("compare(3.2, 2.4)")
-WaitForLineOnUart("True")
-WriteLineToUart("compare(2.2, 5.8)")
-WaitForLineOnUart("False")
+terminalTester.WaitFor(String(">>>"), pauseEmulation=True)
 
-ResetEmulation()
+terminalTester.WriteLine("2+2")
+terminalTester.WaitFor(String("4"), pauseEmulation=True)
 
+terminalTester.WriteLine("def compare(a, b): return True if a > b else False")
+terminalTester.WaitFor(String("..."), pauseEmulation=True)
+terminalTester.WriteLine("")
+
+terminalTester.WriteLine("compare(3.2, 2.4)")
+terminalTester.WaitFor(String("True"), pauseEmulation=True)
+
+terminalTester.WriteLine("compare(2.2, 5.8)")
+terminalTester.WaitFor(String("False"), pauseEmulation=True)
+
+emulation.Dispose()

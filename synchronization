@@ -1,10 +1,10 @@
-ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.{{uart_name}}", timeout=5)
-StartEmulation()
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("{{platform}}")
+terminalTester = TerminalTester(machine.sysbus.{{uart_name}}, 5)
 
-WaitForLineOnUart(r"thread_a: Hello World from cpu \d on {{platform}}", treatAsRegex=True)
-WaitForLineOnUart(r"thread_b: Hello World from cpu \d on {{platform}}", treatAsRegex=True)
-WaitForLineOnUart(r"thread_a: Hello World from cpu \d on {{platform}}", treatAsRegex=True)
-WaitForLineOnUart(r"thread_b: Hello World from cpu \d on {{platform}}", treatAsRegex=True)
+terminalTester.WaitFor(String(r"thread_a: Hello World from cpu \d on {{platform}}"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String(r"thread_b: Hello World from cpu \d on {{platform}}"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String(r"thread_a: Hello World from cpu \d on {{platform}}"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String(r"thread_b: Hello World from cpu \d on {{platform}}"), treatAsRegex=True, pauseEmulation=True)
 
-ResetEmulation()
+emulation.Dispose()

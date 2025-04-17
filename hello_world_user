@@ -1,7 +1,7 @@
-ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.{{uart_name}}", timeout=5)
-StartEmulation()
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("{{platform}}")
+terminalTester = TerminalTester(machine.sysbus.{{uart_name}}, 5)
 
-WaitForLineOnUart("Hello World from UserSpace! ({{platform}})")
+terminalTester.WaitFor(String("Hello World from UserSpace! ({{platform}})"), pauseEmulation=True)
 
-ResetEmulation()
+emulation.Dispose()

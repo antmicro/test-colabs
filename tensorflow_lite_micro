@@ -1,11 +1,10 @@
-ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.{{uart_name}}", timeout=15)
-StartEmulation()
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("{{platform}}")
+terminalTester = TerminalTester(machine.sysbus.{{uart_name}}, 15)
 
-WaitForLineOnUart("x_value: .* y_value: .*", treatAsRegex=True)
-WaitForLineOnUart("x_value: .* y_value: .*", treatAsRegex=True)
-WaitForLineOnUart("x_value: .* y_value: .*", treatAsRegex=True)
-WaitForLineOnUart("x_value: .* y_value: .*", treatAsRegex=True)
+terminalTester.WaitFor(String("x_value: .* y_value: .*"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("x_value: .* y_value: .*"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("x_value: .* y_value: .*"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("x_value: .* y_value: .*"), treatAsRegex=True, pauseEmulation=True)
 
-ResetEmulation()
-
+emulation.Dispose()

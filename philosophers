@@ -1,10 +1,9 @@
-ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.{{uart_name}}", timeout=5)
-StartEmulation()
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("{{platform}}")
+terminalTester = TerminalTester(machine.sysbus.{{uart_name}}, 10)
 
-WaitForLineOnUart("Philosopher 0.*THINKING", treatAsRegex=True)
-WaitForLineOnUart("Philosopher 0.*HOLDING", treatAsRegex=True)
-WaitForLineOnUart("Philosopher 0.*EATING", treatAsRegex=True)
+terminalTester.WaitFor(String("Philosopher 0.*THINKING"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("Philosopher 0.*HOLDING"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("Philosopher 0.*EATING"), treatAsRegex=True, pauseEmulation=True)
 
-ResetEmulation()
-
+emulation.Dispose()
