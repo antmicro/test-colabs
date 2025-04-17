@@ -13,40 +13,36 @@
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
 ! pip install -q git+https://github.com/antmicro/renode-run.git
-! pip install -q git+https://github.com/antmicro/pyrenode.git
-! renode-run download
+! pip install -q git+https://github.com/antmicro/pyrenode3.git
+! renode-run download --renode-variant dotnet-portable
 
 # %% [markdown]
 """## Start Renode"""
 
 # %%
-from pyrenode import connect_renode, get_keywords
-connect_renode()
-get_keywords()
+import os
+from renode_run import get_default_renode_path
+from renode_run.utils import RenodeVariant
+
+os.environ['PYRENODE_RUNTIME'] = 'coreclr'
+os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+
+from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
+from Antmicro.Renode.Peripherals.UART import UARTBackend
+from Antmicro.Renode.Analyzers import LoggingUartAnalyzer
+from System import String
+
+currentDirectory = os.getcwd()
+emulation = Emulation()
+monitor = Monitor()
+emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 
 # %% [markdown]
 """## Setup a script"""
 
 # %%
 %%writefile script.resc
-
-using sysbus
-$name?="{{platform}}"
-mach create $name
-
-machine LoadPlatformDescription @{{repl}}
-machine EnableProfiler $ORIGIN/metrics.dump
-
-showAnalyzer sysbus.{{uart_name}}
-sysbus.{{uart_name}} RecordToAsciinema $ORIGIN/output.asciinema
-
-macro reset
-"""
-    sysbus LoadELF @{{elf}}
-    {{script | indent(4)}}
-"""
-
-runMacro $reset
+{{script}}
 
 # %% [markdown]
 """## Run the sample"""
@@ -59,7 +55,7 @@ runMacro $reset
 
 # %%
 from renode_colab_tools import asciinema
-asciinema.display_asciicast('output.asciinema')
+asciinema.display_asciicast('{{sample_name}}-asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""
