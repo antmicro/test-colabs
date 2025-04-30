@@ -13,37 +13,60 @@
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
 ! pip install -q git+https://github.com/antmicro/renode-run.git
-! pip install -q git+https://github.com/antmicro/pyrenode.git
-! renode-run download
+! pip install -q git+https://github.com/antmicro/pyrenode3.git
+! renode-run download --renode-variant dotnet-portable
 
 # %% [markdown]
 """## Start Renode"""
 
 # %%
-from pyrenode import connect_renode, get_keywords
-connect_renode()
-get_keywords()
+import os
+from renode_run import get_default_renode_path
+from renode_run.utils import RenodeVariant
+
+os.environ['PYRENODE_RUNTIME'] = 'coreclr'
+os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+
+from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
+from Antmicro.Renode.Peripherals.UART import UARTBackend
+from Antmicro.Renode.Analyzers import LoggingUartAnalyzer
+from System import String
+
+currentDirectory = os.getcwd()
+emulation = Emulation()
+monitor = Monitor()
+emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 
 # %% [markdown]
 """## Setup a script"""
 
 # %%
 %%writefile script.resc
+logFile $ORIGIN/synchronization-renode.log True
 
 using sysbus
 $name?="stm32f413h_disco"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/29197ac9633c2542fd0c9b63639af1f75462844e/cb8e70c557b089373bca37e93d3af87f9392dbce/stm32f413h_disco/synchronization/synchronization.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/8661c3caea02990daeeb06b6e74c7f96c2fc44f3/cb8e70c557b089373bca37e93d3af87f9392dbce/stm32f413h_disco/synchronization/synchronization.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
-showAnalyzer sysbus.usart6
-sysbus.usart6 RecordToAsciinema $ORIGIN/output.asciinema
+
+showAnalyzer usart6
+
+usart6 RecordToAsciinema $ORIGIN/synchronization-asciinema
+set osPanicHook
+"""
+self.ErrorLog("OS Panicked")
+"""
+cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
+
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/29197ac9633c2542fd0c9b63639af1f75462844e/stm32f413h_disco/synchronization/synchronization.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/8661c3caea02990daeeb06b6e74c7f96c2fc44f3/stm32f413h_disco/synchronization/synchronization.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
+    cpu0 EnableZephyrMode
 """
 
 runMacro $reset
@@ -52,23 +75,23 @@ runMacro $reset
 """## Run the sample"""
 
 # %%
-ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.usart6", timeout=5)
-StartEmulation()
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("stm32f413h_disco")
+terminalTester = TerminalTester(machine.sysbus.usart6, 5)
 
-WaitForLineOnUart(r"thread_a: Hello World from cpu \d on stm32f413h_disco", treatAsRegex=True)
-WaitForLineOnUart(r"thread_b: Hello World from cpu \d on stm32f413h_disco", treatAsRegex=True)
-WaitForLineOnUart(r"thread_a: Hello World from cpu \d on stm32f413h_disco", treatAsRegex=True)
-WaitForLineOnUart(r"thread_b: Hello World from cpu \d on stm32f413h_disco", treatAsRegex=True)
+terminalTester.WaitFor(String(r"thread_a: Hello World from cpu \d on stm32f413h_disco"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String(r"thread_b: Hello World from cpu \d on stm32f413h_disco"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String(r"thread_a: Hello World from cpu \d on stm32f413h_disco"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String(r"thread_b: Hello World from cpu \d on stm32f413h_disco"), treatAsRegex=True, pauseEmulation=True)
 
-ResetEmulation()
+emulation.Dispose()
 
 # %% [markdown]
 """## UART output"""
 
 # %%
 from renode_colab_tools import asciinema
-asciinema.display_asciicast('output.asciinema')
+asciinema.display_asciicast('synchronization-asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""

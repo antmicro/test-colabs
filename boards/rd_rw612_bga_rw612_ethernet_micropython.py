@@ -13,37 +13,61 @@
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
 ! pip install -q git+https://github.com/antmicro/renode-run.git
-! pip install -q git+https://github.com/antmicro/pyrenode.git
-! renode-run download
+! pip install -q git+https://github.com/antmicro/pyrenode3.git
+! renode-run download --renode-variant dotnet-portable
 
 # %% [markdown]
 """## Start Renode"""
 
 # %%
-from pyrenode import connect_renode, get_keywords
-connect_renode()
-get_keywords()
+import os
+from renode_run import get_default_renode_path
+from renode_run.utils import RenodeVariant
+
+os.environ['PYRENODE_RUNTIME'] = 'coreclr'
+os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+
+from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
+from Antmicro.Renode.Peripherals.UART import UARTBackend
+from Antmicro.Renode.Analyzers import LoggingUartAnalyzer
+from System import String
+
+currentDirectory = os.getcwd()
+emulation = Emulation()
+monitor = Monitor()
+emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 
 # %% [markdown]
 """## Setup a script"""
 
 # %%
 %%writefile script.resc
+logFile $ORIGIN/micropython-renode.log True
 
 using sysbus
 $name?="rd_rw612_bga_rw612_ethernet"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/29197ac9633c2542fd0c9b63639af1f75462844e/cb8e70c557b089373bca37e93d3af87f9392dbce/rd_rw612_bga_rw612_ethernet/micropython/micropython.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/8661c3caea02990daeeb06b6e74c7f96c2fc44f3/cb8e70c557b089373bca37e93d3af87f9392dbce/rd_rw612_bga_rw612_ethernet/micropython/micropython.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
-showAnalyzer sysbus.flexcomm3
-sysbus.flexcomm3 RecordToAsciinema $ORIGIN/output.asciinema
+
+showAnalyzer flexcomm3
+
+flexcomm3 RecordToAsciinema $ORIGIN/micropython-asciinema
+set osPanicHook
+"""
+self.ErrorLog("OS Panicked")
+"""
+cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
+
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/29197ac9633c2542fd0c9b63639af1f75462844e/rd_rw612_bga_rw612_ethernet/micropython/micropython.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/8661c3caea02990daeeb06b6e74c7f96c2fc44f3/rd_rw612_bga_rw612_ethernet/micropython/micropython.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
+    cpu0 EnableZephyrMode
+    cpu0 EnableProfilerCollapsedStack $ORIGIN/micropython-profile true 62914560 maximumNestedContexts=10
 """
 
 runMacro $reset
@@ -52,29 +76,33 @@ runMacro $reset
 """## Run the sample"""
 
 # %%
-ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.flexcomm3", timeout=5)
-StartEmulation()
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("rd_rw612_bga_rw612_ethernet")
+terminalTester = TerminalTester(machine.sysbus.flexcomm3, 15)
 
-WaitForPromptOnUart(">>>")
-WriteLineToUart("2+2")
-WriteLineToUart("")
-WaitForLineOnUart("4")
-WriteLineToUart("def compare(a, b): return True if a > b else False")
-WriteLineToUart("")
-WriteLineToUart("compare(3.2, 2.4)")
-WaitForLineOnUart("True")
-WriteLineToUart("compare(2.2, 5.8)")
-WaitForLineOnUart("False")
+terminalTester.WaitFor(String(">>>"), pauseEmulation=True)
 
-ResetEmulation()
+terminalTester.WriteLine("2+2")
+terminalTester.WaitFor(String("4"), pauseEmulation=True)
+
+terminalTester.WriteLine("def compare(a, b): return True if a > b else False")
+terminalTester.WaitFor(String("..."), pauseEmulation=True)
+terminalTester.WriteLine("")
+
+terminalTester.WriteLine("compare(3.2, 2.4)")
+terminalTester.WaitFor(String("True"), pauseEmulation=True)
+
+terminalTester.WriteLine("compare(2.2, 5.8)")
+terminalTester.WaitFor(String("False"), pauseEmulation=True)
+
+emulation.Dispose()
 
 # %% [markdown]
 """## UART output"""
 
 # %%
 from renode_colab_tools import asciinema
-asciinema.display_asciicast('output.asciinema')
+asciinema.display_asciicast('micropython-asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""

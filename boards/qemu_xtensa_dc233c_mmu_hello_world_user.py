@@ -13,37 +13,59 @@
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
 ! pip install -q git+https://github.com/antmicro/renode-run.git
-! pip install -q git+https://github.com/antmicro/pyrenode.git
-! renode-run download
+! pip install -q git+https://github.com/antmicro/pyrenode3.git
+! renode-run download --renode-variant dotnet-portable
 
 # %% [markdown]
 """## Start Renode"""
 
 # %%
-from pyrenode import connect_renode, get_keywords
-connect_renode()
-get_keywords()
+import os
+from renode_run import get_default_renode_path
+from renode_run.utils import RenodeVariant
+
+os.environ['PYRENODE_RUNTIME'] = 'coreclr'
+os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+
+from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
+from Antmicro.Renode.Peripherals.UART import UARTBackend
+from Antmicro.Renode.Analyzers import LoggingUartAnalyzer
+from System import String
+
+currentDirectory = os.getcwd()
+emulation = Emulation()
+monitor = Monitor()
+emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 
 # %% [markdown]
 """## Setup a script"""
 
 # %%
 %%writefile script.resc
+logFile $ORIGIN/hello_world_user-renode.log True
 
 using sysbus
 $name?="qemu_xtensa_dc233c_mmu"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/29197ac9633c2542fd0c9b63639af1f75462844e/cb8e70c557b089373bca37e93d3af87f9392dbce/qemu_xtensa_dc233c_mmu/hello_world_user/hello_world_user.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/8661c3caea02990daeeb06b6e74c7f96c2fc44f3/cb8e70c557b089373bca37e93d3af87f9392dbce/qemu_xtensa_dc233c_mmu/hello_world_user/hello_world_user.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
-showAnalyzer sysbus.cpu0.uart
-sysbus.cpu0.uart RecordToAsciinema $ORIGIN/output.asciinema
+
+showAnalyzer cpu0.uart
+
+cpu0.uart RecordToAsciinema $ORIGIN/hello_world_user-asciinema
+set osPanicHook
+"""
+self.ErrorLog("OS Panicked")
+"""
+cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
+
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/29197ac9633c2542fd0c9b63639af1f75462844e/qemu_xtensa_dc233c_mmu/hello_world_user/hello_world_user.elf
-    
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/8661c3caea02990daeeb06b6e74c7f96c2fc44f3/qemu_xtensa_dc233c_mmu/hello_world_user/hello_world_user.elf
+    cpu0 EnableZephyrMode
 """
 
 runMacro $reset
@@ -52,20 +74,20 @@ runMacro $reset
 """## Run the sample"""
 
 # %%
-ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.cpu0.uart", timeout=5)
-StartEmulation()
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("qemu_xtensa_dc233c_mmu")
+terminalTester = TerminalTester(machine.sysbus.cpu0.uart, 5)
 
-WaitForLineOnUart("Hello World from UserSpace! (qemu_xtensa_dc233c_mmu)")
+terminalTester.WaitFor(String("Hello World from UserSpace! (qemu_xtensa_dc233c_mmu)"), pauseEmulation=True)
 
-ResetEmulation()
+emulation.Dispose()
 
 # %% [markdown]
 """## UART output"""
 
 # %%
 from renode_colab_tools import asciinema
-asciinema.display_asciicast('output.asciinema')
+asciinema.display_asciicast('hello_world_user-asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""
