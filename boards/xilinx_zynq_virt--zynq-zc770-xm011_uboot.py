@@ -34,7 +34,7 @@ using sysbus
 $name?="xilinx_zynq_virt--zynq-zc770-xm011"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/34820924edbc4ec7803eb89d9852f4b870fa760a/a690bcb2b437c2f152d4e99d91daaf7c2fceeff8/xilinx_zynq_virt--zynq-zc770-xm011/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/9d3f1ebaf8751f0287b5d02158cc706435f8fb19/fca3b9a247be52a6891cb729ccccee42b78f2ac9/xilinx_zynq_virt--zynq-zc770-xm011/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart1
@@ -42,7 +42,7 @@ sysbus.uart1 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://u-boot-dashboard.renode.io/uboot/34820924edbc4ec7803eb89d9852f4b870fa760a/xilinx_zynq_virt--zynq-zc770-xm011/uboot/uboot.elf
+    sysbus LoadELF @https://u-boot-dashboard.renode.io/uboot/9d3f1ebaf8751f0287b5d02158cc706435f8fb19/xilinx_zynq_virt--zynq-zc770-xm011/uboot/uboot.elf
     cpu1 IsHalted true
 """
 

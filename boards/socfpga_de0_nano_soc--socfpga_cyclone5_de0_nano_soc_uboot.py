@@ -34,7 +34,7 @@ using sysbus
 $name?="socfpga_de0_nano_soc--socfpga_cyclone5_de0_nano_soc"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/34820924edbc4ec7803eb89d9852f4b870fa760a/a690bcb2b437c2f152d4e99d91daaf7c2fceeff8/socfpga_de0_nano_soc--socfpga_cyclone5_de0_nano_soc/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/9d3f1ebaf8751f0287b5d02158cc706435f8fb19/fca3b9a247be52a6891cb729ccccee42b78f2ac9/socfpga_de0_nano_soc--socfpga_cyclone5_de0_nano_soc/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 showAnalyzer sysbus.uart0
@@ -42,7 +42,7 @@ sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
 
 macro reset
 """
-    sysbus LoadELF @https://u-boot-dashboard.renode.io/uboot/34820924edbc4ec7803eb89d9852f4b870fa760a/socfpga_de0_nano_soc--socfpga_cyclone5_de0_nano_soc/uboot/uboot.elf
+    sysbus LoadELF @https://u-boot-dashboard.renode.io/uboot/9d3f1ebaf8751f0287b5d02158cc706435f8fb19/socfpga_de0_nano_soc--socfpga_cyclone5_de0_nano_soc/uboot/uboot.elf
     cpu1 IsHalted true
 """
 
