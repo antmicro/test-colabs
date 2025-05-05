@@ -13,37 +13,59 @@
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
 ! pip install -q git+https://github.com/antmicro/renode-run.git
-! pip install -q git+https://github.com/antmicro/pyrenode.git
-! renode-run download
+! pip install -q git+https://github.com/antmicro/pyrenode3.git
+! renode-run download --renode-variant dotnet-portable
 
 # %% [markdown]
 """## Start Renode"""
 
 # %%
-from pyrenode import connect_renode, get_keywords
-connect_renode()
-get_keywords()
+import os
+from renode_run import get_default_renode_path
+from renode_run.utils import RenodeVariant
+
+os.environ['PYRENODE_RUNTIME'] = 'coreclr'
+os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+
+from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
+from Antmicro.Renode.Peripherals.UART import UARTBackend
+from Antmicro.Renode.Analyzers import LoggingUartAnalyzer
+from System import String
+
+currentDirectory = os.getcwd()
+emulation = Emulation()
+monitor = Monitor()
+emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 
 # %% [markdown]
 """## Setup a script"""
 
 # %%
 %%writefile script.resc
+logFile $ORIGIN/lz4-renode.log True
 
 using sysbus
 $name?="rcar_h3ulcb_r8a77951_r7"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/29197ac9633c2542fd0c9b63639af1f75462844e/cb8e70c557b089373bca37e93d3af87f9392dbce/rcar_h3ulcb_r8a77951_r7/lz4/lz4.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/8661c3caea02990daeeb06b6e74c7f96c2fc44f3/cb8e70c557b089373bca37e93d3af87f9392dbce/rcar_h3ulcb_r8a77951_r7/lz4/lz4.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
-showAnalyzer sysbus.scif1
-sysbus.scif1 RecordToAsciinema $ORIGIN/output.asciinema
+
+showAnalyzer scif1
+
+scif1 RecordToAsciinema $ORIGIN/lz4-asciinema
+set osPanicHook
+"""
+self.ErrorLog("OS Panicked")
+"""
+cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
+
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/29197ac9633c2542fd0c9b63639af1f75462844e/rcar_h3ulcb_r8a77951_r7/lz4/lz4.elf
-    
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/8661c3caea02990daeeb06b6e74c7f96c2fc44f3/rcar_h3ulcb_r8a77951_r7/lz4/lz4.elf
+    cpu0 EnableZephyrMode
 """
 
 runMacro $reset
@@ -52,24 +74,24 @@ runMacro $reset
 """## Run the sample"""
 
 # %%
-ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.scif1", timeout=5)
-StartEmulation()
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("rcar_h3ulcb_r8a77951_r7")
+terminalTester = TerminalTester(machine.sysbus.scif1, 5)
 
-WaitForLineOnUart(r"Original Data size: \d+", treatAsRegex=True)
-WaitForLineOnUart(r"Compressed Data size : \d+", treatAsRegex=True)
-WaitForLineOnUart("Successfully decompressed some data")
-WaitForLineOnUart("Validation done. The string we ended up with is:")
-WaitForLineOnUart(r".*", treatAsRegex=True)
+terminalTester.WaitFor(String(r"Original Data size: \d+"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String(r"Compressed Data size : \d+"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("Successfully decompressed some data"), pauseEmulation=True)
+terminalTester.WaitFor(String("Validation done. The string we ended up with is:"), pauseEmulation=True)
+terminalTester.WaitFor(String(r".*"), treatAsRegex=True, pauseEmulation=True)
 
-ResetEmulation()
+emulation.Dispose()
 
 # %% [markdown]
 """## UART output"""
 
 # %%
 from renode_colab_tools import asciinema
-asciinema.display_asciicast('output.asciinema')
+asciinema.display_asciicast('lz4-asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""
