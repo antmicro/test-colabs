@@ -48,7 +48,7 @@ using sysbus
 $name?="stm32f3_disco"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/8661c3caea02990daeeb06b6e74c7f96c2fc44f3/cb8e70c557b089373bca37e93d3af87f9392dbce/stm32f3_disco/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/76e1fc7713a4a3f2b50c497afddec0364a34c10b/234e81a06ec4b68b8091b7a9e595f25a611c1ce5/stm32f3_disco/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -64,7 +64,7 @@ cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/8661c3caea02990daeeb06b6e74c7f96c2fc44f3/stm32f3_disco/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/76e1fc7713a4a3f2b50c497afddec0364a34c10b/stm32f3_disco/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.elf
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
     cpu0 EnableZephyrMode
     cpu0 EnableProfilerCollapsedStack $ORIGIN/kenning-zephyr-runtime-microtvm-profile true 62914560 maximumNestedContexts=10
@@ -80,7 +80,7 @@ monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("stm32f3_disco")
 terminalTester = TerminalTester(machine.sysbus.usart1, 5)
 
-terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+8661c3caea02 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+76e1fc7713a4 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
 
 terminalTester.WaitFor(String("I: model output: [wing: 1.000000, ring: 0.000000, slope: 0.000000, negative: 0.000000]"), pauseEmulation=True)
 terminalTester.WaitFor(String("I: model output: [wing: 0.000000, ring: 0.000000, slope: 0.000000, negative: 1.000000]"), pauseEmulation=True)

@@ -48,7 +48,7 @@ using sysbus
 $name?="hifive_unleashed_fu540_u54"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/8661c3caea02990daeeb06b6e74c7f96c2fc44f3/cb8e70c557b089373bca37e93d3af87f9392dbce/hifive_unleashed_fu540_u54/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/76e1fc7713a4a3f2b50c497afddec0364a34c10b/234e81a06ec4b68b8091b7a9e595f25a611c1ce5/hifive_unleashed_fu540_u54/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -64,7 +64,7 @@ cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/8661c3caea02990daeeb06b6e74c7f96c2fc44f3/hifive_unleashed_fu540_u54/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/76e1fc7713a4a3f2b50c497afddec0364a34c10b/hifive_unleashed_fu540_u54/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.elf
     cpu0 EnableZephyrMode
     cpu1 IsHalted true
     cpu2 IsHalted true
@@ -85,7 +85,7 @@ monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("hifive_unleashed_fu540_u54")
 terminalTester = TerminalTester(machine.sysbus.uart0, 5)
 
-terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+8661c3caea02 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+76e1fc7713a4 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
 
 terminalTester.WaitFor(String("I: model output: [wing: 213.957657, ring: 80.423126, slope: 113.229385, negative: 158.669312]"), pauseEmulation=True)
 terminalTester.WaitFor(String("I: model output: [wing: 162.148727, ring: 140.959763, slope: 149.957062, negative: 236.156754]"), pauseEmulation=True)

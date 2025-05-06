@@ -48,7 +48,7 @@ using sysbus
 $name?="qemu_x86_tiny"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/8661c3caea02990daeeb06b6e74c7f96c2fc44f3/cb8e70c557b089373bca37e93d3af87f9392dbce/qemu_x86_tiny/hello_world/hello_world.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/76e1fc7713a4a3f2b50c497afddec0364a34c10b/234e81a06ec4b68b8091b7a9e595f25a611c1ce5/qemu_x86_tiny/hello_world/hello_world.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -64,7 +64,7 @@ cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/8661c3caea02990daeeb06b6e74c7f96c2fc44f3/qemu_x86_tiny/hello_world/hello_world.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/76e1fc7713a4a3f2b50c497afddec0364a34c10b/qemu_x86_tiny/hello_world/hello_world.elf
     
     # set the D flag for Executable code segment
     cpu0 SetDescriptor CS 0x0 0x0 0x0 0x400000

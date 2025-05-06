@@ -48,7 +48,7 @@ using sysbus
 $name?="hifive_unleashed_fu540_e51"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/8661c3caea02990daeeb06b6e74c7f96c2fc44f3/cb8e70c557b089373bca37e93d3af87f9392dbce/hifive_unleashed_fu540_e51/shell_module/shell_module.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/76e1fc7713a4a3f2b50c497afddec0364a34c10b/234e81a06ec4b68b8091b7a9e595f25a611c1ce5/hifive_unleashed_fu540_e51/shell_module/shell_module.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -64,7 +64,7 @@ cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/8661c3caea02990daeeb06b6e74c7f96c2fc44f3/hifive_unleashed_fu540_e51/shell_module/shell_module.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/76e1fc7713a4a3f2b50c497afddec0364a34c10b/hifive_unleashed_fu540_e51/shell_module/shell_module.elf
     cpu0 EnableZephyrMode
     u54_1 IsHalted true
     u54_2 IsHalted true
