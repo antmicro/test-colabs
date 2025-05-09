@@ -48,7 +48,7 @@ using sysbus
 $name?="legend_25hdd"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/76e1fc7713a4a3f2b50c497afddec0364a34c10b/234e81a06ec4b68b8091b7a9e595f25a611c1ce5/legend_25hdd/synchronization/synchronization.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/76e1fc7713a4a3f2b50c497afddec0364a34c10b/7264358f8f1c9b3e70f0503c3b1623e15c51b45a/legend_25hdd/synchronization/synchronization.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

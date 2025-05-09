@@ -48,7 +48,7 @@ using sysbus
 $name?="efm32wg_stk3800"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/76e1fc7713a4a3f2b50c497afddec0364a34c10b/234e81a06ec4b68b8091b7a9e595f25a611c1ce5/efm32wg_stk3800/synchronization/synchronization.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/76e1fc7713a4a3f2b50c497afddec0364a34c10b/7264358f8f1c9b3e70f0503c3b1623e15c51b45a/efm32wg_stk3800/synchronization/synchronization.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
