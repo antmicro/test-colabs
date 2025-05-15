@@ -44,11 +44,14 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 %%writefile script.resc
 logFile $ORIGIN/synchronization-renode.log True
 
-using sysbus
 $name?="hifive_unleashed_fu540_e51"
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/54b826336bae437f851fcba332481e24a7e1532d/hifive_unleashed_fu540_e51/synchronization/synchronization.elf
+$repl?=$ORIGIN/synchronization.repl
+
+using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/76e1fc7713a4a3f2b50c497afddec0364a34c10b/7264358f8f1c9b3e70f0503c3b1623e15c51b45a/hifive_unleashed_fu540_e51/synchronization/synchronization.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/54b826336bae437f851fcba332481e24a7e1532d/0e512aebf21a8c51bda51fa67354277811f10a40/hifive_unleashed_fu540_e51/synchronization/synchronization.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -64,7 +67,7 @@ cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/76e1fc7713a4a3f2b50c497afddec0364a34c10b/hifive_unleashed_fu540_e51/synchronization/synchronization.elf
+    sysbus LoadELF $bin
     cpu0 EnableZephyrMode
     u54_1 IsHalted true
     u54_2 IsHalted true
