@@ -44,11 +44,14 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 %%writefile script.resc
 logFile $ORIGIN/rust-app-renode.log True
 
-using sysbus
 $name?="arty_a7_designstart_fpga_cortex_m3"
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/6353ba88b6cd5c2969215d601947bd89f651375d/arty_a7_designstart_fpga_cortex_m3/rust-app/rust-app.elf
+$repl?=$ORIGIN/rust-app.repl
+
+using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/8661c3caea02990daeeb06b6e74c7f96c2fc44f3/cb8e70c557b089373bca37e93d3af87f9392dbce/arty_a7_designstart_fpga_cortex_m3/rust-app/rust-app.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/6353ba88b6cd5c2969215d601947bd89f651375d/7ef505b300bbcc32e104ae2e636d21f7e2fec465/arty_a7_designstart_fpga_cortex_m3/rust-app/rust-app.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -64,7 +67,7 @@ cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/8661c3caea02990daeeb06b6e74c7f96c2fc44f3/arty_a7_designstart_fpga_cortex_m3/rust-app/rust-app.elf
+    sysbus LoadELF $bin
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
     cpu0 EnableZephyrMode
     cpu0 EnableProfilerCollapsedStack $ORIGIN/rust-app-profile true 62914560 maximumNestedContexts=10
@@ -80,7 +83,7 @@ monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("arty_a7_designstart_fpga_cortex_m3")
 terminalTester = TerminalTester(machine.sysbus.uartlite0, 5)
 
-terminalTester.WaitFor(String("*** Booting Zephyr OS build 8661c3caea02 ***"), pauseEmulation=True)
+terminalTester.WaitFor(String("*** Booting Zephyr OS build 6353ba88b6cd ***"), pauseEmulation=True)
 terminalTester.WaitFor(String("Next call will crash if userspace is working"), pauseEmulation=True)
 terminalTester.WaitFor(String(r".*ZEPHYR FATAL ERROR.*"), treatAsRegex=True, pauseEmulation=True)
 

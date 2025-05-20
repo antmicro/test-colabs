@@ -13,37 +13,63 @@
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
 ! pip install -q git+https://github.com/antmicro/renode-run.git
-! pip install -q git+https://github.com/antmicro/pyrenode.git
-! renode-run download
+! pip install -q git+https://github.com/antmicro/pyrenode3.git
+! renode-run download --renode-variant dotnet-portable
 
 # %% [markdown]
 """## Start Renode"""
 
 # %%
-from pyrenode import connect_renode, get_keywords
-connect_renode()
-get_keywords()
+import os
+from renode_run import get_default_renode_path
+from renode_run.utils import RenodeVariant
+
+os.environ['PYRENODE_RUNTIME'] = 'coreclr'
+os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+
+from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
+from Antmicro.Renode.Peripherals.UART import UARTBackend
+from Antmicro.Renode.Analyzers import LoggingUartAnalyzer
+from System import String
+
+currentDirectory = os.getcwd()
+emulation = Emulation()
+monitor = Monitor()
+emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 
 # %% [markdown]
 """## Setup a script"""
 
 # %%
 %%writefile script.resc
+logFile $ORIGIN/rust-app-renode.log True
+
+$name?="hifive_unmatched_fu740_s7"
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/6353ba88b6cd5c2969215d601947bd89f651375d/hifive_unmatched_fu740_s7/rust-app/rust-app.elf
+$repl?=$ORIGIN/rust-app.repl
 
 using sysbus
-$name?="hifive_unmatched_fu740_s7"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/798db0f777d0fc1298694ac9431cee6ce94c2103/ac2416c1b08a787f7db9a936f3acebfc53fe526b/hifive_unmatched_fu740_s7/rust-app/rust-app.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/6353ba88b6cd5c2969215d601947bd89f651375d/7ef505b300bbcc32e104ae2e636d21f7e2fec465/hifive_unmatched_fu740_s7/rust-app/rust-app.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
-showAnalyzer sysbus.uart0
-sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
+
+showAnalyzer uart0
+
+uart0 RecordToAsciinema $ORIGIN/rust-app-asciinema
+set osPanicHook
+"""
+self.ErrorLog("OS Panicked")
+"""
+cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
+
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/798db0f777d0fc1298694ac9431cee6ce94c2103/hifive_unmatched_fu740_s7/rust-app/rust-app.elf
-    
+    sysbus LoadELF $bin
+    cpu0 EnableZephyrMode
+    cpu0 EnableProfilerCollapsedStack $ORIGIN/rust-app-profile true 62914560 maximumNestedContexts=10
 """
 
 runMacro $reset
@@ -52,22 +78,22 @@ runMacro $reset
 """## Run the sample"""
 
 # %%
-ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.uart0", timeout=5)
-StartEmulation()
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("hifive_unmatched_fu740_s7")
+terminalTester = TerminalTester(machine.sysbus.uart0, 5)
 
-WaitForLineOnUart("*** Booting Zephyr OS build 798db0f777d0 ***")
-WaitForLineOnUart("Next call will crash if userspace is working")
-WaitForLineOnUart(r".*ZEPHYR FATAL ERROR.*", treatAsRegex=True)
+terminalTester.WaitFor(String("*** Booting Zephyr OS build 6353ba88b6cd ***"), pauseEmulation=True)
+terminalTester.WaitFor(String("Next call will crash if userspace is working"), pauseEmulation=True)
+terminalTester.WaitFor(String(r".*ZEPHYR FATAL ERROR.*"), treatAsRegex=True, pauseEmulation=True)
 
-ResetEmulation()
+emulation.Dispose()
 
 # %% [markdown]
 """## UART output"""
 
 # %%
 from renode_colab_tools import asciinema
-asciinema.display_asciicast('output.asciinema')
+asciinema.display_asciicast('rust-app-asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""
