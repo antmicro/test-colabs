@@ -70,4 +70,4 @@ generate_demos() {
 }
 
 generate_demos zephyr
-#generate_demos uboot
+generate_demos uboot
