@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/kenning-zephyr-runtime-microtvm-renode.log True
 
 $name?="croxel_cx1825_nrf52840"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/6353ba88b6cd5c2969215d601947bd89f651375d/croxel_cx1825_nrf52840/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/bcf4d1ad3856ecb174bc71c4856445fccd093239/croxel_cx1825_nrf52840/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.elf
 $repl?=$ORIGIN/kenning-zephyr-runtime-microtvm.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/6353ba88b6cd5c2969215d601947bd89f651375d/1f5b1203341cd1bbdf00e8434b0d12dbfad12465/croxel_cx1825_nrf52840/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/bcf4d1ad3856ecb174bc71c4856445fccd093239/327f86675b49497a02301a95de5220ccc7bab67d/croxel_cx1825_nrf52840/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 usbd CreateAndAttachCDCToUARTConverter "boardcdcacmuart"
@@ -84,7 +84,7 @@ monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("croxel_cx1825_nrf52840")
 terminalTester = TerminalTester(machine.sysbus.boardcdcacmuart, 5)
 
-terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+6353ba88b6cd \*\*\*"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+bcf4d1ad3856 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
 
 terminalTester.WaitFor(String("I: model output: [wing: 1.000000, ring: 0.000000, slope: 0.000000, negative: 0.000000]"), pauseEmulation=True)
 terminalTester.WaitFor(String("I: model output: [wing: 0.000000, ring: 0.000000, slope: 0.000000, negative: 1.000000]"), pauseEmulation=True)

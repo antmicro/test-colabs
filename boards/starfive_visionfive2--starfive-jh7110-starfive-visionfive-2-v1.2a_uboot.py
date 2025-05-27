@@ -13,39 +13,79 @@
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
 ! pip install -q git+https://github.com/antmicro/renode-run.git
-! pip install -q git+https://github.com/antmicro/pyrenode.git
-! renode-run download
+! pip install -q git+https://github.com/antmicro/pyrenode3.git
+! renode-run download --renode-variant dotnet-portable
 
 # %% [markdown]
 """## Start Renode"""
 
 # %%
-from pyrenode import connect_renode, get_keywords
-connect_renode()
-get_keywords()
+import os
+from renode_run import get_default_renode_path
+from renode_run.utils import RenodeVariant
+
+os.environ['PYRENODE_RUNTIME'] = 'coreclr'
+os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+
+from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
+from Antmicro.Renode.Peripherals.UART import UARTBackend
+from Antmicro.Renode.Analyzers import LoggingUartAnalyzer
+from System import String
+
+currentDirectory = os.getcwd()
+emulation = Emulation()
+monitor = Monitor()
+emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 
 # %% [markdown]
 """## Setup a script"""
 
 # %%
 %%writefile script.resc
+logFile $ORIGIN/uboot-renode.log True
 
 using sysbus
 $name?="starfive_visionfive2--starfive-jh7110-starfive-visionfive-2-v1.2a"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/9d3f1ebaf8751f0287b5d02158cc706435f8fb19/fca3b9a247be52a6891cb729ccccee42b78f2ac9/starfive_visionfive2--starfive-jh7110-starfive-visionfive-2-v1.2a/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/327f86675b49497a02301a95de5220ccc7bab67d/starfive_visionfive2--starfive-jh7110-starfive-visionfive-2-v1.2a/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
-showAnalyzer sysbus.uart0
-sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
+
+showAnalyzer uart0
+
+uart0 RecordToAsciinema $ORIGIN/uboot-asciinema
+set osPanicHook
+"""
+self.ErrorLog("OS Panicked")
+"""
+cpu0 AddSymbolHook "hang" $osPanicHook
+cpu0 AddSymbolHook "panic" $osPanicHook
+
 
 macro reset
 """
-    sysbus LoadELF @https://u-boot-dashboard.renode.io/uboot/9d3f1ebaf8751f0287b5d02158cc706435f8fb19/starfive_visionfive2--starfive-jh7110-starfive-visionfive-2-v1.2a/uboot/uboot.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/uboot/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/starfive_visionfive2--starfive-jh7110-starfive-visionfive-2-v1.2a/uboot/uboot.elf
+    cpu0 EnableUbootMode
+    cpu0 EnableZephyrMode
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
+    cpu0 EnableProfilerCollapsedStack $ORIGIN/uboot-profile true 62914560 maximumNestedContexts=10
+    sysbus LoadBinary @https://u-boot-dashboard.renode.io/uboot/6a0db9ee030f634731b792d864fc7a9df6cc6b80/microchip_mpfs_icicle--microchip-mpfs-icicle-kit/uboot/fw_dynamic.bin 0x80000000
+    cpu0 PC 0x80000000
+
+    cpu0 SetRegister "A0" 0x1                           # hart number
+    cpu0 SetRegister "A1" 0x0000000040287960                # fdt location
+    cpu0 SetRegister "A2" 0x80100000                    # struct fw_dynamic_info address
+
+    # struct fw_dynamic_info
+    sysbus WriteQuadWord 0x80100000 0x4942534f          # magic
+    sysbus WriteQuadWord 0x80100008 0x2                 # version
+    sysbus WriteQuadWord 0x80100010 0x40200000    # next_addr
+    sysbus WriteQuadWord 0x80100018 0x1                 # next_mode
+    sysbus WriteQuadWord 0x80100020 0x0                 # options
+    sysbus WriteQuadWord 0x80100028 0x1                 # boot hart
 """
 
 runMacro $reset
@@ -54,24 +94,25 @@ runMacro $reset
 """## Run the sample"""
 
 # %%
-ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.uart0", timeout=5)
-StartEmulation()
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("starfive_visionfive2--starfive-jh7110-starfive-visionfive-2-v1.2a")
+terminalTester = TerminalTester(machine.sysbus.uart0, 5)
 
-WaitForPromptOnUart("Hit any key to stop autoboot")
-SendKeyToUart(ord('a'))
-WaitForPromptOnUart(">")
-WriteLineToUart("version")
-WaitForLineOnUart("U-Boot")
+terminalTester.WaitFor(String("Hit any key to stop autoboot"), includeUnfinishedLine=True, pauseEmulation=True)
+terminalTester.Write("\n")
+terminalTester.WaitFor(String(">"), includeUnfinishedLine=True, pauseEmulation=True)
+terminalTester.WriteLine("version")
+terminalTester.WaitFor(String("U-Boot"), pauseEmulation=True)
+terminalTester.WaitFor(String(">"), includeUnfinishedLine=True, pauseEmulation=True)
 
-ResetEmulation()
+emulation.Dispose()
 
 # %% [markdown]
 """## UART output"""
 
 # %%
 from renode_colab_tools import asciinema
-asciinema.display_asciicast('output.asciinema')
+asciinema.display_asciicast('uboot-asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""

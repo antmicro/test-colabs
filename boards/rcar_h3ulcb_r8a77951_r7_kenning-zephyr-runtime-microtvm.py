@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/kenning-zephyr-runtime-microtvm-renode.log True
 
 $name?="rcar_h3ulcb_r8a77951_r7"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/6353ba88b6cd5c2969215d601947bd89f651375d/rcar_h3ulcb_r8a77951_r7/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/bcf4d1ad3856ecb174bc71c4856445fccd093239/rcar_h3ulcb_r8a77951_r7/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.elf
 $repl?=$ORIGIN/kenning-zephyr-runtime-microtvm.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/6353ba88b6cd5c2969215d601947bd89f651375d/1f5b1203341cd1bbdf00e8434b0d12dbfad12465/rcar_h3ulcb_r8a77951_r7/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/bcf4d1ad3856ecb174bc71c4856445fccd093239/327f86675b49497a02301a95de5220ccc7bab67d/rcar_h3ulcb_r8a77951_r7/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -81,7 +81,7 @@ monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("rcar_h3ulcb_r8a77951_r7")
 terminalTester = TerminalTester(machine.sysbus.scif1, 5)
 
-terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+6353ba88b6cd \*\*\*"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+bcf4d1ad3856 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
 
 terminalTester.WaitFor(String("I: model output: [wing: 1.000000, ring: 0.000000, slope: 0.000000, negative: 0.000000]"), pauseEmulation=True)
 terminalTester.WaitFor(String("I: model output: [wing: 0.000000, ring: 0.000000, slope: 0.000000, negative: 1.000000]"), pauseEmulation=True)

@@ -13,36 +13,61 @@
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
 ! pip install -q git+https://github.com/antmicro/renode-run.git
-! pip install -q git+https://github.com/antmicro/pyrenode.git
-! renode-run download
+! pip install -q git+https://github.com/antmicro/pyrenode3.git
+! renode-run download --renode-variant dotnet-portable
 
 # %% [markdown]
 """## Start Renode"""
 
 # %%
-from pyrenode import connect_renode, get_keywords
-connect_renode()
-get_keywords()
+import os
+from renode_run import get_default_renode_path
+from renode_run.utils import RenodeVariant
+
+os.environ['PYRENODE_RUNTIME'] = 'coreclr'
+os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+
+from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
+from Antmicro.Renode.Peripherals.UART import UARTBackend
+from Antmicro.Renode.Analyzers import LoggingUartAnalyzer
+from System import String
+
+currentDirectory = os.getcwd()
+emulation = Emulation()
+monitor = Monitor()
+emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 
 # %% [markdown]
 """## Setup a script"""
 
 # %%
 %%writefile script.resc
+logFile $ORIGIN/uboot-renode.log True
 
 using sysbus
 $name?="vexpress_aemv8a_semi--fvp-base-revc"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/9d3f1ebaf8751f0287b5d02158cc706435f8fb19/fca3b9a247be52a6891cb729ccccee42b78f2ac9/vexpress_aemv8a_semi--fvp-base-revc/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/327f86675b49497a02301a95de5220ccc7bab67d/vexpress_aemv8a_semi--fvp-base-revc/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
-showAnalyzer sysbus.v2mserial0
-sysbus.v2mserial0 RecordToAsciinema $ORIGIN/output.asciinema
+
+showAnalyzer v2mserial0
+
+v2mserial0 RecordToAsciinema $ORIGIN/uboot-asciinema
+set osPanicHook
+"""
+self.ErrorLog("OS Panicked")
+"""
+cpu0 AddSymbolHook "hang" $osPanicHook
+cpu0 AddSymbolHook "panic" $osPanicHook
+
 
 macro reset
 """
-    sysbus LoadELF @https://u-boot-dashboard.renode.io/uboot/9d3f1ebaf8751f0287b5d02158cc706435f8fb19/vexpress_aemv8a_semi--fvp-base-revc/uboot/uboot.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/uboot/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/vexpress_aemv8a_semi--fvp-base-revc/uboot/uboot.elf
+    cpu0 EnableUbootMode
+    cpu0 EnableZephyrMode
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
@@ -50,6 +75,8 @@ macro reset
     cpu5 IsHalted true
     cpu6 IsHalted true
     cpu7 IsHalted true
+    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/vexpress_aemv8a_semi--fvp-base-revc/uboot/uboot.elf textAddress=0x00000000fff6b000
+    cpu0 EnableProfilerCollapsedStack $ORIGIN/uboot-profile true 62914560 maximumNestedContexts=10
 """
 
 runMacro $reset
@@ -58,24 +85,25 @@ runMacro $reset
 """## Run the sample"""
 
 # %%
-ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.v2mserial0", timeout=5)
-StartEmulation()
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("vexpress_aemv8a_semi--fvp-base-revc")
+terminalTester = TerminalTester(machine.sysbus.v2mserial0, 5)
 
-WaitForPromptOnUart("Hit any key to stop autoboot")
-SendKeyToUart(ord('a'))
-WaitForPromptOnUart(">")
-WriteLineToUart("version")
-WaitForLineOnUart("U-Boot")
+terminalTester.WaitFor(String("Hit any key to stop autoboot"), includeUnfinishedLine=True, pauseEmulation=True)
+terminalTester.Write("\n")
+terminalTester.WaitFor(String(">"), includeUnfinishedLine=True, pauseEmulation=True)
+terminalTester.WriteLine("version")
+terminalTester.WaitFor(String("U-Boot"), pauseEmulation=True)
+terminalTester.WaitFor(String(">"), includeUnfinishedLine=True, pauseEmulation=True)
 
-ResetEmulation()
+emulation.Dispose()
 
 # %% [markdown]
 """## UART output"""
 
 # %%
 from renode_colab_tools import asciinema
-asciinema.display_asciicast('output.asciinema')
+asciinema.display_asciicast('uboot-asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""

@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/synchronization-renode.log True
 
 $name?="canbardo_same70n20b"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/6353ba88b6cd5c2969215d601947bd89f651375d/canbardo_same70n20b/synchronization/synchronization.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/bcf4d1ad3856ecb174bc71c4856445fccd093239/canbardo_same70n20b/synchronization/synchronization.elf
 $repl?=$ORIGIN/synchronization.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/6353ba88b6cd5c2969215d601947bd89f651375d/1f5b1203341cd1bbdf00e8434b0d12dbfad12465/canbardo_same70n20b/synchronization/synchronization.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/bcf4d1ad3856ecb174bc71c4856445fccd093239/327f86675b49497a02301a95de5220ccc7bab67d/canbardo_same70n20b/synchronization/synchronization.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

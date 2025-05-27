@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/tensorflow_lite_micro-renode.log True
 
 $name?="khadas_edge2"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/6353ba88b6cd5c2969215d601947bd89f651375d/khadas_edge2/tensorflow_lite_micro/tensorflow_lite_micro.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/bcf4d1ad3856ecb174bc71c4856445fccd093239/khadas_edge2/tensorflow_lite_micro/tensorflow_lite_micro.elf
 $repl?=$ORIGIN/tensorflow_lite_micro.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/6353ba88b6cd5c2969215d601947bd89f651375d/1f5b1203341cd1bbdf00e8434b0d12dbfad12465/khadas_edge2/tensorflow_lite_micro/tensorflow_lite_micro.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/bcf4d1ad3856ecb174bc71c4856445fccd093239/327f86675b49497a02301a95de5220ccc7bab67d/khadas_edge2/tensorflow_lite_micro/tensorflow_lite_micro.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -69,6 +69,7 @@ macro reset
 """
     sysbus LoadELF $bin
     cpu0 EnableZephyrMode
+    gic DisabledSecurity true
     cpu0 EnableProfilerCollapsedStack $ORIGIN/tensorflow_lite_micro-profile true 62914560 maximumNestedContexts=10
 """
 
