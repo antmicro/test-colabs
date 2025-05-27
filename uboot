@@ -4,9 +4,9 @@ terminalTester = TerminalTester(machine.sysbus.{{uart_name}}, 5)
 
 terminalTester.WaitFor(String("Hit any key to stop autoboot"), includeUnfinishedLine=True, pauseEmulation=True)
 terminalTester.Write("\n")
-terminalTester.WaitFor(String(">"), pauseEmulation=True)
+terminalTester.WaitFor(String(">"), includeUnfinishedLine=True, pauseEmulation=True)
 terminalTester.WriteLine("version")
 terminalTester.WaitFor(String("U-Boot"), pauseEmulation=True)
-terminalTester.WaitFor(String(">"), pauseEmulation=True)
+terminalTester.WaitFor(String(">"), includeUnfinishedLine=True, pauseEmulation=True)
 
 emulation.Dispose()
