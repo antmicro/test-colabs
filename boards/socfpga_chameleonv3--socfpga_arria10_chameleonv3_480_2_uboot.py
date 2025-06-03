@@ -48,7 +48,7 @@ using sysbus
 $name?="socfpga_chameleonv3--socfpga_arria10_chameleonv3_480_2"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/327f86675b49497a02301a95de5220ccc7bab67d/socfpga_chameleonv3--socfpga_arria10_chameleonv3_480_2/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/93905ab6e7564089f5d7b703b660464d675e5ab0/ffd339dd25d1b077a39f348685017e28dfc48d1b/socfpga_chameleonv3--socfpga_arria10_chameleonv3_480_2/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -65,12 +65,12 @@ cpu0 AddSymbolHook "panic" $osPanicHook
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/uboot/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/socfpga_chameleonv3--socfpga_arria10_chameleonv3_480_2/uboot/uboot.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/socfpga_chameleonv3--socfpga_arria10_chameleonv3_480_2/uboot/uboot.elf
     cpu0 EnableUbootMode
     cpu0 EnableZephyrMode
     cpu1 IsHalted true
-    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/socfpga_chameleonv3--socfpga_arria10_chameleonv3_480_2/uboot/uboot.elf textAddress=0x7ff95000
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/socfpga_chameleonv3--socfpga_arria10_chameleonv3_480_2/uboot/uboot.dtb 0x0105c834
+    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/socfpga_chameleonv3--socfpga_arria10_chameleonv3_480_2/uboot/uboot.elf textAddress=0x7ff95000
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/socfpga_chameleonv3--socfpga_arria10_chameleonv3_480_2/uboot/uboot.dtb 0x0105c844
 """
 
 runMacro $reset

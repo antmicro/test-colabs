@@ -48,7 +48,7 @@ using sysbus
 $name?="starfive_visionfive2--starfive-jh7110-starfive-visionfive-2-v1.3b"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/327f86675b49497a02301a95de5220ccc7bab67d/starfive_visionfive2--starfive-jh7110-starfive-visionfive-2-v1.3b/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/93905ab6e7564089f5d7b703b660464d675e5ab0/ffd339dd25d1b077a39f348685017e28dfc48d1b/starfive_visionfive2--starfive-jh7110-starfive-visionfive-2-v1.3b/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -65,7 +65,7 @@ cpu0 AddSymbolHook "panic" $osPanicHook
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/uboot/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/starfive_visionfive2--starfive-jh7110-starfive-visionfive-2-v1.3b/uboot/uboot.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/starfive_visionfive2--starfive-jh7110-starfive-visionfive-2-v1.3b/uboot/uboot.elf
     cpu0 EnableUbootMode
     cpu0 EnableZephyrMode
     cpu1 IsHalted true
@@ -76,7 +76,7 @@ macro reset
     cpu0 PC 0x80000000
 
     cpu0 SetRegister "A0" 0x1                           # hart number
-    cpu0 SetRegister "A1" 0x0000000040287960                # fdt location
+    cpu0 SetRegister "A1" 0x0000000040287970                # fdt location
     cpu0 SetRegister "A2" 0x80100000                    # struct fw_dynamic_info address
 
     # struct fw_dynamic_info

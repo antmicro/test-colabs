@@ -48,7 +48,7 @@ using sysbus
 $name?="aml-a311d-cc--amlogic-meson-g12b-a311d-libretech-cc"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/327f86675b49497a02301a95de5220ccc7bab67d/aml-a311d-cc--amlogic-meson-g12b-a311d-libretech-cc/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/93905ab6e7564089f5d7b703b660464d675e5ab0/ffd339dd25d1b077a39f348685017e28dfc48d1b/aml-a311d-cc--amlogic-meson-g12b-a311d-libretech-cc/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -72,7 +72,7 @@ self.SetRegisterUlong(0, 0x0)
 macro reset
 """
 cpu0 PSCIEmulationMethod SMC
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/uboot/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/aml-a311d-cc--amlogic-meson-g12b-a311d-libretech-cc/uboot/uboot.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/aml-a311d-cc--amlogic-meson-g12b-a311d-libretech-cc/uboot/uboot.elf
     cpu0 EnableUbootMode
     cpu0 EnableZephyrMode
     cpu1 IsHalted true

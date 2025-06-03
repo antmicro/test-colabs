@@ -48,7 +48,7 @@ using sysbus
 $name?="phycore-imx8mp--freescale-imx8mp-phyboard-pollux-rdk"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/327f86675b49497a02301a95de5220ccc7bab67d/phycore-imx8mp--freescale-imx8mp-phyboard-pollux-rdk/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/93905ab6e7564089f5d7b703b660464d675e5ab0/ffd339dd25d1b077a39f348685017e28dfc48d1b/phycore-imx8mp--freescale-imx8mp-phyboard-pollux-rdk/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -63,7 +63,7 @@ cpu0 AddSymbolHook "hang" $osPanicHook
 cpu0 AddSymbolHook "panic" $osPanicHook
 
 
-sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/phycore-imx8mp--freescale-imx8mp-phyboard-pollux-rdk/uboot/uboot.elf
+sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/phycore-imx8mp--freescale-imx8mp-phyboard-pollux-rdk/uboot/uboot.elf
 set hook
 """
 self.SetRegisterUlong(0, 6) # SD1_BOOT
@@ -75,15 +75,15 @@ macro reset
 """
     cpu0 EnableTimeSkip "mxc_i2c_xfer" 0
     cpu0 EnableTimeSkip "mxc_i2c_probe_chip" 0
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/uboot/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/phycore-imx8mp--freescale-imx8mp-phyboard-pollux-rdk/uboot/uboot.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/phycore-imx8mp--freescale-imx8mp-phyboard-pollux-rdk/uboot/uboot.elf
     cpu0 EnableUbootMode
     cpu0 EnableZephyrMode
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
-    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/phycore-imx8mp--freescale-imx8mp-phyboard-pollux-rdk/uboot/uboot.elf textAddress=0x00000000fff01000
+    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/phycore-imx8mp--freescale-imx8mp-phyboard-pollux-rdk/uboot/uboot.elf textAddress=0x00000000fff01000
     cpu0 EnableProfilerCollapsedStack $ORIGIN/uboot-profile true 62914560 maximumNestedContexts=10
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/phycore-imx8mp--freescale-imx8mp-phyboard-pollux-rdk/uboot/uboot.dtb 0x00000000402e5898
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/phycore-imx8mp--freescale-imx8mp-phyboard-pollux-rdk/uboot/uboot.dtb 0x00000000402e5898
 """
 
 runMacro $reset

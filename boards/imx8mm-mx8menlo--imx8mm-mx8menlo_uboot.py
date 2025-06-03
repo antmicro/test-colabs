@@ -48,7 +48,7 @@ using sysbus
 $name?="imx8mm-mx8menlo--imx8mm-mx8menlo"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/327f86675b49497a02301a95de5220ccc7bab67d/imx8mm-mx8menlo--imx8mm-mx8menlo/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/93905ab6e7564089f5d7b703b660464d675e5ab0/ffd339dd25d1b077a39f348685017e28dfc48d1b/imx8mm-mx8menlo--imx8mm-mx8menlo/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -71,15 +71,15 @@ self.SetRegisterUlong(0, 0x0)
 macro reset
 """
     cpu0 PSCIEmulationMethod SMC
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/uboot/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/imx8mm-mx8menlo--imx8mm-mx8menlo/uboot/uboot.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/imx8mm-mx8menlo--imx8mm-mx8menlo/uboot/uboot.elf
     cpu0 EnableUbootMode
     cpu0 EnableZephyrMode
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
-    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/imx8mm-mx8menlo--imx8mm-mx8menlo/uboot/uboot.elf textAddress=0x00000000fff05000
+    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/imx8mm-mx8menlo--imx8mm-mx8menlo/uboot/uboot.elf textAddress=0x00000000fff05000
     cpu0 EnableProfilerCollapsedStack $ORIGIN/uboot-profile true 62914560 maximumNestedContexts=10
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/imx8mm-mx8menlo--imx8mm-mx8menlo/uboot/uboot.dtb 0x00000000402dc340
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/imx8mm-mx8menlo--imx8mm-mx8menlo/uboot/uboot.dtb 0x00000000402dc340
 """
 
 runMacro $reset

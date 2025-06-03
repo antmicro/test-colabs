@@ -48,7 +48,7 @@ using sysbus
 $name?="openpiton_riscv64_spl--openpiton-riscv64"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/327f86675b49497a02301a95de5220ccc7bab67d/openpiton_riscv64_spl--openpiton-riscv64/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/93905ab6e7564089f5d7b703b660464d675e5ab0/ffd339dd25d1b077a39f348685017e28dfc48d1b/openpiton_riscv64_spl--openpiton-riscv64/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -65,11 +65,11 @@ cpu0 AddSymbolHook "panic" $osPanicHook
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/uboot/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/openpiton_riscv64_spl--openpiton-riscv64/uboot/uboot.elf
+    sysbus LoadELF @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/openpiton_riscv64_spl--openpiton-riscv64/uboot/uboot.elf
     cpu0 EnableUbootMode
     cpu0 EnableZephyrMode
     cpu1 IsHalted true
-    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/2ca1398a5ece8d33d8feb6b410e6e38588b5d2bc/openpiton_riscv64_spl--openpiton-riscv64/uboot/uboot.elf textAddress=0x00000000bffbd000
+    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/openpiton_riscv64_spl--openpiton-riscv64/uboot/uboot.elf textAddress=0x00000000bffbd000
     cpu0 EnableProfilerCollapsedStack $ORIGIN/uboot-profile true 62914560 maximumNestedContexts=10
     sysbus LoadBinary @https://u-boot-dashboard.renode.io/uboot/6a0db9ee030f634731b792d864fc7a9df6cc6b80/microchip_mpfs_icicle--microchip-mpfs-icicle-kit/uboot/fw_dynamic.bin 0x90000000
     cpu0 PC 0x90000000
