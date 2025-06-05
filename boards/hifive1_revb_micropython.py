@@ -13,37 +13,63 @@
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
 ! pip install -q git+https://github.com/antmicro/renode-run.git
-! pip install -q git+https://github.com/antmicro/pyrenode.git
-! renode-run download
+! pip install -q git+https://github.com/antmicro/pyrenode3.git
+! renode-run download --renode-variant dotnet-portable
 
 # %% [markdown]
 """## Start Renode"""
 
 # %%
-from pyrenode import connect_renode, get_keywords
-connect_renode()
-get_keywords()
+import os
+from renode_run import get_default_renode_path
+from renode_run.utils import RenodeVariant
+
+os.environ['PYRENODE_RUNTIME'] = 'coreclr'
+os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+
+from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
+from Antmicro.Renode.Peripherals.UART import UARTBackend
+from Antmicro.Renode.Analyzers import LoggingUartAnalyzer
+from System import String
+
+currentDirectory = os.getcwd()
+emulation = Emulation()
+monitor = Monitor()
+emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 
 # %% [markdown]
 """## Setup a script"""
 
 # %%
 %%writefile script.resc
+logFile $ORIGIN/micropython-renode.log True
+
+$name?="hifive1_revb"
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/ad3df1d0f240f29e07b1620992e2b1aa91e5cf15/hifive1_revb/micropython/micropython.elf
+$repl?=$ORIGIN/micropython.repl
 
 using sysbus
-$name?="hifive1_revb"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/hifive1_revb-micropython/hifive1_revb-micropython.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/ad3df1d0f240f29e07b1620992e2b1aa91e5cf15/fe1dfb0df6239f9ed91fb6d119215c5018586d46/hifive1_revb/micropython/micropython.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
-showAnalyzer sysbus.uart0
-sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
+
+showAnalyzer uart0
+
+uart0 RecordToAsciinema $ORIGIN/micropython-asciinema
+set osPanicHook
+"""
+self.ErrorLog("OS Panicked")
+"""
+cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
+
 
 macro reset
 """
-    sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/044529d0cd06c9bcaf64a78ade7a123e7fb8c9a3/hifive1_revb/micropython/micropython.elf
-    
+    sysbus LoadELF $bin
+    cpu0 EnableZephyrMode
+    cpu0 EnableProfilerCollapsedStack $ORIGIN/micropython-profile true 62914560 maximumNestedContexts=10
 """
 
 runMacro $reset
@@ -52,29 +78,33 @@ runMacro $reset
 """## Run the sample"""
 
 # %%
-ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.uart0", timeout=5)
-StartEmulation()
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("hifive1_revb")
+terminalTester = TerminalTester(machine.sysbus.uart0, 15)
 
-WaitForPromptOnUart(">>>")
-WriteLineToUart("2+2")
-WriteLineToUart("")
-WaitForLineOnUart("4")
-WriteLineToUart("def compare(a, b): return True if a > b else False")
-WriteLineToUart("")
-WriteLineToUart("compare(3.2, 2.4)")
-WaitForLineOnUart("True")
-WriteLineToUart("compare(2.2, 5.8)")
-WaitForLineOnUart("False")
+terminalTester.WaitFor(String(">>>"), pauseEmulation=True)
 
-ResetEmulation()
+terminalTester.WriteLine("2+2")
+terminalTester.WaitFor(String("4"), pauseEmulation=True)
+
+terminalTester.WriteLine("def compare(a, b): return True if a > b else False")
+terminalTester.WaitFor(String("..."), pauseEmulation=True)
+terminalTester.WriteLine("")
+
+terminalTester.WriteLine("compare(3.2, 2.4)")
+terminalTester.WaitFor(String("True"), pauseEmulation=True)
+
+terminalTester.WriteLine("compare(2.2, 5.8)")
+terminalTester.WaitFor(String("False"), pauseEmulation=True)
+
+emulation.Dispose()
 
 # %% [markdown]
 """## UART output"""
 
 # %%
 from renode_colab_tools import asciinema
-asciinema.display_asciicast('output.asciinema')
+asciinema.display_asciicast('micropython-asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""
@@ -82,7 +112,8 @@ asciinema.display_asciicast('output.asciinema')
 # %%
 import sys
 from pathlib import Path
-sys.path.append(Path('/root/.config/renode/renode-run.path').read_text())
+from renode_run import get_default_renode_path
+sys.path.append(str(Path(get_default_renode_path()).parent))
 
 from renode_colab_tools import metrics
 from tools.metrics_analyzer.metrics_parser import MetricsParser

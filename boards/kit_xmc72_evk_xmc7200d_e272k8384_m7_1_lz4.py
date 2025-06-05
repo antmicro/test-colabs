@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/lz4-renode.log True
 
 $name?="kit_xmc72_evk_xmc7200d_e272k8384_m7_1"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/af46f628a0c5b21fca3ac4a78640059f3cb19442/kit_xmc72_evk_xmc7200d_e272k8384_m7_1/lz4/lz4.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/ad3df1d0f240f29e07b1620992e2b1aa91e5cf15/kit_xmc72_evk_xmc7200d_e272k8384_m7_1/lz4/lz4.elf
 $repl?=$ORIGIN/lz4.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/af46f628a0c5b21fca3ac4a78640059f3cb19442/676b9c094bc81a595428c8b7f03f18592e7ddc50/kit_xmc72_evk_xmc7200d_e272k8384_m7_1/lz4/lz4.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/ad3df1d0f240f29e07b1620992e2b1aa91e5cf15/fe1dfb0df6239f9ed91fb6d119215c5018586d46/kit_xmc72_evk_xmc7200d_e272k8384_m7_1/lz4/lz4.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
