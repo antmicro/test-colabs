@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/rust-app-renode.log True
 
 $name?="ubx_evkannab1_nrf52832"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/ad3df1d0f240f29e07b1620992e2b1aa91e5cf15/ubx_evkannab1_nrf52832/rust-app/rust-app.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/ed7f2e0833c25fdc67e0d2c1e6d6915275407569/ubx_evkannab1_nrf52832/rust-app/rust-app.elf
 $repl?=$ORIGIN/rust-app.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/ad3df1d0f240f29e07b1620992e2b1aa91e5cf15/fe1dfb0df6239f9ed91fb6d119215c5018586d46/ubx_evkannab1_nrf52832/rust-app/rust-app.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/ed7f2e0833c25fdc67e0d2c1e6d6915275407569/a89f6f74dc68926e931ddad63a8a5be317822434/ubx_evkannab1_nrf52832/rust-app/rust-app.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -83,7 +83,7 @@ monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("ubx_evkannab1_nrf52832")
 terminalTester = TerminalTester(machine.sysbus.uart0, 5)
 
-terminalTester.WaitFor(String("*** Booting Zephyr OS build ad3df1d0f240 ***"), pauseEmulation=True)
+terminalTester.WaitFor(String("*** Booting Zephyr OS build ed7f2e0833c2 ***"), pauseEmulation=True)
 terminalTester.WaitFor(String("Next call will crash if userspace is working"), pauseEmulation=True)
 terminalTester.WaitFor(String(r".*ZEPHYR FATAL ERROR.*"), treatAsRegex=True, pauseEmulation=True)
 

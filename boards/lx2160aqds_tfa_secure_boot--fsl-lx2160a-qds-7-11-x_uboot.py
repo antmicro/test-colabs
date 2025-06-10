@@ -44,11 +44,14 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 %%writefile script.resc
 logFile $ORIGIN/uboot-renode.log True
 
-using sysbus
 $name?="lx2160aqds_tfa_secure_boot--fsl-lx2160a-qds-7-11-x"
+$bin?=@https://zephyr-dashboard.renode.io/uboot/b3f69c14187d413610abbc2b82d1a3752cb342c1/lx2160aqds_tfa_secure_boot--fsl-lx2160a-qds-7-11-x/uboot/uboot.elf
+$repl?=$ORIGIN/uboot.repl
+
+using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/93905ab6e7564089f5d7b703b660464d675e5ab0/ffd339dd25d1b077a39f348685017e28dfc48d1b/lx2160aqds_tfa_secure_boot--fsl-lx2160a-qds-7-11-x/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/b3f69c14187d413610abbc2b82d1a3752cb342c1/4f68d8d3ac0048d5a44ca2172cbf6ffb40837323/lx2160aqds_tfa_secure_boot--fsl-lx2160a-qds-7-11-x/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -94,10 +97,10 @@ else:
 macro reset
 """
     cpu0 PSCIEmulationMethod SMC
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/lx2160aqds_tfa_secure_boot--fsl-lx2160a-qds-7-11-x/uboot/uboot.elf
+    sysbus LoadELF $bin
     cpu0 EnableUbootMode
     cpu0 EnableZephyrMode
-    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/lx2160aqds_tfa_secure_boot--fsl-lx2160a-qds-7-11-x/uboot/uboot.elf textAddress=0x00000000fbd35000
+    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/b3f69c14187d413610abbc2b82d1a3752cb342c1/lx2160aqds_tfa_secure_boot--fsl-lx2160a-qds-7-11-x/uboot/uboot.elf textAddress=0x00000000fbd35000
     cpu0 EnableProfilerCollapsedStack $ORIGIN/uboot-profile true 62914560 maximumNestedContexts=10
 """
 

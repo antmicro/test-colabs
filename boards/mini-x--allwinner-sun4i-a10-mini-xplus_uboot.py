@@ -44,11 +44,14 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 %%writefile script.resc
 logFile $ORIGIN/uboot-renode.log True
 
-using sysbus
 $name?="mini-x--allwinner-sun4i-a10-mini-xplus"
+$bin?=@https://zephyr-dashboard.renode.io/uboot/b3f69c14187d413610abbc2b82d1a3752cb342c1/mini-x--allwinner-sun4i-a10-mini-xplus/uboot/uboot.elf
+$repl?=$ORIGIN/uboot.repl
+
+using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/93905ab6e7564089f5d7b703b660464d675e5ab0/ffd339dd25d1b077a39f348685017e28dfc48d1b/mini-x--allwinner-sun4i-a10-mini-xplus/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/b3f69c14187d413610abbc2b82d1a3752cb342c1/4f68d8d3ac0048d5a44ca2172cbf6ffb40837323/mini-x--allwinner-sun4i-a10-mini-xplus/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -65,10 +68,10 @@ cpu0 AddSymbolHook "panic" $osPanicHook
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/mini-x--allwinner-sun4i-a10-mini-xplus/uboot/uboot.elf
+    sysbus LoadELF $bin
     cpu0 EnableUbootMode
     cpu0 EnableZephyrMode
-    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/mini-x--allwinner-sun4i-a10-mini-xplus/uboot/uboot.elf textAddress=0x4df94000
+    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/b3f69c14187d413610abbc2b82d1a3752cb342c1/mini-x--allwinner-sun4i-a10-mini-xplus/uboot/uboot.elf textAddress=0x4df94000
 """
 
 runMacro $reset

@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/lz4-renode.log True
 
 $name?="qemu_x86"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/ad3df1d0f240f29e07b1620992e2b1aa91e5cf15/qemu_x86/lz4/lz4.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/ed7f2e0833c25fdc67e0d2c1e6d6915275407569/qemu_x86/lz4/lz4.elf
 $repl?=$ORIGIN/lz4.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/ad3df1d0f240f29e07b1620992e2b1aa91e5cf15/fe1dfb0df6239f9ed91fb6d119215c5018586d46/qemu_x86/lz4/lz4.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/ed7f2e0833c25fdc67e0d2c1e6d6915275407569/a89f6f74dc68926e931ddad63a8a5be317822434/qemu_x86/lz4/lz4.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

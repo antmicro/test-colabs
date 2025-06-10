@@ -44,11 +44,14 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 %%writefile script.resc
 logFile $ORIGIN/uboot-renode.log True
 
-using sysbus
 $name?="khadas-edge-captain-rk3399--rockchip-rk3399-khadas-edge-captain"
+$bin?=@https://zephyr-dashboard.renode.io/uboot/b3f69c14187d413610abbc2b82d1a3752cb342c1/khadas-edge-captain-rk3399--rockchip-rk3399-khadas-edge-captain/uboot/uboot.elf
+$repl?=$ORIGIN/uboot.repl
+
+using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/93905ab6e7564089f5d7b703b660464d675e5ab0/ffd339dd25d1b077a39f348685017e28dfc48d1b/khadas-edge-captain-rk3399--rockchip-rk3399-khadas-edge-captain/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/b3f69c14187d413610abbc2b82d1a3752cb342c1/4f68d8d3ac0048d5a44ca2172cbf6ffb40837323/khadas-edge-captain-rk3399--rockchip-rk3399-khadas-edge-captain/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -65,7 +68,7 @@ cpu0 AddSymbolHook "panic" $osPanicHook
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/khadas-edge-captain-rk3399--rockchip-rk3399-khadas-edge-captain/uboot/uboot.elf
+    sysbus LoadELF $bin
     cpu0 EnableUbootMode
     cpu0 EnableZephyrMode
     cpu1 IsHalted true
@@ -73,9 +76,9 @@ macro reset
     cpu3 IsHalted true
     cpu4 IsHalted true
     cpu5 IsHalted true
-    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/khadas-edge-captain-rk3399--rockchip-rk3399-khadas-edge-captain/uboot/uboot.elf textAddress=0x000000000ff1d000
+    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/b3f69c14187d413610abbc2b82d1a3752cb342c1/khadas-edge-captain-rk3399--rockchip-rk3399-khadas-edge-captain/uboot/uboot.elf textAddress=0x000000000ff1d000
     cpu0 EnableProfilerCollapsedStack $ORIGIN/uboot-profile true 62914560 maximumNestedContexts=10
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/khadas-edge-captain-rk3399--rockchip-rk3399-khadas-edge-captain/uboot/uboot.dtb 0x00000000002dcb38
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/b3f69c14187d413610abbc2b82d1a3752cb342c1/khadas-edge-captain-rk3399--rockchip-rk3399-khadas-edge-captain/uboot/uboot.dtb 0x00000000002dcad0
 """
 
 runMacro $reset

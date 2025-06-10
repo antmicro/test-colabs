@@ -44,11 +44,14 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 %%writefile script.resc
 logFile $ORIGIN/uboot-renode.log True
 
-using sysbus
 $name?="milkv_duo--cv1800b-milkv-duo"
+$bin?=@https://zephyr-dashboard.renode.io/uboot/b3f69c14187d413610abbc2b82d1a3752cb342c1/milkv_duo--cv1800b-milkv-duo/uboot/uboot.elf
+$repl?=$ORIGIN/uboot.repl
+
+using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/93905ab6e7564089f5d7b703b660464d675e5ab0/ffd339dd25d1b077a39f348685017e28dfc48d1b/milkv_duo--cv1800b-milkv-duo/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/b3f69c14187d413610abbc2b82d1a3752cb342c1/4f68d8d3ac0048d5a44ca2172cbf6ffb40837323/milkv_duo--cv1800b-milkv-duo/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -72,16 +75,16 @@ macro reset
 cpu0 InstallCustomInstructionHandlerFromString "00000010100101010000000000001011" "" # DCACHE_CPA_A0
 cpu0 InstallCustomInstructionHandlerFromString "00000001100100000000000000001011" "" # SYNC_S
 
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/milkv_duo--cv1800b-milkv-duo/uboot/uboot.elf
+    sysbus LoadELF $bin
     cpu0 EnableUbootMode
     cpu0 EnableZephyrMode
-    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/93905ab6e7564089f5d7b703b660464d675e5ab0/milkv_duo--cv1800b-milkv-duo/uboot/uboot.elf textAddress=0x0000000083eca000
+    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/b3f69c14187d413610abbc2b82d1a3752cb342c1/milkv_duo--cv1800b-milkv-duo/uboot/uboot.elf textAddress=0x0000000083eca000
     cpu0 EnableProfilerCollapsedStack $ORIGIN/uboot-profile true 62914560 maximumNestedContexts=10
     sysbus LoadBinary @https://u-boot-dashboard.renode.io/uboot/6a0db9ee030f634731b792d864fc7a9df6cc6b80/microchip_mpfs_icicle--microchip-mpfs-icicle-kit/uboot/fw_dynamic.bin 0x80000000
     cpu0 PC 0x80000000
 
     cpu0 SetRegister "A0" 0x1                           # hart number
-    cpu0 SetRegister "A1" 0x0000000080251330                # fdt location
+    cpu0 SetRegister "A1" 0x00000000802512d0                # fdt location
     cpu0 SetRegister "A2" 0x80100000                    # struct fw_dynamic_info address
 
     # struct fw_dynamic_info
