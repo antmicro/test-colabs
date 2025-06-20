@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="beelink-gtking--amlogic-meson-g12b-gtking"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/b3f69c14187d413610abbc2b82d1a3752cb342c1/beelink-gtking--amlogic-meson-g12b-gtking/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/beelink-gtking--amlogic-meson-g12b-gtking/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/b3f69c14187d413610abbc2b82d1a3752cb342c1/4f68d8d3ac0048d5a44ca2172cbf6ffb40837323/beelink-gtking--amlogic-meson-g12b-gtking/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/17012e3068d047ad71460f039eeb0c3be63f82a0/620bf6ac483da090947d50639d6ea88e97c34f35/beelink-gtking--amlogic-meson-g12b-gtking/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

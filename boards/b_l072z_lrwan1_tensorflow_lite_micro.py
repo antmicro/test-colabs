@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/tensorflow_lite_micro-renode.log True
 
 $name?="b_l072z_lrwan1"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/ed7f2e0833c25fdc67e0d2c1e6d6915275407569/b_l072z_lrwan1/tensorflow_lite_micro/tensorflow_lite_micro.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/34e47f4040c99d52fe0e5d5eb64b2904e14f8981/b_l072z_lrwan1/tensorflow_lite_micro/tensorflow_lite_micro.elf
 $repl?=$ORIGIN/tensorflow_lite_micro.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/ed7f2e0833c25fdc67e0d2c1e6d6915275407569/a89f6f74dc68926e931ddad63a8a5be317822434/b_l072z_lrwan1/tensorflow_lite_micro/tensorflow_lite_micro.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/34e47f4040c99d52fe0e5d5eb64b2904e14f8981/b50237b53ead88c2c8fe98ee9775c75d08813f6b/b_l072z_lrwan1/tensorflow_lite_micro/tensorflow_lite_micro.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

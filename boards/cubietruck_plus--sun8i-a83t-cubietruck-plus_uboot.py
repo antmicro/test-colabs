@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="cubietruck_plus--sun8i-a83t-cubietruck-plus"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/b3f69c14187d413610abbc2b82d1a3752cb342c1/cubietruck_plus--sun8i-a83t-cubietruck-plus/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/cubietruck_plus--sun8i-a83t-cubietruck-plus/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/b3f69c14187d413610abbc2b82d1a3752cb342c1/4f68d8d3ac0048d5a44ca2172cbf6ffb40837323/cubietruck_plus--sun8i-a83t-cubietruck-plus/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/17012e3068d047ad71460f039eeb0c3be63f82a0/620bf6ac483da090947d50639d6ea88e97c34f35/cubietruck_plus--sun8i-a83t-cubietruck-plus/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -78,7 +78,7 @@ macro reset
     cpu5 IsHalted true
     cpu6 IsHalted true
     cpu7 IsHalted true
-    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/b3f69c14187d413610abbc2b82d1a3752cb342c1/cubietruck_plus--sun8i-a83t-cubietruck-plus/uboot/uboot.elf textAddress=0xbff87000
+    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/cubietruck_plus--sun8i-a83t-cubietruck-plus/uboot/uboot.elf textAddress=0xbff87000
 """
 
 runMacro $reset

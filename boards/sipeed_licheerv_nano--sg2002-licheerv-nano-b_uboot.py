@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="sipeed_licheerv_nano--sg2002-licheerv-nano-b"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/b3f69c14187d413610abbc2b82d1a3752cb342c1/sipeed_licheerv_nano--sg2002-licheerv-nano-b/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/sipeed_licheerv_nano--sg2002-licheerv-nano-b/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/b3f69c14187d413610abbc2b82d1a3752cb342c1/4f68d8d3ac0048d5a44ca2172cbf6ffb40837323/sipeed_licheerv_nano--sg2002-licheerv-nano-b/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/17012e3068d047ad71460f039eeb0c3be63f82a0/620bf6ac483da090947d50639d6ea88e97c34f35/sipeed_licheerv_nano--sg2002-licheerv-nano-b/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -71,7 +71,7 @@ macro reset
     sysbus LoadELF $bin
     cpu0 EnableUbootMode
     cpu0 EnableZephyrMode
-    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/b3f69c14187d413610abbc2b82d1a3752cb342c1/sipeed_licheerv_nano--sg2002-licheerv-nano-b/uboot/uboot.elf textAddress=0x000000008ff7e000
+    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/sipeed_licheerv_nano--sg2002-licheerv-nano-b/uboot/uboot.elf textAddress=0x000000008ff7e000
     cpu0 EnableProfilerCollapsedStack $ORIGIN/uboot-profile true 62914560 maximumNestedContexts=10
     sysbus LoadBinary @https://u-boot-dashboard.renode.io/uboot/6a0db9ee030f634731b792d864fc7a9df6cc6b80/microchip_mpfs_icicle--microchip-mpfs-icicle-kit/uboot/fw_dynamic.bin 0x80000000
     cpu0 PC 0x80000000

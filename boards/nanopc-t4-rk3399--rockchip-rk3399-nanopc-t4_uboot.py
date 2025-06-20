@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="nanopc-t4-rk3399--rockchip-rk3399-nanopc-t4"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/b3f69c14187d413610abbc2b82d1a3752cb342c1/nanopc-t4-rk3399--rockchip-rk3399-nanopc-t4/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/nanopc-t4-rk3399--rockchip-rk3399-nanopc-t4/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/b3f69c14187d413610abbc2b82d1a3752cb342c1/4f68d8d3ac0048d5a44ca2172cbf6ffb40837323/nanopc-t4-rk3399--rockchip-rk3399-nanopc-t4/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/17012e3068d047ad71460f039eeb0c3be63f82a0/620bf6ac483da090947d50639d6ea88e97c34f35/nanopc-t4-rk3399--rockchip-rk3399-nanopc-t4/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -76,9 +76,8 @@ macro reset
     cpu3 IsHalted true
     cpu4 IsHalted true
     cpu5 IsHalted true
-    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/b3f69c14187d413610abbc2b82d1a3752cb342c1/nanopc-t4-rk3399--rockchip-rk3399-nanopc-t4/uboot/uboot.elf textAddress=0x000000000bf21000
+    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/nanopc-t4-rk3399--rockchip-rk3399-nanopc-t4/uboot/uboot.elf textAddress=0x000000000ff23000
     cpu0 EnableProfilerCollapsedStack $ORIGIN/uboot-profile true 62914560 maximumNestedContexts=10
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/b3f69c14187d413610abbc2b82d1a3752cb342c1/nanopc-t4-rk3399--rockchip-rk3399-nanopc-t4/uboot/uboot.dtb 0x00000000002e83d8
 """
 
 runMacro $reset
