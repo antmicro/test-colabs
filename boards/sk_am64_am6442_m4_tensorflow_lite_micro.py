@@ -45,19 +45,19 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/tensorflow_lite_micro-renode.log True
 
 $name?="sk_am64_am6442_m4"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/34e47f4040c99d52fe0e5d5eb64b2904e14f8981/sk_am64_am6442_m4/tensorflow_lite_micro/tensorflow_lite_micro.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/2f2eaf7b6f7fcdae72031da50567e7ae81cb0264/sk_am64_am6442_m4/tensorflow_lite_micro/tensorflow_lite_micro.elf
 $repl?=$ORIGIN/tensorflow_lite_micro.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/34e47f4040c99d52fe0e5d5eb64b2904e14f8981/b50237b53ead88c2c8fe98ee9775c75d08813f6b/sk_am64_am6442_m4/tensorflow_lite_micro/tensorflow_lite_micro.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/2f2eaf7b6f7fcdae72031da50567e7ae81cb0264/08e83a23c4e0976dde65c502d15c8c965105c943/sk_am64_am6442_m4/tensorflow_lite_micro/tensorflow_lite_micro.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
-showAnalyzer uart0
+showAnalyzer mcuuart0
 
-uart0 RecordToAsciinema $ORIGIN/tensorflow_lite_micro-asciinema
+mcuuart0 RecordToAsciinema $ORIGIN/tensorflow_lite_micro-asciinema
 set osPanicHook
 """
 self.ErrorLog("OS Panicked")
@@ -81,7 +81,7 @@ runMacro $reset
 # %%
 monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("sk_am64_am6442_m4")
-terminalTester = TerminalTester(machine.sysbus.uart0, 15)
+terminalTester = TerminalTester(machine.sysbus.mcuuart0, 15)
 
 terminalTester.WaitFor(String("x_value: .* y_value: .*"), treatAsRegex=True, pauseEmulation=True)
 terminalTester.WaitFor(String("x_value: .* y_value: .*"), treatAsRegex=True, pauseEmulation=True)
