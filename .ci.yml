@@ -26,7 +26,7 @@ build:
     - popd
     - git checkout -b $CI_COMMIT_REF_NAME
     - git add boards
-    - git diff --staged --quiet --exit-code && exit 0
+    - git diff --staged --quiet --exit-code && exit 0 || true
     - git commit -m "Automatic update of ipynb files" -m "[ci skip]"
     - git push origin $CI_COMMIT_REF_NAME
   artifacts:
