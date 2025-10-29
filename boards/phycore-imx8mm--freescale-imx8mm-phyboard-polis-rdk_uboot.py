@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="phycore-imx8mm--freescale-imx8mm-phyboard-polis-rdk"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/phycore-imx8mm--freescale-imx8mm-phyboard-polis-rdk/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/fd976ff3a233ae7c6a9f5bec790b02bbbf57bb24/phycore-imx8mm--freescale-imx8mm-phyboard-polis-rdk/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/17012e3068d047ad71460f039eeb0c3be63f82a0/620bf6ac483da090947d50639d6ea88e97c34f35/phycore-imx8mm--freescale-imx8mm-phyboard-polis-rdk/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/fd976ff3a233ae7c6a9f5bec790b02bbbf57bb24/678fb194936e871ab3a4ef84a842f33d5624bad5/phycore-imx8mm--freescale-imx8mm-phyboard-polis-rdk/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -74,15 +74,14 @@ self.SetRegisterUlong(0, 0x0)
 macro reset
 """
     cpu0 PSCIEmulationMethod SMC
-    sysbus LoadELF $bin
+    sysbus LoadELF $bin 
     cpu0 EnableUbootMode
     cpu0 EnableZephyrMode
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
-    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/phycore-imx8mm--freescale-imx8mm-phyboard-polis-rdk/uboot/uboot.elf textAddress=0x00000000bff26000
     cpu0 EnableProfilerCollapsedStack $ORIGIN/uboot-profile true 62914560 maximumNestedContexts=10
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/phycore-imx8mm--freescale-imx8mm-phyboard-polis-rdk/uboot/uboot.dtb 0x00000000402be1e0
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/fd976ff3a233ae7c6a9f5bec790b02bbbf57bb24/phycore-imx8mm--freescale-imx8mm-phyboard-polis-rdk/uboot/uboot.dtb 0x00000000402cc478
 """
 
 runMacro $reset

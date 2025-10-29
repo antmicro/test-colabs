@@ -45,19 +45,19 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/lz4-renode.log True
 
 $name?="pocketbeagle_2_am6232_a53"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/2f2eaf7b6f7fcdae72031da50567e7ae81cb0264/pocketbeagle_2_am6232_a53/lz4/lz4.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/ad320ee4f25130af333f7c8d177ab73b7f584fe8/pocketbeagle_2_am6232_a53/lz4/lz4.elf
 $repl?=$ORIGIN/lz4.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/2f2eaf7b6f7fcdae72031da50567e7ae81cb0264/08e83a23c4e0976dde65c502d15c8c965105c943/pocketbeagle_2_am6232_a53/lz4/lz4.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/ad320ee4f25130af333f7c8d177ab73b7f584fe8/fb29ee41fe3f2756a261758f8e89be1fceb15237/pocketbeagle_2_am6232_a53/lz4/lz4.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
-showAnalyzer uart6
+showAnalyzer mainuart6
 
-uart6 RecordToAsciinema $ORIGIN/lz4-asciinema
+mainuart6 RecordToAsciinema $ORIGIN/lz4-asciinema
 set osPanicHook
 """
 self.ErrorLog("OS Panicked")
@@ -67,10 +67,13 @@ cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
 
 macro reset
 """
-    sysbus LoadELF $bin
+    sysbus LoadELF $bin 
     cpu0 EnableZephyrMode
     emulation SetGlobalSerialExecution true
     gic DisabledSecurity true
+    cpu0 PSCIEmulationMethod SMC
+    cpu1 PSCIEmulationMethod SMC
+    cpu1 IsHalted true
     cpu0 EnableProfilerCollapsedStack $ORIGIN/lz4-profile true 62914560 maximumNestedContexts=10
 """
 
@@ -82,7 +85,7 @@ runMacro $reset
 # %%
 monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("pocketbeagle_2_am6232_a53")
-terminalTester = TerminalTester(machine.sysbus.uart6, 5)
+terminalTester = TerminalTester(machine.sysbus.mainuart6, 5)
 
 terminalTester.WaitFor(String(r"Original Data size: \d+"), treatAsRegex=True, pauseEmulation=True)
 terminalTester.WaitFor(String(r"Compressed Data size : \d+"), treatAsRegex=True, pauseEmulation=True)

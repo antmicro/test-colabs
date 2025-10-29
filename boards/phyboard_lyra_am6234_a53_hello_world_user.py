@@ -45,19 +45,19 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/hello_world_user-renode.log True
 
 $name?="phyboard_lyra_am6234_a53"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/2f2eaf7b6f7fcdae72031da50567e7ae81cb0264/phyboard_lyra_am6234_a53/hello_world_user/hello_world_user.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/ad320ee4f25130af333f7c8d177ab73b7f584fe8/phyboard_lyra_am6234_a53/hello_world_user/hello_world_user.elf
 $repl?=$ORIGIN/hello_world_user.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/2f2eaf7b6f7fcdae72031da50567e7ae81cb0264/08e83a23c4e0976dde65c502d15c8c965105c943/phyboard_lyra_am6234_a53/hello_world_user/hello_world_user.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/ad320ee4f25130af333f7c8d177ab73b7f584fe8/fb29ee41fe3f2756a261758f8e89be1fceb15237/phyboard_lyra_am6234_a53/hello_world_user/hello_world_user.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
-showAnalyzer uart0
+showAnalyzer mainuart0
 
-uart0 RecordToAsciinema $ORIGIN/hello_world_user-asciinema
+mainuart0 RecordToAsciinema $ORIGIN/hello_world_user-asciinema
 set osPanicHook
 """
 self.ErrorLog("OS Panicked")
@@ -67,7 +67,7 @@ cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
 
 macro reset
 """
-    sysbus LoadELF $bin
+    sysbus LoadELF $bin 
     cpu0 EnableZephyrMode
     gic DisabledSecurity true
     cpu0 EnableProfilerCollapsedStack $ORIGIN/hello_world_user-profile true 62914560 maximumNestedContexts=10
@@ -81,7 +81,7 @@ runMacro $reset
 # %%
 monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("phyboard_lyra_am6234_a53")
-terminalTester = TerminalTester(machine.sysbus.uart0, 5)
+terminalTester = TerminalTester(machine.sysbus.mainuart0, 5)
 
 terminalTester.WaitFor(String("Hello World from UserSpace! (phyboard_lyra_am6234_a53)"), pauseEmulation=True)
 

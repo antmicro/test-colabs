@@ -13,37 +13,62 @@
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
 ! pip install -q git+https://github.com/antmicro/renode-run.git
-! pip install -q git+https://github.com/antmicro/pyrenode.git
-! renode-run download
+! pip install -q git+https://github.com/antmicro/pyrenode3.git
+! renode-run download --renode-variant dotnet-portable
 
 # %% [markdown]
 """## Start Renode"""
 
 # %%
-from pyrenode import connect_renode, get_keywords
-connect_renode()
-get_keywords()
+import os
+from renode_run import get_default_renode_path
+from renode_run.utils import RenodeVariant
+
+os.environ['PYRENODE_RUNTIME'] = 'coreclr'
+os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+
+from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
+from Antmicro.Renode.Peripherals.UART import UARTBackend
+from Antmicro.Renode.Analyzers import LoggingUartAnalyzer
+from System import String
+
+currentDirectory = os.getcwd()
+emulation = Emulation()
+monitor = Monitor()
+emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 
 # %% [markdown]
 """## Setup a script"""
 
 # %%
 %%writefile script.resc
+logFile $ORIGIN/philosophers-renode.log True
+
+$name?="litex_vexriscv"
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/ad320ee4f25130af333f7c8d177ab73b7f584fe8/litex_vexriscv/philosophers/philosophers.elf
+$repl?=$ORIGIN/philosophers.repl
 
 using sysbus
-$name?="litex_vexriscv"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/a70bf0e488c5327ad67512c2854987d113318c79/39825dfac1127ddb969d5fea99613f72ad37c639/litex_vexriscv/philosophers/philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/ad320ee4f25130af333f7c8d177ab73b7f584fe8/fb29ee41fe3f2756a261758f8e89be1fceb15237/litex_vexriscv/philosophers/philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
-showAnalyzer sysbus.uart0
-sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
+
+showAnalyzer uart0
+
+uart0 RecordToAsciinema $ORIGIN/philosophers-asciinema
+set osPanicHook
+"""
+self.ErrorLog("OS Panicked")
+"""
+cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
+
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/a70bf0e488c5327ad67512c2854987d113318c79/litex_vexriscv/philosophers/philosophers.elf
-    
+    sysbus LoadELF $bin 
+    cpu0 EnableZephyrMode
 """
 
 runMacro $reset
@@ -52,22 +77,22 @@ runMacro $reset
 """## Run the sample"""
 
 # %%
-ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.uart0", timeout=5)
-StartEmulation()
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("litex_vexriscv")
+terminalTester = TerminalTester(machine.sysbus.uart0, 10)
 
-WaitForLineOnUart("Philosopher 0.*THINKING", treatAsRegex=True)
-WaitForLineOnUart("Philosopher 0.*HOLDING", treatAsRegex=True)
-WaitForLineOnUart("Philosopher 0.*EATING", treatAsRegex=True)
+terminalTester.WaitFor(String("Philosopher 0.*THINKING"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("Philosopher 0.*HOLDING"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("Philosopher 0.*EATING"), treatAsRegex=True, pauseEmulation=True)
 
-ResetEmulation()
+emulation.Dispose()
 
 # %% [markdown]
 """## UART output"""
 
 # %%
 from renode_colab_tools import asciinema
-asciinema.display_asciicast('output.asciinema')
+asciinema.display_asciicast('philosophers-asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""

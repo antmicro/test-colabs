@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="netspace_max_v2--marvell-kirkwood-ns2max"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/netspace_max_v2--marvell-kirkwood-ns2max/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/fd976ff3a233ae7c6a9f5bec790b02bbbf57bb24/netspace_max_v2--marvell-kirkwood-ns2max/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/17012e3068d047ad71460f039eeb0c3be63f82a0/620bf6ac483da090947d50639d6ea88e97c34f35/netspace_max_v2--marvell-kirkwood-ns2max/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/fd976ff3a233ae7c6a9f5bec790b02bbbf57bb24/678fb194936e871ab3a4ef84a842f33d5624bad5/netspace_max_v2--marvell-kirkwood-ns2max/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -68,10 +68,9 @@ cpu0 AddSymbolHook "panic" $osPanicHook
 
 macro reset
 """
-    sysbus LoadELF $bin
+    sysbus LoadELF $bin 
     cpu0 EnableUbootMode
     cpu0 EnableZephyrMode
-    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/netspace_max_v2--marvell-kirkwood-ns2max/uboot/uboot.elf textAddress=0x00f93000
 """
 
 runMacro $reset

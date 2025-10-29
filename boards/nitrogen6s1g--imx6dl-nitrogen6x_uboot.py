@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="nitrogen6s1g--imx6dl-nitrogen6x"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/nitrogen6s1g--imx6dl-nitrogen6x/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/fd976ff3a233ae7c6a9f5bec790b02bbbf57bb24/nitrogen6s1g--imx6dl-nitrogen6x/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/17012e3068d047ad71460f039eeb0c3be63f82a0/620bf6ac483da090947d50639d6ea88e97c34f35/nitrogen6s1g--imx6dl-nitrogen6x/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/fd976ff3a233ae7c6a9f5bec790b02bbbf57bb24/678fb194936e871ab3a4ef84a842f33d5624bad5/nitrogen6s1g--imx6dl-nitrogen6x/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -68,12 +68,11 @@ cpu0 AddSymbolHook "panic" $osPanicHook
 
 macro reset
 """
-    sysbus LoadELF $bin
+    sysbus LoadELF $bin 
     cpu0 EnableUbootMode
     cpu0 EnableZephyrMode
     cpu1 IsHalted true
-    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/nitrogen6s1g--imx6dl-nitrogen6x/uboot/uboot.elf textAddress=0x4f788000
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/nitrogen6s1g--imx6dl-nitrogen6x/uboot/uboot.dtb 0x1787fa60
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/fd976ff3a233ae7c6a9f5bec790b02bbbf57bb24/nitrogen6s1g--imx6dl-nitrogen6x/uboot/uboot.dtb 0x17880710
 """
 
 runMacro $reset

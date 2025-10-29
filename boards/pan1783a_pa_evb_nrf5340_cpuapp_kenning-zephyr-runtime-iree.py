@@ -13,37 +13,63 @@
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
 ! pip install -q git+https://github.com/antmicro/renode-run.git
-! pip install -q git+https://github.com/antmicro/pyrenode.git
-! renode-run download
+! pip install -q git+https://github.com/antmicro/pyrenode3.git
+! renode-run download --renode-variant dotnet-portable
 
 # %% [markdown]
 """## Start Renode"""
 
 # %%
-from pyrenode import connect_renode, get_keywords
-connect_renode()
-get_keywords()
+import os
+from renode_run import get_default_renode_path
+from renode_run.utils import RenodeVariant
+
+os.environ['PYRENODE_RUNTIME'] = 'coreclr'
+os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+
+from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
+from Antmicro.Renode.Peripherals.UART import UARTBackend
+from Antmicro.Renode.Analyzers import LoggingUartAnalyzer
+from System import String
+
+currentDirectory = os.getcwd()
+emulation = Emulation()
+monitor = Monitor()
+emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 
 # %% [markdown]
 """## Setup a script"""
 
 # %%
 %%writefile script.resc
+logFile $ORIGIN/kenning-zephyr-runtime-iree-renode.log True
+
+$name?="pan1783a_pa_evb_nrf5340_cpuapp"
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/ad320ee4f25130af333f7c8d177ab73b7f584fe8/pan1783a_pa_evb_nrf5340_cpuapp/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.elf
+$repl?=$ORIGIN/kenning-zephyr-runtime-iree.repl
 
 using sysbus
-$name?="pan1783a_pa_evb_nrf5340_cpuapp"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f9e3b65d3a9794ee2233aa88172346f887b48d04/1cfe00236a5b1483a5f4de2cf6fa5ca79cc05a7b/pan1783a_pa_evb_nrf5340_cpuapp/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/ad320ee4f25130af333f7c8d177ab73b7f584fe8/fb29ee41fe3f2756a261758f8e89be1fceb15237/pan1783a_pa_evb_nrf5340_cpuapp/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
-showAnalyzer sysbus.uart0
-sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
+
+showAnalyzer uart0
+
+uart0 RecordToAsciinema $ORIGIN/kenning-zephyr-runtime-iree-asciinema
+set osPanicHook
+"""
+self.ErrorLog("OS Panicked")
+"""
+cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
+
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/f9e3b65d3a9794ee2233aa88172346f887b48d04/pan1783a_pa_evb_nrf5340_cpuapp/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.elf
+    sysbus LoadELF $bin 
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
+    cpu0 EnableZephyrMode
 """
 
 runMacro $reset
@@ -52,31 +78,32 @@ runMacro $reset
 """## Run the sample"""
 
 # %%
-ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.uart0", timeout=5)
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("pan1783a_pa_evb_nrf5340_cpuapp")
+terminalTester = TerminalTester(machine.sysbus.uart0, 5)
 
-WaitForLineOnUart("\*\*\* Booting Zephyr OS build.+f9e3b65d3a97 \*\*\*", treatAsRegex=True)
+terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+ad320ee4f251 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
 
-WaitForLineOnUart("I: model output: [wing: 213.957657, ring: 80.423126, slope: 113.229385, negative: 158.669312]")
-WaitForLineOnUart("I: model output: [wing: 162.148727, ring: 140.959763, slope: 149.957062, negative: 236.156754]")
-WaitForLineOnUart("I: model output: [wing: 188.821198, ring: 250.954285, slope: 465.087341, negative: 329.155609]")
-WaitForLineOnUart("I: model output: [wing: 338.350342, ring: 124.087769, slope: 176.398407, negative: 253.115158]")
-WaitForLineOnUart("I: model output: [wing: -4.008126, ring: 17.447975, slope: -7.546309, negative: 11.472969]")
-WaitForLineOnUart("I: model output: [wing: 92.145882, ring: 120.856918, slope: 199.117325, negative: 148.276291]")
-WaitForLineOnUart("I: model output: [wing: 48.781994, ring: -10.816508, slope: 2.117262, negative: 8.108255]")
-WaitForLineOnUart("I: model output: [wing: 409.882996, ring: 152.557037, slope: 218.346588, negative: 307.647278]")
-WaitForLineOnUart("I: model output: [wing: 131.864792, ring: 56.820179, slope: 77.920105, negative: 98.029961]")
-WaitForLineOnUart("I: model output: [wing: 111.868904, ring: 157.771606, slope: 303.319824, negative: 198.856445]")
-WaitForLineOnUart("I: inference done")
+terminalTester.WaitFor(String("I: model output: [wing: 213.957657, ring: 80.423126, slope: 113.229385, negative: 158.669312]"), pauseEmulation=True)
+terminalTester.WaitFor(String("I: model output: [wing: 162.148727, ring: 140.959763, slope: 149.957062, negative: 236.156754]"), pauseEmulation=True)
+terminalTester.WaitFor(String("I: model output: [wing: 188.821198, ring: 250.954285, slope: 465.087341, negative: 329.155609]"), pauseEmulation=True)
+terminalTester.WaitFor(String("I: model output: [wing: 338.350342, ring: 124.087769, slope: 176.398407, negative: 253.115158]"), pauseEmulation=True)
+terminalTester.WaitFor(String("I: model output: [wing: -4.008126, ring: 17.447975, slope: -7.546309, negative: 11.472969]"), pauseEmulation=True)
+terminalTester.WaitFor(String("I: model output: [wing: 92.145882, ring: 120.856918, slope: 199.117325, negative: 148.276291]"), pauseEmulation=True)
+terminalTester.WaitFor(String("I: model output: [wing: 48.781994, ring: -10.816508, slope: 2.117262, negative: 8.108255]"), pauseEmulation=True)
+terminalTester.WaitFor(String("I: model output: [wing: 409.882996, ring: 152.557037, slope: 218.346588, negative: 307.647278]"), pauseEmulation=True)
+terminalTester.WaitFor(String("I: model output: [wing: 131.864792, ring: 56.820179, slope: 77.920105, negative: 98.029961]"), pauseEmulation=True)
+terminalTester.WaitFor(String("I: model output: [wing: 111.868904, ring: 157.771606, slope: 303.319824, negative: 198.856445]"), pauseEmulation=True)
+terminalTester.WaitFor(String("I: inference done"), pauseEmulation=True)
 
-ResetEmulation()
+emulation.Dispose()
 
 # %% [markdown]
 """## UART output"""
 
 # %%
 from renode_colab_tools import asciinema
-asciinema.display_asciicast('output.asciinema')
+asciinema.display_asciicast('kenning-zephyr-runtime-iree-asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""

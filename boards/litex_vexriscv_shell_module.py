@@ -13,37 +13,62 @@
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
 ! pip install -q git+https://github.com/antmicro/renode-run.git
-! pip install -q git+https://github.com/antmicro/pyrenode.git
-! renode-run download
+! pip install -q git+https://github.com/antmicro/pyrenode3.git
+! renode-run download --renode-variant dotnet-portable
 
 # %% [markdown]
 """## Start Renode"""
 
 # %%
-from pyrenode import connect_renode, get_keywords
-connect_renode()
-get_keywords()
+import os
+from renode_run import get_default_renode_path
+from renode_run.utils import RenodeVariant
+
+os.environ['PYRENODE_RUNTIME'] = 'coreclr'
+os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+
+from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
+from Antmicro.Renode.Peripherals.UART import UARTBackend
+from Antmicro.Renode.Analyzers import LoggingUartAnalyzer
+from System import String
+
+currentDirectory = os.getcwd()
+emulation = Emulation()
+monitor = Monitor()
+emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 
 # %% [markdown]
 """## Setup a script"""
 
 # %%
 %%writefile script.resc
+logFile $ORIGIN/shell_module-renode.log True
+
+$name?="litex_vexriscv"
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/ad320ee4f25130af333f7c8d177ab73b7f584fe8/litex_vexriscv/shell_module/shell_module.elf
+$repl?=$ORIGIN/shell_module.repl
 
 using sysbus
-$name?="litex_vexriscv"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/litex_vexriscv-shell_module/litex_vexriscv-shell_module.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/ad320ee4f25130af333f7c8d177ab73b7f584fe8/fb29ee41fe3f2756a261758f8e89be1fceb15237/litex_vexriscv/shell_module/shell_module.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
-showAnalyzer sysbus.uart0
-sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
+
+showAnalyzer uart0
+
+uart0 RecordToAsciinema $ORIGIN/shell_module-asciinema
+set osPanicHook
+"""
+self.ErrorLog("OS Panicked")
+"""
+cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
+
 
 macro reset
 """
-    sysbus LoadELF @https://new-zephyr-dashboard.renode.io/zephyr/044529d0cd06c9bcaf64a78ade7a123e7fb8c9a3/litex_vexriscv/shell_module/shell_module.elf
-    
+    sysbus LoadELF $bin 
+    cpu0 EnableZephyrMode
 """
 
 runMacro $reset
@@ -52,24 +77,24 @@ runMacro $reset
 """## Run the sample"""
 
 # %%
-ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.uart0", timeout=5)
-StartEmulation()
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("litex_vexriscv")
+terminalTester = TerminalTester(machine.sysbus.uart0, 10)
 
-WaitForPromptOnUart("uart:~$")
-WriteLineToUart("")
-WaitForPromptOnUart("uart:~$")
-WriteLineToUart("demo board")
-WaitForLineOnUart("litex_vexriscv")
+terminalTester.WaitFor(String("uart:~$"), pauseEmulation=True)
+terminalTester.WriteLine("")
+terminalTester.WaitFor(String("uart:~$"), pauseEmulation=True)
+terminalTester.WriteLine("demo board")
+terminalTester.WaitFor(String("litex_vexriscv"), pauseEmulation=True)
 
-ResetEmulation()
+emulation.Dispose()
 
 # %% [markdown]
 """## UART output"""
 
 # %%
 from renode_colab_tools import asciinema
-asciinema.display_asciicast('output.asciinema')
+asciinema.display_asciicast('shell_module-asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""
@@ -77,7 +102,8 @@ asciinema.display_asciicast('output.asciinema')
 # %%
 import sys
 from pathlib import Path
-sys.path.append(Path('/root/.config/renode/renode-run.path').read_text())
+from renode_run import get_default_renode_path
+sys.path.append(str(Path(get_default_renode_path()).parent))
 
 from renode_colab_tools import metrics
 from tools.metrics_analyzer.metrics_parser import MetricsParser
