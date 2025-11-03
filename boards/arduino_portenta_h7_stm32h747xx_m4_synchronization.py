@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/synchronization-renode.log True
 
 $name?="arduino_portenta_h7_stm32h747xx_m4"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/ed7f2e0833c25fdc67e0d2c1e6d6915275407569/arduino_portenta_h7_stm32h747xx_m4/synchronization/synchronization.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/0f5e03f1fcba4326baf4507c343f3609bf32c524/arduino_portenta_h7_stm32h747xx_m4/synchronization/synchronization.elf
 $repl?=$ORIGIN/synchronization.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/ed7f2e0833c25fdc67e0d2c1e6d6915275407569/a89f6f74dc68926e931ddad63a8a5be317822434/arduino_portenta_h7_stm32h747xx_m4/synchronization/synchronization.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/0f5e03f1fcba4326baf4507c343f3609bf32c524/34743ba5fd349aed8305c9d44c9822880a59f0f1/arduino_portenta_h7_stm32h747xx_m4/synchronization/synchronization.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -67,7 +67,7 @@ cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
 
 macro reset
 """
-    sysbus LoadELF $bin
+    sysbus LoadELF $bin 
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
     cpu0 EnableZephyrMode
 """
