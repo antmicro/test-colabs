@@ -51,7 +51,7 @@ $repl?=$ORIGIN/hello_world.repl
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/497209c74ead38a01e9d0480b6551f8156939a7a/acd4851c0c3b31478ba6877431be65844c5dfb77/nucleo_l152re/hello_world/hello_world.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/497209c74ead38a01e9d0480b6551f8156939a7a/c84587a7370bc1d3c616ba58aea78cfaa5dac0c8/nucleo_l152re/hello_world/hello_world.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
