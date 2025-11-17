@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/shell_module-renode.log True
 
 $name?="hifive_unleashed_fu540_e51"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/112871afa4f32da694164b668559b1108c96f5cc/hifive_unleashed_fu540_e51/shell_module/shell_module.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/df8b43d330edadad7113e57e540c647b7464ea45/hifive_unleashed_fu540_e51/shell_module/shell_module.elf
 $repl?=$ORIGIN/shell_module.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/112871afa4f32da694164b668559b1108c96f5cc/e785419a6a543712a66b981fc36709a53c9f6a8f/hifive_unleashed_fu540_e51/shell_module/shell_module.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/df8b43d330edadad7113e57e540c647b7464ea45/d82be128f20e28a4954fe2bd70f980fdffe32609/hifive_unleashed_fu540_e51/shell_module/shell_module.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

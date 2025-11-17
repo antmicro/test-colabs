@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="linksprite_pcduino3--sun7i-a20-pcduino3"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/62b45e82bdbf703571450e97f605893fe0d50530/linksprite_pcduino3--sun7i-a20-pcduino3/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/365a7079fb918643da0f0709660a7d8ea76dd6f3/linksprite_pcduino3--sun7i-a20-pcduino3/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/62b45e82bdbf703571450e97f605893fe0d50530/acd4851c0c3b31478ba6877431be65844c5dfb77/linksprite_pcduino3--sun7i-a20-pcduino3/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/365a7079fb918643da0f0709660a7d8ea76dd6f3/d82be128f20e28a4954fe2bd70f980fdffe32609/linksprite_pcduino3--sun7i-a20-pcduino3/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

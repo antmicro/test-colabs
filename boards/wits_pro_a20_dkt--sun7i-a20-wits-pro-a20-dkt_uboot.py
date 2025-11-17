@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="wits_pro_a20_dkt--sun7i-a20-wits-pro-a20-dkt"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/62b45e82bdbf703571450e97f605893fe0d50530/wits_pro_a20_dkt--sun7i-a20-wits-pro-a20-dkt/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/365a7079fb918643da0f0709660a7d8ea76dd6f3/wits_pro_a20_dkt--sun7i-a20-wits-pro-a20-dkt/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/62b45e82bdbf703571450e97f605893fe0d50530/acd4851c0c3b31478ba6877431be65844c5dfb77/wits_pro_a20_dkt--sun7i-a20-wits-pro-a20-dkt/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/365a7079fb918643da0f0709660a7d8ea76dd6f3/d82be128f20e28a4954fe2bd70f980fdffe32609/wits_pro_a20_dkt--sun7i-a20-wits-pro-a20-dkt/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
