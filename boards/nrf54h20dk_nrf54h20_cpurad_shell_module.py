@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/shell_module-renode.log True
 
 $name?="nrf54h20dk_nrf54h20_cpurad"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/2f2eaf7b6f7fcdae72031da50567e7ae81cb0264/nrf54h20dk_nrf54h20_cpurad/shell_module/shell_module.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/9463d9a51d9cb1094bf98ef437a39850a7b5705d/nrf54h20dk_nrf54h20_cpurad/shell_module/shell_module.elf
 $repl?=$ORIGIN/shell_module.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/2f2eaf7b6f7fcdae72031da50567e7ae81cb0264/08e83a23c4e0976dde65c502d15c8c965105c943/nrf54h20dk_nrf54h20_cpurad/shell_module/shell_module.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/9463d9a51d9cb1094bf98ef437a39850a7b5705d/6c22cb92bc98d7a88feff30f0438e5c6fb9003af/nrf54h20dk_nrf54h20_cpurad/shell_module/shell_module.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -67,7 +67,7 @@ cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
 
 macro reset
 """
-    sysbus LoadELF $bin
+    sysbus LoadELF $bin 
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
     cpu0 EnableZephyrMode
     cpu0 EnableProfilerCollapsedStack $ORIGIN/shell_module-profile true 62914560 maximumNestedContexts=10

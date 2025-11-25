@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/philosophers-renode.log True
 
 $name?="intel_socfpga_agilex5_socdk"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/df8b43d330edadad7113e57e540c647b7464ea45/intel_socfpga_agilex5_socdk/philosophers/philosophers.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/9463d9a51d9cb1094bf98ef437a39850a7b5705d/intel_socfpga_agilex5_socdk/philosophers/philosophers.elf
 $repl?=$ORIGIN/philosophers.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/df8b43d330edadad7113e57e540c647b7464ea45/d82be128f20e28a4954fe2bd70f980fdffe32609/intel_socfpga_agilex5_socdk/philosophers/philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/9463d9a51d9cb1094bf98ef437a39850a7b5705d/6c22cb92bc98d7a88feff30f0438e5c6fb9003af/intel_socfpga_agilex5_socdk/philosophers/philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -74,10 +74,13 @@ macro reset
     cpu0 PSCIEmulationMethod SMC
     cpu1 PSCIEmulationMethod SMC
     cpu1 IsHalted true
+    cpu1 EnableZephyrMode
     cpu2 PSCIEmulationMethod SMC
     cpu2 IsHalted true
+    cpu2 EnableZephyrMode
     cpu3 PSCIEmulationMethod SMC
     cpu3 IsHalted true
+    cpu3 EnableZephyrMode
     cpu0 EnableProfilerCollapsedStack $ORIGIN/philosophers-profile true 62914560 maximumNestedContexts=10
 """
 

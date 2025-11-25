@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/hello_world-renode.log True
 
 $name?="imx95_evk_mimx9596_a55_smp"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/df8b43d330edadad7113e57e540c647b7464ea45/imx95_evk_mimx9596_a55_smp/hello_world/hello_world.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/9463d9a51d9cb1094bf98ef437a39850a7b5705d/imx95_evk_mimx9596_a55_smp/hello_world/hello_world.elf
 $repl?=$ORIGIN/hello_world.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/df8b43d330edadad7113e57e540c647b7464ea45/d82be128f20e28a4954fe2bd70f980fdffe32609/imx95_evk_mimx9596_a55_smp/hello_world/hello_world.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/9463d9a51d9cb1094bf98ef437a39850a7b5705d/6c22cb92bc98d7a88feff30f0438e5c6fb9003af/imx95_evk_mimx9596_a55_smp/hello_world/hello_world.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -74,14 +74,19 @@ macro reset
     cpu0 PSCIEmulationMethod SMC
     cpu1 PSCIEmulationMethod SMC
     cpu1 IsHalted true
+    cpu1 EnableZephyrMode
     cpu2 PSCIEmulationMethod SMC
     cpu2 IsHalted true
+    cpu2 EnableZephyrMode
     cpu3 PSCIEmulationMethod SMC
     cpu3 IsHalted true
+    cpu3 EnableZephyrMode
     cpu4 PSCIEmulationMethod SMC
     cpu4 IsHalted true
+    cpu4 EnableZephyrMode
     cpu5 PSCIEmulationMethod SMC
     cpu5 IsHalted true
+    cpu5 EnableZephyrMode
     cpu0 EnableProfilerCollapsedStack $ORIGIN/hello_world-profile true 62914560 maximumNestedContexts=10
 """
 

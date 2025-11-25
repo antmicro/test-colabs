@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="orangepi_pc_plus--sun8i-h3-orangepi-pc-plus"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/365a7079fb918643da0f0709660a7d8ea76dd6f3/orangepi_pc_plus--sun8i-h3-orangepi-pc-plus/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/c5e6d2ab7eba68cbfb600cdc131c0c375ced2ec9/orangepi_pc_plus--sun8i-h3-orangepi-pc-plus/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/365a7079fb918643da0f0709660a7d8ea76dd6f3/d82be128f20e28a4954fe2bd70f980fdffe32609/orangepi_pc_plus--sun8i-h3-orangepi-pc-plus/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/c5e6d2ab7eba68cbfb600cdc131c0c375ced2ec9/6c22cb92bc98d7a88feff30f0438e5c6fb9003af/orangepi_pc_plus--sun8i-h3-orangepi-pc-plus/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/kenning-zephyr-runtime-tflitemicro-renode.log True
 
 $name?="roc_rk3568_pc_rk3568_smp"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/df8b43d330edadad7113e57e540c647b7464ea45/roc_rk3568_pc_rk3568_smp/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/9463d9a51d9cb1094bf98ef437a39850a7b5705d/roc_rk3568_pc_rk3568_smp/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.elf
 $repl?=$ORIGIN/kenning-zephyr-runtime-tflitemicro.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/df8b43d330edadad7113e57e540c647b7464ea45/d82be128f20e28a4954fe2bd70f980fdffe32609/roc_rk3568_pc_rk3568_smp/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/9463d9a51d9cb1094bf98ef437a39850a7b5705d/6c22cb92bc98d7a88feff30f0438e5c6fb9003af/roc_rk3568_pc_rk3568_smp/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -74,10 +74,13 @@ macro reset
     cpu0 PSCIEmulationMethod SMC
     cpu1 PSCIEmulationMethod SMC
     cpu1 IsHalted true
+    cpu1 EnableZephyrMode
     cpu2 PSCIEmulationMethod SMC
     cpu2 IsHalted true
+    cpu2 EnableZephyrMode
     cpu3 PSCIEmulationMethod SMC
     cpu3 IsHalted true
+    cpu3 EnableZephyrMode
 """
 
 runMacro $reset
@@ -90,7 +93,7 @@ monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("roc_rk3568_pc_rk3568_smp")
 terminalTester = TerminalTester(machine.sysbus.uart2, 5)
 
-terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+df8b43d330ed \*\*\*"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+9463d9a51d9c \*\*\*"), treatAsRegex=True, pauseEmulation=True)
 
 terminalTester.WaitFor(String("I: model output: [wing: 1.000000, ring: 0.000000, slope: 0.000000, negative: 0.000000]"), pauseEmulation=True)
 terminalTester.WaitFor(String("I: model output: [wing: 0.000000, ring: 0.000000, slope: 0.000000, negative: 1.000000]"), pauseEmulation=True)
