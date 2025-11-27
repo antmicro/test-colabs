@@ -51,7 +51,7 @@ $repl?=$ORIGIN/rust-app.repl
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/9463d9a51d9cb1094bf98ef437a39850a7b5705d/6c22cb92bc98d7a88feff30f0438e5c6fb9003af/circuitdojo_feather_nrf9160_ns/rust-app/rust-app.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/9463d9a51d9cb1094bf98ef437a39850a7b5705d/f0b6003e9e203d0c86b802628142a51df66eed1c/circuitdojo_feather_nrf9160_ns/rust-app/rust-app.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
