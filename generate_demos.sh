@@ -3,7 +3,7 @@ set -euo pipefail
 
 mkdir -p boards/
 
-zephyr_DEMOS=(philosophers hello_world tensorflow_lite_micro shell_module micropython blinky hello_world_user synchronization lz4 rust-app kenning-zephyr-runtime-microtvm kenning-zephyr-runtime-tflitemicro kenning-zephyr-runtime-iree)
+zephyr_DEMOS=(hello_world philosophers shell_module tensorflow_lite_micro micropython blinky hello_world_user synchronization posix_eventfd rust-app zephyr-lang-rust-hello-world kenning-zephyr-runtime-microtvm kenning-zephyr-runtime-tflitemicro kenning-zephyr-runtime-iree)
 zephyr_dashboard_base=https://zephyr-dashboard.renode.io
 zephyr_VERSION="$(curl -s $zephyr_dashboard_base/zephyr_sim/latest)"
 zephyr_renode_version="$(curl -s $zephyr_dashboard_base/zephyr_sim/$zephyr_VERSION/latest)"
@@ -62,7 +62,7 @@ generate_demos() {
             script=$(cat $resc_path | sed -e "/machine LoadPlatformDescription/c\machine LoadPlatformDescription @${repl}\nmachine EnableProfiler \$ORIGIN/metrics.dump")
 
             # First we replace Jinja templates in the demo-specific input. We'll use it later to fill out the Python template file
-            jinja -D platform ${platform} -D platform_original ${platform_original} -D uart_name ${uart_names[j]} -D gpio_led_name ${gpio_led_names[j]} -D software_version "${!version}" -o "$tmp/${platform}_${demo}" ${demo}
+            jinja -D platform ${platform} -D platform_original ${platform_original} -D uart_name ${uart_names[j]} -D gpio_led_name ${gpio_led_names[j]} -D software_version "${!version}" -o "$tmp/${platform}_${demo}" sample_templates/${demo}
             sample=`cat "${tmp}"/${platform}_${demo}`
             jinja -D sample_name ${demo} -D sample "${sample}" -D platform ${platform} -D platform_original ${platform_original} -D board_path ${board_path} -D uart_name ${uart_names[j]} -D script "$script" -D software_version "${!version}" -D repl "$repl" -D elf "$elf" -o "${board_path}"_"${demo}".py template.py
         done

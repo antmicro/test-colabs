@@ -1,0 +1,9 @@
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("{{platform}}")
+terminalTester = TerminalTester(machine.sysbus.{{uart_name}}, 10)
+
+terminalTester.WaitFor(String("Writing 1 to efd"), pauseEmulation=True)
+terminalTester.WaitFor(String("Completed write loop"), pauseEmulation=True)
+terminalTester.WaitFor(String("Finished"), pauseEmulation=True)
+
+emulation.Dispose()

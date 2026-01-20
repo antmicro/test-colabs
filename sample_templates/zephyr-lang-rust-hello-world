@@ -1,0 +1,7 @@
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("{{platform}}")
+terminalTester = TerminalTester(machine.sysbus.{{uart_name}}, 5)
+
+terminalTester.WaitFor(String("Hello World from Rust on {{platform}}"), pauseEmulation=True)
+
+emulation.Dispose()
