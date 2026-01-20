@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/micropython-renode.log True
 
 $name?="rpi_pico_rp2040_w_mcuboot"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/9463d9a51d9cb1094bf98ef437a39850a7b5705d/rpi_pico_rp2040_w_mcuboot/micropython/micropython.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/caa8079a5362cd0437ec4d74c888077857df1a9c/rpi_pico_rp2040_w_mcuboot/micropython/micropython.elf
 $repl?=$ORIGIN/micropython.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/9463d9a51d9cb1094bf98ef437a39850a7b5705d/f0b6003e9e203d0c86b802628142a51df66eed1c/rpi_pico_rp2040_w_mcuboot/micropython/micropython.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/caa8079a5362cd0437ec4d74c888077857df1a9c/5b03e34050deb983d78c70ca46dc94fee6e45f2a/rpi_pico_rp2040_w_mcuboot/micropython/micropython.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

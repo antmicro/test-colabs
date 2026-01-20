@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="imx8mm_venice--freescale-imx8mm-venice-gw71xx-0x"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/c5e6d2ab7eba68cbfb600cdc131c0c375ced2ec9/imx8mm_venice--freescale-imx8mm-venice-gw71xx-0x/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/ff498a3c5efb424accc1d825cc45cede2540ca13/imx8mm_venice--freescale-imx8mm-venice-gw71xx-0x/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/c5e6d2ab7eba68cbfb600cdc131c0c375ced2ec9/6c22cb92bc98d7a88feff30f0438e5c6fb9003af/imx8mm_venice--freescale-imx8mm-venice-gw71xx-0x/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ff498a3c5efb424accc1d825cc45cede2540ca13/d228058428cec4d6b66916cf4133bcbab372011b/imx8mm_venice--freescale-imx8mm-venice-gw71xx-0x/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -80,8 +80,7 @@ macro reset
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
-    cpu0 EnableProfilerCollapsedStack $ORIGIN/uboot-profile true 62914560 maximumNestedContexts=10
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/c5e6d2ab7eba68cbfb600cdc131c0c375ced2ec9/imx8mm_venice--freescale-imx8mm-venice-gw71xx-0x/uboot/uboot.dtb 0x00000000402fc0f8
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/ff498a3c5efb424accc1d825cc45cede2540ca13/imx8mm_venice--freescale-imx8mm-venice-gw71xx-0x/uboot/uboot.dtb 0x0000000040300158
 """
 
 runMacro $reset

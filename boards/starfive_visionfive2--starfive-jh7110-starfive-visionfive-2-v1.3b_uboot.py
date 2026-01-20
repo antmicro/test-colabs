@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="starfive_visionfive2--starfive-jh7110-starfive-visionfive-2-v1.3b"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/c5e6d2ab7eba68cbfb600cdc131c0c375ced2ec9/starfive_visionfive2--starfive-jh7110-starfive-visionfive-2-v1.3b/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/ff498a3c5efb424accc1d825cc45cede2540ca13/starfive_visionfive2--starfive-jh7110-starfive-visionfive-2-v1.3b/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/c5e6d2ab7eba68cbfb600cdc131c0c375ced2ec9/6c22cb92bc98d7a88feff30f0438e5c6fb9003af/starfive_visionfive2--starfive-jh7110-starfive-visionfive-2-v1.3b/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ff498a3c5efb424accc1d825cc45cede2540ca13/d228058428cec4d6b66916cf4133bcbab372011b/starfive_visionfive2--starfive-jh7110-starfive-visionfive-2-v1.3b/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -74,12 +74,11 @@ macro reset
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
-    cpu0 EnableProfilerCollapsedStack $ORIGIN/uboot-profile true 62914560 maximumNestedContexts=10
     sysbus LoadBinary @https://u-boot-dashboard.renode.io/uboot/6a0db9ee030f634731b792d864fc7a9df6cc6b80/microchip_mpfs_icicle--microchip-mpfs-icicle-kit/uboot/fw_dynamic.bin 0x80000000
     cpu0 PC 0x80000000
 
     cpu0 SetRegister "A0" 0x1                           # hart number
-    cpu0 SetRegister "A1" 0x00000000402896a0                # fdt location
+    cpu0 SetRegister "A1" 0x00000000402a1e60                # fdt location
     cpu0 SetRegister "A2" 0x80100000                    # struct fw_dynamic_info address
 
     # struct fw_dynamic_info
