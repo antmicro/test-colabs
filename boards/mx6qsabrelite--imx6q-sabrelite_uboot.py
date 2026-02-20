@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="mx6qsabrelite--imx6q-sabrelite"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/ff498a3c5efb424accc1d825cc45cede2540ca13/mx6qsabrelite--imx6q-sabrelite/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/f9ffeec4bdcf1da655a0ffea482062adde78fee8/mx6qsabrelite--imx6q-sabrelite/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ff498a3c5efb424accc1d825cc45cede2540ca13/d228058428cec4d6b66916cf4133bcbab372011b/mx6qsabrelite--imx6q-sabrelite/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/f9ffeec4bdcf1da655a0ffea482062adde78fee8/7f0af423ad652a8a5c6fe5b28d0606e7a294ef55/mx6qsabrelite--imx6q-sabrelite/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -74,7 +74,7 @@ macro reset
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/ff498a3c5efb424accc1d825cc45cede2540ca13/mx6qsabrelite--imx6q-sabrelite/uboot/uboot.dtb 0x178865f8
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/f9ffeec4bdcf1da655a0ffea482062adde78fee8/mx6qsabrelite--imx6q-sabrelite/uboot/uboot.dtb 0x17886620
 """
 
 runMacro $reset
