@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/synchronization-renode.log True
 
 $name?="stm32u5a9j_dk"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/b55a618c64f2d1e6e3865befe4ce86409bd139ec/stm32u5a9j_dk/synchronization/synchronization.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/5caa2a4a228fde82b6f09e675bd82d3153fc20aa/stm32u5a9j_dk/synchronization/synchronization.elf
 $repl?=$ORIGIN/synchronization.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/b55a618c64f2d1e6e3865befe4ce86409bd139ec/dc8153a608b10f0e58f9b2f0afa09ba2a63defcb/stm32u5a9j_dk/synchronization/synchronization.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/5caa2a4a228fde82b6f09e675bd82d3153fc20aa/a362ed6f5d5733fa1ebc45f6831f6aaf6341e0f0/stm32u5a9j_dk/synchronization/synchronization.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/zephyr-lang-rust-hello-world-renode.log True
 
 $name?="hifive_unmatched_fu740_s7"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/b55a618c64f2d1e6e3865befe4ce86409bd139ec/hifive_unmatched_fu740_s7/zephyr-lang-rust-hello-world/zephyr-lang-rust-hello-world.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/5caa2a4a228fde82b6f09e675bd82d3153fc20aa/hifive_unmatched_fu740_s7/zephyr-lang-rust-hello-world/zephyr-lang-rust-hello-world.elf
 $repl?=$ORIGIN/zephyr-lang-rust-hello-world.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/b55a618c64f2d1e6e3865befe4ce86409bd139ec/dc8153a608b10f0e58f9b2f0afa09ba2a63defcb/hifive_unmatched_fu740_s7/zephyr-lang-rust-hello-world/zephyr-lang-rust-hello-world.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/5caa2a4a228fde82b6f09e675bd82d3153fc20aa/a362ed6f5d5733fa1ebc45f6831f6aaf6341e0f0/hifive_unmatched_fu740_s7/zephyr-lang-rust-hello-world/zephyr-lang-rust-hello-world.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
