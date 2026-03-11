@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="imx8mm_evk_fspi--freescale-imx8mm-evk"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/437ea9f8be5afaebe2d8cbab6242f1182857f21e/imx8mm_evk_fspi--freescale-imx8mm-evk/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/b26cc03b7cecaabdb306c2f68eebde764161a545/imx8mm_evk_fspi--freescale-imx8mm-evk/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/437ea9f8be5afaebe2d8cbab6242f1182857f21e/f415d947c5e368042f920915fd0b5a2b5f185686/imx8mm_evk_fspi--freescale-imx8mm-evk/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/b26cc03b7cecaabdb306c2f68eebde764161a545/ddb4f9c642d956be68e096c0f4746db0301c3ae9/imx8mm_evk_fspi--freescale-imx8mm-evk/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -80,7 +80,7 @@ macro reset
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/437ea9f8be5afaebe2d8cbab6242f1182857f21e/imx8mm_evk_fspi--freescale-imx8mm-evk/uboot/uboot.dtb 0x00000000402baaf0
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/b26cc03b7cecaabdb306c2f68eebde764161a545/imx8mm_evk_fspi--freescale-imx8mm-evk/uboot/uboot.dtb 0x00000000402baaf0
 """
 
 runMacro $reset
