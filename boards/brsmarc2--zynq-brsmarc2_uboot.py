@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="brsmarc2--zynq-brsmarc2"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/b26cc03b7cecaabdb306c2f68eebde764161a545/brsmarc2--zynq-brsmarc2/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/eefb822fb574e28d49fc9f358328854e17fc8406/brsmarc2--zynq-brsmarc2/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/b26cc03b7cecaabdb306c2f68eebde764161a545/ddb4f9c642d956be68e096c0f4746db0301c3ae9/brsmarc2--zynq-brsmarc2/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/eefb822fb574e28d49fc9f358328854e17fc8406/6f41c16b7aa0a8efe5c94f7f0964994c44845eb4/brsmarc2--zynq-brsmarc2/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -72,7 +72,7 @@ macro reset
     cpu0 EnableUbootMode
     cpu0 EnableZephyrMode
     cpu1 IsHalted true
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/b26cc03b7cecaabdb306c2f68eebde764161a545/brsmarc2--zynq-brsmarc2/uboot/uboot.dtb 0x0407a560
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/eefb822fb574e28d49fc9f358328854e17fc8406/brsmarc2--zynq-brsmarc2/uboot/uboot.dtb 0x0407a560
 """
 
 runMacro $reset

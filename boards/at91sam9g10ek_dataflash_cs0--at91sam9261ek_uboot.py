@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="at91sam9g10ek_dataflash_cs0--at91sam9261ek"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/b26cc03b7cecaabdb306c2f68eebde764161a545/at91sam9g10ek_dataflash_cs0--at91sam9261ek/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/eefb822fb574e28d49fc9f358328854e17fc8406/at91sam9g10ek_dataflash_cs0--at91sam9261ek/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/b26cc03b7cecaabdb306c2f68eebde764161a545/ddb4f9c642d956be68e096c0f4746db0301c3ae9/at91sam9g10ek_dataflash_cs0--at91sam9261ek/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/eefb822fb574e28d49fc9f358328854e17fc8406/6f41c16b7aa0a8efe5c94f7f0964994c44845eb4/at91sam9g10ek_dataflash_cs0--at91sam9261ek/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
