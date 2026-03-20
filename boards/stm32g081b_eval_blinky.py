@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/blinky-renode.log True
 
 $name?="stm32g081b_eval"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/8e0a7d840b6200ce3b15c3b28803dd1ec52d2030/stm32g081b_eval/blinky/blinky.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/4ebb22e7109a111735a8da769fafbd2543c4511a/stm32g081b_eval/blinky/blinky.elf
 $repl?=$ORIGIN/blinky.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/8e0a7d840b6200ce3b15c3b28803dd1ec52d2030/594f3a80df3f8edb918618088589ebe6476062c7/stm32g081b_eval/blinky/blinky.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/4ebb22e7109a111735a8da769fafbd2543c4511a/65a66c089ee2cff218924f21bfbd7545fbf72a50/stm32g081b_eval/blinky/blinky.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
