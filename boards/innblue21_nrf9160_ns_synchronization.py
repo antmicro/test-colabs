@@ -51,7 +51,7 @@ $repl?=$ORIGIN/synchronization.repl
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/492dc2f950ee9a6a84f14cfc4a28fcb2b18156e8/46de17c9c77065853030e8ef478abe6956caf442/innblue21_nrf9160_ns/synchronization/synchronization.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/492dc2f950ee9a6a84f14cfc4a28fcb2b18156e8/302c7f9e7912acbf410cf3515426b288eea80376/innblue21_nrf9160_ns/synchronization/synchronization.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

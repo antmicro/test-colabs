@@ -51,7 +51,7 @@ $repl?=$ORIGIN/hello_world_user.repl
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/492dc2f950ee9a6a84f14cfc4a28fcb2b18156e8/46de17c9c77065853030e8ef478abe6956caf442/max32650fthr/hello_world_user/hello_world_user.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/492dc2f950ee9a6a84f14cfc4a28fcb2b18156e8/302c7f9e7912acbf410cf3515426b288eea80376/max32650fthr/hello_world_user/hello_world_user.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -70,6 +70,7 @@ macro reset
     sysbus LoadELF $bin 
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
     cpu0 EnableZephyrMode
+    cpu1 IsHalted true
     cpu0 EnableProfilerCollapsedStack $ORIGIN/hello_world_user-profile true 62914560 maximumNestedContexts=10
 """
 
