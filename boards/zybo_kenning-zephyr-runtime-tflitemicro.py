@@ -45,14 +45,15 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/kenning-zephyr-runtime-tflitemicro-renode.log True
 
 $name?="zybo"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/54b826336bae437f851fcba332481e24a7e1532d/zybo/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/3deeffb422071c6320b601796cf98e761abd662a/zybo/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.elf
 $repl?=$ORIGIN/kenning-zephyr-runtime-tflitemicro.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/54b826336bae437f851fcba332481e24a7e1532d/0e512aebf21a8c51bda51fa67354277811f10a40/zybo/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/3deeffb422071c6320b601796cf98e761abd662a/aadba26ac052f0e522abcb035a1b99315f49eda8/zybo/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.repl
 machine EnableProfiler $ORIGIN/metrics.dump
+
 
 
 showAnalyzer uart1
@@ -67,7 +68,7 @@ cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
 
 macro reset
 """
-    sysbus LoadELF $bin
+    sysbus LoadELF $bin 
     cpu0 EnableZephyrMode
     cpu1 IsHalted true
 """
@@ -82,7 +83,7 @@ monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("zybo")
 terminalTester = TerminalTester(machine.sysbus.uart1, 5)
 
-terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+54b826336bae \*\*\*"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+3deeffb42207 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
 
 terminalTester.WaitFor(String("I: model output: [wing: 1.000000, ring: 0.000000, slope: 0.000000, negative: 0.000000]"), pauseEmulation=True)
 terminalTester.WaitFor(String("I: model output: [wing: 0.000000, ring: 0.000000, slope: 0.000000, negative: 1.000000]"), pauseEmulation=True)

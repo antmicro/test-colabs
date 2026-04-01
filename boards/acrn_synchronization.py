@@ -45,14 +45,15 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/synchronization-renode.log True
 
 $name?="acrn"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/492dc2f950ee9a6a84f14cfc4a28fcb2b18156e8/acrn/synchronization/synchronization.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/3deeffb422071c6320b601796cf98e761abd662a/acrn/synchronization/synchronization.elf
 $repl?=$ORIGIN/synchronization.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/492dc2f950ee9a6a84f14cfc4a28fcb2b18156e8/302c7f9e7912acbf410cf3515426b288eea80376/acrn/synchronization/synchronization.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/3deeffb422071c6320b601796cf98e761abd662a/aadba26ac052f0e522abcb035a1b99315f49eda8/acrn/synchronization/synchronization.repl
 machine EnableProfiler $ORIGIN/metrics.dump
+
 
 
 showAnalyzer uart0
@@ -76,6 +77,7 @@ macro reset
 
     # disable parallel execution as it is unstable on x86 and x86_64 targets
     emulation SetGlobalSerialExecution true
+
     cpu0 EnableZephyrMode
     cpu1 IsHalted true
 """

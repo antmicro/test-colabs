@@ -45,14 +45,15 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="kontron-sl-mx6ul--nxp-imx-imx6ull-kontron-bl"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/33756fd4a8157d1d921a703c4fa172f6d2eadbd2/kontron-sl-mx6ul--nxp-imx-imx6ull-kontron-bl/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/c704af3c8b0f37929bce8c2a4bba27d6e89919c7/kontron-sl-mx6ul--nxp-imx-imx6ull-kontron-bl/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/33756fd4a8157d1d921a703c4fa172f6d2eadbd2/39ef9468f0788e2d80102fbb8d22ddf3a1ab383c/kontron-sl-mx6ul--nxp-imx-imx6ull-kontron-bl/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/c704af3c8b0f37929bce8c2a4bba27d6e89919c7/acdef8b7186fbf077e3e4fcc532491037d10d843/kontron-sl-mx6ul--nxp-imx-imx6ull-kontron-bl/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
+
 
 
 showAnalyzer uart4
@@ -70,8 +71,7 @@ macro reset
 """
     sysbus LoadELF $bin 
     cpu0 EnableUbootMode
-    cpu0 EnableZephyrMode
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/33756fd4a8157d1d921a703c4fa172f6d2eadbd2/kontron-sl-mx6ul--nxp-imx-imx6ull-kontron-bl/uboot/uboot.dtb 0x878b22e8
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/c704af3c8b0f37929bce8c2a4bba27d6e89919c7/kontron-sl-mx6ul--nxp-imx-imx6ull-kontron-bl/uboot/uboot.dtb 0x878b22e8
 """
 
 runMacro $reset

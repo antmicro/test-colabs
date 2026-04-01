@@ -45,14 +45,15 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="empire_electronix_m712--allwinner-sun5i-a13-empire-electronix-m712"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/33756fd4a8157d1d921a703c4fa172f6d2eadbd2/empire_electronix_m712--allwinner-sun5i-a13-empire-electronix-m712/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/c704af3c8b0f37929bce8c2a4bba27d6e89919c7/empire_electronix_m712--allwinner-sun5i-a13-empire-electronix-m712/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/33756fd4a8157d1d921a703c4fa172f6d2eadbd2/39ef9468f0788e2d80102fbb8d22ddf3a1ab383c/empire_electronix_m712--allwinner-sun5i-a13-empire-electronix-m712/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/c704af3c8b0f37929bce8c2a4bba27d6e89919c7/acdef8b7186fbf077e3e4fcc532491037d10d843/empire_electronix_m712--allwinner-sun5i-a13-empire-electronix-m712/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
+
 
 
 showAnalyzer uart1
@@ -70,7 +71,6 @@ macro reset
 """
     sysbus LoadELF $bin 
     cpu0 EnableUbootMode
-    cpu0 EnableZephyrMode
 """
 
 runMacro $reset

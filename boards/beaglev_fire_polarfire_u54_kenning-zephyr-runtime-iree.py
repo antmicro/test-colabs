@@ -45,14 +45,15 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/kenning-zephyr-runtime-iree-renode.log True
 
 $name?="beaglev_fire_polarfire_u54"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/caa8079a5362cd0437ec4d74c888077857df1a9c/beaglev_fire_polarfire_u54/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/3deeffb422071c6320b601796cf98e761abd662a/beaglev_fire_polarfire_u54/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.elf
 $repl?=$ORIGIN/kenning-zephyr-runtime-iree.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/caa8079a5362cd0437ec4d74c888077857df1a9c/1afd16604d181039b93eb579ad962a864a303227/beaglev_fire_polarfire_u54/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/3deeffb422071c6320b601796cf98e761abd662a/aadba26ac052f0e522abcb035a1b99315f49eda8/beaglev_fire_polarfire_u54/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.repl
 machine EnableProfiler $ORIGIN/metrics.dump
+
 
 
 showAnalyzer uart0
@@ -84,7 +85,7 @@ monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("beaglev_fire_polarfire_u54")
 terminalTester = TerminalTester(machine.sysbus.uart0, 5)
 
-terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+caa8079a5362 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+3deeffb42207 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
 
 terminalTester.WaitFor(String("I: model output: [wing: 213.957657, ring: 80.423126, slope: 113.229385, negative: 158.669312]"), pauseEmulation=True)
 terminalTester.WaitFor(String("I: model output: [wing: 162.148727, ring: 140.959763, slope: 149.957062, negative: 236.156754]"), pauseEmulation=True)

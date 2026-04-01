@@ -45,14 +45,15 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="generic-rk3399--rk3399-generic"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/33756fd4a8157d1d921a703c4fa172f6d2eadbd2/generic-rk3399--rk3399-generic/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/c704af3c8b0f37929bce8c2a4bba27d6e89919c7/generic-rk3399--rk3399-generic/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/33756fd4a8157d1d921a703c4fa172f6d2eadbd2/39ef9468f0788e2d80102fbb8d22ddf3a1ab383c/generic-rk3399--rk3399-generic/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/c704af3c8b0f37929bce8c2a4bba27d6e89919c7/acdef8b7186fbf077e3e4fcc532491037d10d843/generic-rk3399--rk3399-generic/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
+
 
 
 showAnalyzer uart2
@@ -70,7 +71,11 @@ macro reset
 """
     sysbus LoadELF $bin 
     cpu0 EnableUbootMode
-    cpu0 EnableZephyrMode
+    cpu1 EnableUbootMode
+    cpu2 EnableUbootMode
+    cpu3 EnableUbootMode
+    cpu4 EnableUbootMode
+    cpu5 EnableUbootMode
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true

@@ -45,14 +45,15 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="ls1012a2g5rdb_tfa--fsl-ls1012a-2g5rdb"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/ls1012a2g5rdb_tfa--fsl-ls1012a-2g5rdb/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/c704af3c8b0f37929bce8c2a4bba27d6e89919c7/ls1012a2g5rdb_tfa--fsl-ls1012a-2g5rdb/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/17012e3068d047ad71460f039eeb0c3be63f82a0/620bf6ac483da090947d50639d6ea88e97c34f35/ls1012a2g5rdb_tfa--fsl-ls1012a-2g5rdb/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/c704af3c8b0f37929bce8c2a4bba27d6e89919c7/acdef8b7186fbf077e3e4fcc532491037d10d843/ls1012a2g5rdb_tfa--fsl-ls1012a-2g5rdb/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
+
 
 
 showAnalyzer duart0
@@ -66,8 +67,12 @@ cpu0 AddSymbolHook "hang" $osPanicHook
 cpu0 AddSymbolHook "panic" $osPanicHook
 
 
-cpu0 AddCustomPSCIHandler 0xc200ff12
-"""
+# This handler stubs the `smc` SIP call 0xff12 (SIP_SVC_MEM_BANK)
+# atf implementation can be found here:
+# https://github.com/Xilinx/arm-trusted-firmware/blob/e4a37b000fb9a708112da1e06da0e8fad939dc86/plat/nxp/common/sip_svc/sip_svc.c#L115
+# Basically it returns available dram regions size
+
+cpu0 AddCustomPSCIHandler 0xc200ff12 """
 from Antmicro.Renode.Peripherals.CPU import RegisterValue
 
 x1 = self.GetRegisterUlong(1)
@@ -93,11 +98,8 @@ else:
 macro reset
 """
     cpu0 PSCIEmulationMethod SMC
-    sysbus LoadELF $bin
+    sysbus LoadELF $bin 
     cpu0 EnableUbootMode
-    cpu0 EnableZephyrMode
-    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/ls1012a2g5rdb_tfa--fsl-ls1012a-2g5rdb/uboot/uboot.elf textAddress=0x00000000fbd6b000
-    cpu0 EnableProfilerCollapsedStack $ORIGIN/uboot-profile true 62914560 maximumNestedContexts=10
 """
 
 runMacro $reset

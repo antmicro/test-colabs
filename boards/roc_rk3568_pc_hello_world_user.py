@@ -45,14 +45,15 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/hello_world_user-renode.log True
 
 $name?="roc_rk3568_pc"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/492dc2f950ee9a6a84f14cfc4a28fcb2b18156e8/roc_rk3568_pc/hello_world_user/hello_world_user.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/3deeffb422071c6320b601796cf98e761abd662a/roc_rk3568_pc/hello_world_user/hello_world_user.elf
 $repl?=$ORIGIN/hello_world_user.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/492dc2f950ee9a6a84f14cfc4a28fcb2b18156e8/302c7f9e7912acbf410cf3515426b288eea80376/roc_rk3568_pc/hello_world_user/hello_world_user.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/3deeffb422071c6320b601796cf98e761abd662a/aadba26ac052f0e522abcb035a1b99315f49eda8/roc_rk3568_pc/hello_world_user/hello_world_user.repl
 machine EnableProfiler $ORIGIN/metrics.dump
+
 
 
 showAnalyzer uart2
@@ -69,10 +70,10 @@ macro reset
 """
     sysbus LoadELF $bin 
     cpu0 EnableZephyrMode
+    gic DisabledSecurity true
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
-    gic DisabledSecurity true
     cpu0 EnableProfilerCollapsedStack $ORIGIN/hello_world_user-profile true 62914560 maximumNestedContexts=10
 """
 

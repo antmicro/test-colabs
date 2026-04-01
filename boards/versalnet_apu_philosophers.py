@@ -45,14 +45,15 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/philosophers-renode.log True
 
 $name?="versalnet_apu"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/492dc2f950ee9a6a84f14cfc4a28fcb2b18156e8/versalnet_apu/philosophers/philosophers.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/3deeffb422071c6320b601796cf98e761abd662a/versalnet_apu/philosophers/philosophers.elf
 $repl?=$ORIGIN/philosophers.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/492dc2f950ee9a6a84f14cfc4a28fcb2b18156e8/302c7f9e7912acbf410cf3515426b288eea80376/versalnet_apu/philosophers/philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/3deeffb422071c6320b601796cf98e761abd662a/aadba26ac052f0e522abcb035a1b99315f49eda8/versalnet_apu/philosophers/philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
+
 
 
 showAnalyzer uart0
@@ -69,10 +70,10 @@ macro reset
 """
     sysbus LoadELF $bin 
     cpu0 EnableZephyrMode
+    gic DisabledSecurity true
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
-    gic DisabledSecurity true
     cpu0 EnableProfilerCollapsedStack $ORIGIN/philosophers-profile true 62914560 maximumNestedContexts=10
 """
 

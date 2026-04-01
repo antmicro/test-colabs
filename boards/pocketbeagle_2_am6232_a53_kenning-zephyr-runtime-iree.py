@@ -45,14 +45,15 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/kenning-zephyr-runtime-iree-renode.log True
 
 $name?="pocketbeagle_2_am6232_a53"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/17da549ce2acc13a7d9897eb4339604b3f3a54e8/pocketbeagle_2_am6232_a53/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/3deeffb422071c6320b601796cf98e761abd662a/pocketbeagle_2_am6232_a53/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.elf
 $repl?=$ORIGIN/kenning-zephyr-runtime-iree.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/17da549ce2acc13a7d9897eb4339604b3f3a54e8/099fd22301540a22e689dacd61d68e48c3d5e77c/pocketbeagle_2_am6232_a53/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/3deeffb422071c6320b601796cf98e761abd662a/aadba26ac052f0e522abcb035a1b99315f49eda8/pocketbeagle_2_am6232_a53/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.repl
 machine EnableProfiler $ORIGIN/metrics.dump
+
 
 
 showAnalyzer mainuart6
@@ -69,7 +70,6 @@ macro reset
 """
     sysbus LoadELF $bin 
     cpu0 EnableZephyrMode
-    emulation SetGlobalSerialExecution true
     gic DisabledSecurity true
     cpu0 PSCIEmulationMethod SMC
     cpu1 PSCIEmulationMethod SMC
@@ -87,7 +87,7 @@ monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("pocketbeagle_2_am6232_a53")
 terminalTester = TerminalTester(machine.sysbus.mainuart6, 5)
 
-terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+17da549ce2ac \*\*\*"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+3deeffb42207 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
 
 terminalTester.WaitFor(String("I: model output: [wing: 213.957657, ring: 80.423126, slope: 113.229385, negative: 158.669312]"), pauseEmulation=True)
 terminalTester.WaitFor(String("I: model output: [wing: 162.148727, ring: 140.959763, slope: 149.957062, negative: 236.156754]"), pauseEmulation=True)

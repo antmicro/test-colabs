@@ -45,14 +45,15 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="milkv_duo--cv1800b-milkv-duo"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/33756fd4a8157d1d921a703c4fa172f6d2eadbd2/milkv_duo--cv1800b-milkv-duo/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/c704af3c8b0f37929bce8c2a4bba27d6e89919c7/milkv_duo--cv1800b-milkv-duo/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/33756fd4a8157d1d921a703c4fa172f6d2eadbd2/39ef9468f0788e2d80102fbb8d22ddf3a1ab383c/milkv_duo--cv1800b-milkv-duo/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/c704af3c8b0f37929bce8c2a4bba27d6e89919c7/acdef8b7186fbf077e3e4fcc532491037d10d843/milkv_duo--cv1800b-milkv-duo/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
+
 
 
 showAnalyzer uart0
@@ -77,7 +78,6 @@ cpu0 InstallCustomInstructionHandlerFromString "00000001100100000000000000001011
 
     sysbus LoadELF $bin 
     cpu0 EnableUbootMode
-    cpu0 EnableZephyrMode
     sysbus LoadBinary @https://u-boot-dashboard.renode.io/uboot/6a0db9ee030f634731b792d864fc7a9df6cc6b80/microchip_mpfs_icicle--microchip-mpfs-icicle-kit/uboot/fw_dynamic.bin 0x80000000
     cpu0 PC 0x80000000
 

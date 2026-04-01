@@ -45,14 +45,15 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="imx6ul_isiot_nand--imx6ul-isiot-nand"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/33756fd4a8157d1d921a703c4fa172f6d2eadbd2/imx6ul_isiot_nand--imx6ul-isiot-nand/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/c704af3c8b0f37929bce8c2a4bba27d6e89919c7/imx6ul_isiot_nand--imx6ul-isiot-nand/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/33756fd4a8157d1d921a703c4fa172f6d2eadbd2/39ef9468f0788e2d80102fbb8d22ddf3a1ab383c/imx6ul_isiot_nand--imx6ul-isiot-nand/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/c704af3c8b0f37929bce8c2a4bba27d6e89919c7/acdef8b7186fbf077e3e4fcc532491037d10d843/imx6ul_isiot_nand--imx6ul-isiot-nand/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
+
 
 
 showAnalyzer uart1
@@ -70,8 +71,7 @@ macro reset
 """
     sysbus LoadELF $bin 
     cpu0 EnableUbootMode
-    cpu0 EnableZephyrMode
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/33756fd4a8157d1d921a703c4fa172f6d2eadbd2/imx6ul_isiot_nand--imx6ul-isiot-nand/uboot/uboot.dtb 0x87897d00
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/c704af3c8b0f37929bce8c2a4bba27d6e89919c7/imx6ul_isiot_nand--imx6ul-isiot-nand/uboot/uboot.dtb 0x87897d00
 """
 
 runMacro $reset

@@ -45,14 +45,15 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/kenning-zephyr-runtime-tflitemicro-renode.log True
 
 $name?="ubx_evkninab3_nrf52840"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/17da549ce2acc13a7d9897eb4339604b3f3a54e8/ubx_evkninab3_nrf52840/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/3deeffb422071c6320b601796cf98e761abd662a/ubx_evkninab3_nrf52840/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.elf
 $repl?=$ORIGIN/kenning-zephyr-runtime-tflitemicro.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/17da549ce2acc13a7d9897eb4339604b3f3a54e8/099fd22301540a22e689dacd61d68e48c3d5e77c/ubx_evkninab3_nrf52840/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/3deeffb422071c6320b601796cf98e761abd662a/aadba26ac052f0e522abcb035a1b99315f49eda8/ubx_evkninab3_nrf52840/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.repl
 machine EnableProfiler $ORIGIN/metrics.dump
+
 
 
 showAnalyzer uart0
@@ -82,7 +83,7 @@ monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("ubx_evkninab3_nrf52840")
 terminalTester = TerminalTester(machine.sysbus.uart0, 5)
 
-terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+17da549ce2ac \*\*\*"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+3deeffb42207 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
 
 terminalTester.WaitFor(String("I: model output: [wing: 1.000000, ring: 0.000000, slope: 0.000000, negative: 0.000000]"), pauseEmulation=True)
 terminalTester.WaitFor(String("I: model output: [wing: 0.000000, ring: 0.000000, slope: 0.000000, negative: 1.000000]"), pauseEmulation=True)

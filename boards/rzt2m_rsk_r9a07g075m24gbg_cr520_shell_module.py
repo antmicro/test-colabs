@@ -45,14 +45,15 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/shell_module-renode.log True
 
 $name?="rzt2m_rsk_r9a07g075m24gbg_cr520"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/492dc2f950ee9a6a84f14cfc4a28fcb2b18156e8/rzt2m_rsk_r9a07g075m24gbg_cr520/shell_module/shell_module.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/3deeffb422071c6320b601796cf98e761abd662a/rzt2m_rsk_r9a07g075m24gbg_cr520/shell_module/shell_module.elf
 $repl?=$ORIGIN/shell_module.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/492dc2f950ee9a6a84f14cfc4a28fcb2b18156e8/46de17c9c77065853030e8ef478abe6956caf442/rzt2m_rsk_r9a07g075m24gbg_cr520/shell_module/shell_module.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/3deeffb422071c6320b601796cf98e761abd662a/aadba26ac052f0e522abcb035a1b99315f49eda8/rzt2m_rsk_r9a07g075m24gbg_cr520/shell_module/shell_module.repl
 machine EnableProfiler $ORIGIN/metrics.dump
+
 
 
 showAnalyzer sci0
