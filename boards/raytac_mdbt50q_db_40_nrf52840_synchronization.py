@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/synchronization-renode.log True
 
 $name?="raytac_mdbt50q_db_40_nrf52840"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/3deeffb422071c6320b601796cf98e761abd662a/raytac_mdbt50q_db_40_nrf52840/synchronization/synchronization.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/6182bc08c9d72e9e9aed8f5cf05a406fbfd25dd8/raytac_mdbt50q_db_40_nrf52840/synchronization/synchronization.elf
 $repl?=$ORIGIN/synchronization.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/3deeffb422071c6320b601796cf98e761abd662a/aadba26ac052f0e522abcb035a1b99315f49eda8/raytac_mdbt50q_db_40_nrf52840/synchronization/synchronization.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/6182bc08c9d72e9e9aed8f5cf05a406fbfd25dd8/5e276e25c2c71e62f2427c7773ca4c09f9a6c330/raytac_mdbt50q_db_40_nrf52840/synchronization/synchronization.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
