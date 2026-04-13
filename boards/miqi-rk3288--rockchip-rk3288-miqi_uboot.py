@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="miqi-rk3288--rockchip-rk3288-miqi"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/c704af3c8b0f37929bce8c2a4bba27d6e89919c7/miqi-rk3288--rockchip-rk3288-miqi/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/e2fa3e570f83ab0f9ce667ddaec9dc738bcf05b9/miqi-rk3288--rockchip-rk3288-miqi/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/c704af3c8b0f37929bce8c2a4bba27d6e89919c7/acdef8b7186fbf077e3e4fcc532491037d10d843/miqi-rk3288--rockchip-rk3288-miqi/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/e2fa3e570f83ab0f9ce667ddaec9dc738bcf05b9/1ad93ffd5b0f2d67ff04f593de6318d12379d897/miqi-rk3288--rockchip-rk3288-miqi/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -77,7 +77,7 @@ macro reset
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/c704af3c8b0f37929bce8c2a4bba27d6e89919c7/miqi-rk3288--rockchip-rk3288-miqi/uboot/uboot.dtb 0x0108e198
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/e2fa3e570f83ab0f9ce667ddaec9dc738bcf05b9/miqi-rk3288--rockchip-rk3288-miqi/uboot/uboot.dtb 0x0108e4d0
 """
 
 runMacro $reset
