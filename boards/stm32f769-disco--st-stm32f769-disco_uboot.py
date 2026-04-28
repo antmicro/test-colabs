@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="stm32f769-disco--st-stm32f769-disco"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/e2fa3e570f83ab0f9ce667ddaec9dc738bcf05b9/stm32f769-disco--st-stm32f769-disco/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/e3405917a1806971d9e72a94186b299f05581e1a/stm32f769-disco--st-stm32f769-disco/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/e2fa3e570f83ab0f9ce667ddaec9dc738bcf05b9/1ad93ffd5b0f2d67ff04f593de6318d12379d897/stm32f769-disco--st-stm32f769-disco/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/e3405917a1806971d9e72a94186b299f05581e1a/f737da4d0af595b97dc46376762a8c876002c508/stm32f769-disco--st-stm32f769-disco/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

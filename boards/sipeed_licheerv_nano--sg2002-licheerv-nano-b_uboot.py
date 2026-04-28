@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="sipeed_licheerv_nano--sg2002-licheerv-nano-b"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/e2fa3e570f83ab0f9ce667ddaec9dc738bcf05b9/sipeed_licheerv_nano--sg2002-licheerv-nano-b/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/e3405917a1806971d9e72a94186b299f05581e1a/sipeed_licheerv_nano--sg2002-licheerv-nano-b/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/e2fa3e570f83ab0f9ce667ddaec9dc738bcf05b9/1ad93ffd5b0f2d67ff04f593de6318d12379d897/sipeed_licheerv_nano--sg2002-licheerv-nano-b/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/e3405917a1806971d9e72a94186b299f05581e1a/f737da4d0af595b97dc46376762a8c876002c508/sipeed_licheerv_nano--sg2002-licheerv-nano-b/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -75,7 +75,7 @@ macro reset
     cpu0 PC 0x80000000
 
     cpu0 SetRegister "A0" 0x1                           # hart number
-    cpu0 SetRegister "A1" 0x000000008025cfb0                # fdt location
+    cpu0 SetRegister "A1" 0x000000008025d020                # fdt location
     cpu0 SetRegister "A2" 0x80100000                    # struct fw_dynamic_info address
 
     # struct fw_dynamic_info

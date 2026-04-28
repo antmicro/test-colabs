@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="sifive_unleashed--sifive-hifive-unleashed-a00"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/e2fa3e570f83ab0f9ce667ddaec9dc738bcf05b9/sifive_unleashed--sifive-hifive-unleashed-a00/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/e3405917a1806971d9e72a94186b299f05581e1a/sifive_unleashed--sifive-hifive-unleashed-a00/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/e2fa3e570f83ab0f9ce667ddaec9dc738bcf05b9/1ad93ffd5b0f2d67ff04f593de6318d12379d897/sifive_unleashed--sifive-hifive-unleashed-a00/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/e3405917a1806971d9e72a94186b299f05581e1a/f737da4d0af595b97dc46376762a8c876002c508/sifive_unleashed--sifive-hifive-unleashed-a00/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -74,22 +74,14 @@ macro reset
     cpu1 EnableUbootMode
     cpu2 EnableUbootMode
     cpu3 EnableUbootMode
-    u54_1 EnableUbootMode
-    u54_2 EnableUbootMode
-    u54_3 EnableUbootMode
-    u54_4 EnableUbootMode
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
-    u54_1 IsHalted true
-    u54_2 IsHalted true
-    u54_3 IsHalted true
-    u54_4 IsHalted true
     sysbus LoadBinary @https://u-boot-dashboard.renode.io/uboot/6a0db9ee030f634731b792d864fc7a9df6cc6b80/microchip_mpfs_icicle--microchip-mpfs-icicle-kit/uboot/fw_dynamic.bin 0x80000000
     cpu0 PC 0x80000000
 
     cpu0 SetRegister "A0" 0x1                           # hart number
-    cpu0 SetRegister "A1" 0x000000008025d8c0                # fdt location
+    cpu0 SetRegister "A1" 0x000000008025da10                # fdt location
     cpu0 SetRegister "A2" 0x80100000                    # struct fw_dynamic_info address
 
     # struct fw_dynamic_info
