@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="radxa-zero-3-rk3566--rockchip-rk3566-radxa-zero-3w"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/e3405917a1806971d9e72a94186b299f05581e1a/radxa-zero-3-rk3566--rockchip-rk3566-radxa-zero-3w/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/b52670d37bc855f6c8da63eb51bf84bce4dad90b/radxa-zero-3-rk3566--rockchip-rk3566-radxa-zero-3w/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/e3405917a1806971d9e72a94186b299f05581e1a/f737da4d0af595b97dc46376762a8c876002c508/radxa-zero-3-rk3566--rockchip-rk3566-radxa-zero-3w/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/b52670d37bc855f6c8da63eb51bf84bce4dad90b/7dbc814a3039d7e8029d635a81870a0e3ca0b801/radxa-zero-3-rk3566--rockchip-rk3566-radxa-zero-3w/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
