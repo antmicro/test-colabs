@@ -13,40 +13,68 @@
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
 ! pip install -q git+https://github.com/antmicro/renode-run.git
-! pip install -q git+https://github.com/antmicro/pyrenode.git
-! renode-run download
+! pip install -q git+https://github.com/antmicro/pyrenode3.git
+! renode-run download --renode-variant dotnet-portable
 
 # %% [markdown]
 """## Start Renode"""
 
 # %%
-from pyrenode import connect_renode, get_keywords
-connect_renode()
-get_keywords()
+import os
+from renode_run import get_default_renode_path
+from renode_run.utils import RenodeVariant
+
+os.environ['PYRENODE_RUNTIME'] = 'coreclr'
+os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+
+from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
+from Antmicro.Renode.Peripherals.UART import UARTBackend
+from Antmicro.Renode.Analyzers import LoggingUartAnalyzer
+from System import String
+
+currentDirectory = os.getcwd()
+emulation = Emulation()
+monitor = Monitor()
+emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 
 # %% [markdown]
 """## Setup a script"""
 
 # %%
 %%writefile script.resc
+logFile $ORIGIN/micropython-renode.log True
+
+$name?="visionfive2"
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/f39ad09bd21c5bf409e13e6420e5b396d56d2ae8/visionfive2/micropython/micropython.elf
+$repl?=$ORIGIN/micropython.repl
 
 using sysbus
-$name?="visionfive2"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f9e3b65d3a9794ee2233aa88172346f887b48d04/1cfe00236a5b1483a5f4de2cf6fa5ca79cc05a7b/visionfive2/micropython/micropython.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f39ad09bd21c5bf409e13e6420e5b396d56d2ae8/b5b87e7c9d965134393b39d8bc42e4699948cde7/visionfive2/micropython/micropython.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
-showAnalyzer sysbus.uart0
-sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
+
+
+showAnalyzer uart0
+
+uart0 RecordToAsciinema $ORIGIN/micropython-asciinema
+set osPanicHook
+"""
+self.ErrorLog("OS Panicked")
+"""
+cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
+
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/f9e3b65d3a9794ee2233aa88172346f887b48d04/visionfive2/micropython/micropython.elf
+    sysbus LoadELF $bin 
+    cpu0 EnableZephyrMode
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
     cpu4 IsHalted true
+    cpu0 EnableProfilerCollapsedStack $ORIGIN/micropython-profile true 62914560 maximumNestedContexts=10
 """
 
 runMacro $reset
@@ -55,29 +83,33 @@ runMacro $reset
 """## Run the sample"""
 
 # %%
-ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.uart0", timeout=5)
-StartEmulation()
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("visionfive2")
+terminalTester = TerminalTester(machine.sysbus.uart0, 15)
 
-WaitForPromptOnUart(">>>")
-WriteLineToUart("2+2")
-WriteLineToUart("")
-WaitForLineOnUart("4")
-WriteLineToUart("def compare(a, b): return True if a > b else False")
-WriteLineToUart("")
-WriteLineToUart("compare(3.2, 2.4)")
-WaitForLineOnUart("True")
-WriteLineToUart("compare(2.2, 5.8)")
-WaitForLineOnUart("False")
+terminalTester.WaitFor(String(">>>"), pauseEmulation=True)
 
-ResetEmulation()
+terminalTester.WriteLine("2+2")
+terminalTester.WaitFor(String("4"), pauseEmulation=True)
+
+terminalTester.WriteLine("def compare(a, b): return True if a > b else False")
+terminalTester.WaitFor(String("..."), pauseEmulation=True)
+terminalTester.WriteLine("")
+
+terminalTester.WriteLine("compare(3.2, 2.4)")
+terminalTester.WaitFor(String("True"), pauseEmulation=True)
+
+terminalTester.WriteLine("compare(2.2, 5.8)")
+terminalTester.WaitFor(String("False"), pauseEmulation=True)
+
+emulation.Dispose()
 
 # %% [markdown]
 """## UART output"""
 
 # %%
 from renode_colab_tools import asciinema
-asciinema.display_asciicast('output.asciinema')
+asciinema.display_asciicast('micropython-asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""

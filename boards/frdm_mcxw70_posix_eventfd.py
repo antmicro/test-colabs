@@ -45,19 +45,20 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/posix_eventfd-renode.log True
 
 $name?="frdm_mcxw70"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/4ebb22e7109a111735a8da769fafbd2543c4511a/frdm_mcxw70/posix_eventfd/posix_eventfd.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/f39ad09bd21c5bf409e13e6420e5b396d56d2ae8/frdm_mcxw70/posix_eventfd/posix_eventfd.elf
 $repl?=$ORIGIN/posix_eventfd.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/4ebb22e7109a111735a8da769fafbd2543c4511a/65a66c089ee2cff218924f21bfbd7545fbf72a50/frdm_mcxw70/posix_eventfd/posix_eventfd.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f39ad09bd21c5bf409e13e6420e5b396d56d2ae8/b5b87e7c9d965134393b39d8bc42e4699948cde7/frdm_mcxw70/posix_eventfd/posix_eventfd.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
-showAnalyzer lpuart1
 
-lpuart1 RecordToAsciinema $ORIGIN/posix_eventfd-asciinema
+showAnalyzer lpuart0
+
+lpuart0 RecordToAsciinema $ORIGIN/posix_eventfd-asciinema
 set osPanicHook
 """
 self.ErrorLog("OS Panicked")
@@ -81,7 +82,7 @@ runMacro $reset
 # %%
 monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("frdm_mcxw70")
-terminalTester = TerminalTester(machine.sysbus.lpuart1, 10)
+terminalTester = TerminalTester(machine.sysbus.lpuart0, 10)
 
 terminalTester.WaitFor(String("Writing 1 to efd"), pauseEmulation=True)
 terminalTester.WaitFor(String("Completed write loop"), pauseEmulation=True)

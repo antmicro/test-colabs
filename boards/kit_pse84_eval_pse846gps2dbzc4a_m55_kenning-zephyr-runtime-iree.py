@@ -45,14 +45,15 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/kenning-zephyr-runtime-iree-renode.log True
 
 $name?="kit_pse84_eval_pse846gps2dbzc4a_m55"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/caa8079a5362cd0437ec4d74c888077857df1a9c/kit_pse84_eval_pse846gps2dbzc4a_m55/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/f39ad09bd21c5bf409e13e6420e5b396d56d2ae8/kit_pse84_eval_pse846gps2dbzc4a_m55/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.elf
 $repl?=$ORIGIN/kenning-zephyr-runtime-iree.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/caa8079a5362cd0437ec4d74c888077857df1a9c/1afd16604d181039b93eb579ad962a864a303227/kit_pse84_eval_pse846gps2dbzc4a_m55/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f39ad09bd21c5bf409e13e6420e5b396d56d2ae8/b5b87e7c9d965134393b39d8bc42e4699948cde7/kit_pse84_eval_pse846gps2dbzc4a_m55/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.repl
 machine EnableProfiler $ORIGIN/metrics.dump
+
 
 
 showAnalyzer scb2
@@ -82,7 +83,7 @@ monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("kit_pse84_eval_pse846gps2dbzc4a_m55")
 terminalTester = TerminalTester(machine.sysbus.scb2, 5)
 
-terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+caa8079a5362 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+f39ad09bd21c \*\*\*"), treatAsRegex=True, pauseEmulation=True)
 
 terminalTester.WaitFor(String("I: model output: [wing: 213.957657, ring: 80.423126, slope: 113.229385, negative: 158.669312]"), pauseEmulation=True)
 terminalTester.WaitFor(String("I: model output: [wing: 162.148727, ring: 140.959763, slope: 149.957062, negative: 236.156754]"), pauseEmulation=True)

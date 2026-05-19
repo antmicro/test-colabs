@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="a13-olinuxino--allwinner-sun5i-a13-olinuxino"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/b52670d37bc855f6c8da63eb51bf84bce4dad90b/a13-olinuxino--allwinner-sun5i-a13-olinuxino/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/36d4c653580824b16574560b21d4401614d8b68e/a13-olinuxino--allwinner-sun5i-a13-olinuxino/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/b52670d37bc855f6c8da63eb51bf84bce4dad90b/7dbc814a3039d7e8029d635a81870a0e3ca0b801/a13-olinuxino--allwinner-sun5i-a13-olinuxino/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/36d4c653580824b16574560b21d4401614d8b68e/7dbc814a3039d7e8029d635a81870a0e3ca0b801/a13-olinuxino--allwinner-sun5i-a13-olinuxino/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

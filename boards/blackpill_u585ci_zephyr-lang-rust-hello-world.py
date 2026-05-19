@@ -45,14 +45,15 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/zephyr-lang-rust-hello-world-renode.log True
 
 $name?="blackpill_u585ci"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/b84319c460bfdf368ae26382928ec53c913752e6/blackpill_u585ci/zephyr-lang-rust-hello-world/zephyr-lang-rust-hello-world.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/f39ad09bd21c5bf409e13e6420e5b396d56d2ae8/blackpill_u585ci/zephyr-lang-rust-hello-world/zephyr-lang-rust-hello-world.elf
 $repl?=$ORIGIN/zephyr-lang-rust-hello-world.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/b84319c460bfdf368ae26382928ec53c913752e6/0c4e92ce0b6376983f8640ebc6fd9e34a3bb6f0e/blackpill_u585ci/zephyr-lang-rust-hello-world/zephyr-lang-rust-hello-world.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f39ad09bd21c5bf409e13e6420e5b396d56d2ae8/b5b87e7c9d965134393b39d8bc42e4699948cde7/blackpill_u585ci/zephyr-lang-rust-hello-world/zephyr-lang-rust-hello-world.repl
 machine EnableProfiler $ORIGIN/metrics.dump
+
 
 
 showAnalyzer usart1

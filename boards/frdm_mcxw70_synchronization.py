@@ -45,19 +45,20 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/synchronization-renode.log True
 
 $name?="frdm_mcxw70"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/4ebb22e7109a111735a8da769fafbd2543c4511a/frdm_mcxw70/synchronization/synchronization.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/f39ad09bd21c5bf409e13e6420e5b396d56d2ae8/frdm_mcxw70/synchronization/synchronization.elf
 $repl?=$ORIGIN/synchronization.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/4ebb22e7109a111735a8da769fafbd2543c4511a/65a66c089ee2cff218924f21bfbd7545fbf72a50/frdm_mcxw70/synchronization/synchronization.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f39ad09bd21c5bf409e13e6420e5b396d56d2ae8/b5b87e7c9d965134393b39d8bc42e4699948cde7/frdm_mcxw70/synchronization/synchronization.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
-showAnalyzer lpuart1
 
-lpuart1 RecordToAsciinema $ORIGIN/synchronization-asciinema
+showAnalyzer lpuart0
+
+lpuart0 RecordToAsciinema $ORIGIN/synchronization-asciinema
 set osPanicHook
 """
 self.ErrorLog("OS Panicked")
@@ -80,7 +81,7 @@ runMacro $reset
 # %%
 monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("frdm_mcxw70")
-terminalTester = TerminalTester(machine.sysbus.lpuart1, 5)
+terminalTester = TerminalTester(machine.sysbus.lpuart0, 5)
 
 terminalTester.WaitFor(String(r"thread_a: Hello World from cpu \d on frdm_mcxw70"), treatAsRegex=True, pauseEmulation=True)
 terminalTester.WaitFor(String(r"thread_b: Hello World from cpu \d on frdm_mcxw70"), treatAsRegex=True, pauseEmulation=True)

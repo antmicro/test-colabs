@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="socfpga_chameleonv3--socfpga_arria10_chameleonv3_480_2"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/b52670d37bc855f6c8da63eb51bf84bce4dad90b/socfpga_chameleonv3--socfpga_arria10_chameleonv3_480_2/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/36d4c653580824b16574560b21d4401614d8b68e/socfpga_chameleonv3--socfpga_arria10_chameleonv3_480_2/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/b52670d37bc855f6c8da63eb51bf84bce4dad90b/7dbc814a3039d7e8029d635a81870a0e3ca0b801/socfpga_chameleonv3--socfpga_arria10_chameleonv3_480_2/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/36d4c653580824b16574560b21d4401614d8b68e/7dbc814a3039d7e8029d635a81870a0e3ca0b801/socfpga_chameleonv3--socfpga_arria10_chameleonv3_480_2/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -73,7 +73,7 @@ macro reset
     cpu0 EnableUbootMode
     cpu1 EnableUbootMode
     cpu1 IsHalted true
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/b52670d37bc855f6c8da63eb51bf84bce4dad90b/socfpga_chameleonv3--socfpga_arria10_chameleonv3_480_2/uboot/uboot.dtb 0x0105e128
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/36d4c653580824b16574560b21d4401614d8b68e/socfpga_chameleonv3--socfpga_arria10_chameleonv3_480_2/uboot/uboot.dtb 0x0105e108
 """
 
 runMacro $reset
