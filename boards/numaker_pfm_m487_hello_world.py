@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/hello_world-renode.log True
 
 $name?="numaker_pfm_m487"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/7edd8834f66701189dfaf3f1142b2bfba0b508bd/numaker_pfm_m487/hello_world/hello_world.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/07e34e68d34083eb2ae891fa3b41a004841d4339/numaker_pfm_m487/hello_world/hello_world.elf
 $repl?=$ORIGIN/hello_world.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/7edd8834f66701189dfaf3f1142b2bfba0b508bd/088bb95ccf5afd4a017da8b8f3b205a55c3d5da8/numaker_pfm_m487/hello_world/hello_world.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/07e34e68d34083eb2ae891fa3b41a004841d4339/16d8fbb8508b99641d2c7b424d22a32ce114dfc4/numaker_pfm_m487/hello_world/hello_world.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

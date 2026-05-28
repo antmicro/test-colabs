@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/synchronization-renode.log True
 
 $name?="pic64gx_curiosity_kit_pic64gx1000_u54"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/6182bc08c9d72e9e9aed8f5cf05a406fbfd25dd8/pic64gx_curiosity_kit_pic64gx1000_u54/synchronization/synchronization.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/07e34e68d34083eb2ae891fa3b41a004841d4339/pic64gx_curiosity_kit_pic64gx1000_u54/synchronization/synchronization.elf
 $repl?=$ORIGIN/synchronization.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/6182bc08c9d72e9e9aed8f5cf05a406fbfd25dd8/e81fbe7399d54d0434f52ddd1047fb48b37980d5/pic64gx_curiosity_kit_pic64gx1000_u54/synchronization/synchronization.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/07e34e68d34083eb2ae891fa3b41a004841d4339/16d8fbb8508b99641d2c7b424d22a32ce114dfc4/pic64gx_curiosity_kit_pic64gx1000_u54/synchronization/synchronization.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -70,9 +70,6 @@ macro reset
 """
     sysbus LoadELF $bin 
     cpu0 EnableZephyrMode
-    cpu1 IsHalted true
-    cpu2 IsHalted true
-    cpu3 IsHalted true
 """
 
 runMacro $reset

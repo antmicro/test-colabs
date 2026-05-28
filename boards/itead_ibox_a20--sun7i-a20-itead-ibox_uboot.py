@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="itead_ibox_a20--sun7i-a20-itead-ibox"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/36d4c653580824b16574560b21d4401614d8b68e/itead_ibox_a20--sun7i-a20-itead-ibox/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/76d62273bc8a5dc126ed79ed0fb65e5a97359577/itead_ibox_a20--sun7i-a20-itead-ibox/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/36d4c653580824b16574560b21d4401614d8b68e/7dbc814a3039d7e8029d635a81870a0e3ca0b801/itead_ibox_a20--sun7i-a20-itead-ibox/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/76d62273bc8a5dc126ed79ed0fb65e5a97359577/16d8fbb8508b99641d2c7b424d22a32ce114dfc4/itead_ibox_a20--sun7i-a20-itead-ibox/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

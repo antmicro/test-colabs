@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="sifive_unmatched--sifive-hifive-unmatched-a00"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/36d4c653580824b16574560b21d4401614d8b68e/sifive_unmatched--sifive-hifive-unmatched-a00/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/76d62273bc8a5dc126ed79ed0fb65e5a97359577/sifive_unmatched--sifive-hifive-unmatched-a00/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/36d4c653580824b16574560b21d4401614d8b68e/7dbc814a3039d7e8029d635a81870a0e3ca0b801/sifive_unmatched--sifive-hifive-unmatched-a00/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/76d62273bc8a5dc126ed79ed0fb65e5a97359577/16d8fbb8508b99641d2c7b424d22a32ce114dfc4/sifive_unmatched--sifive-hifive-unmatched-a00/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -81,7 +81,7 @@ macro reset
     cpu0 PC 0x80000000
 
     cpu0 SetRegister "A0" 0x1                           # hart number
-    cpu0 SetRegister "A1" 0x0000000080273dd0                # fdt location
+    cpu0 SetRegister "A1" 0x0000000080273e80                # fdt location
     cpu0 SetRegister "A2" 0x80100000                    # struct fw_dynamic_info address
 
     # struct fw_dynamic_info
