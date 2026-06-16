@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="ventana--tegra20-ventana"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/36d4c653580824b16574560b21d4401614d8b68e/ventana--tegra20-ventana/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/5ca1a73c7d3064582498a8aa96c29e714402a6d3/ventana--tegra20-ventana/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/36d4c653580824b16574560b21d4401614d8b68e/7dbc814a3039d7e8029d635a81870a0e3ca0b801/ventana--tegra20-ventana/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/5ca1a73c7d3064582498a8aa96c29e714402a6d3/78ef6f6efe5ba5e989c45cfee74d42534c9d7ac9/ventana--tegra20-ventana/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

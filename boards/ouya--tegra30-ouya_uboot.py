@@ -45,14 +45,15 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="ouya--tegra30-ouya"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/c5e6d2ab7eba68cbfb600cdc131c0c375ced2ec9/ouya--tegra30-ouya/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/5ca1a73c7d3064582498a8aa96c29e714402a6d3/ouya--tegra30-ouya/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/c5e6d2ab7eba68cbfb600cdc131c0c375ced2ec9/6c22cb92bc98d7a88feff30f0438e5c6fb9003af/ouya--tegra30-ouya/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/5ca1a73c7d3064582498a8aa96c29e714402a6d3/78ef6f6efe5ba5e989c45cfee74d42534c9d7ac9/ouya--tegra30-ouya/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
+
 
 
 showAnalyzer uartd
@@ -70,7 +71,9 @@ macro reset
 """
     sysbus LoadELF $bin 
     cpu0 EnableUbootMode
-    cpu0 EnableZephyrMode
+    cpu1 EnableUbootMode
+    cpu2 EnableUbootMode
+    cpu3 EnableUbootMode
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true

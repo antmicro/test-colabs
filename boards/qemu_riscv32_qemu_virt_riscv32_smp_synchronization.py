@@ -13,43 +13,63 @@
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
 ! pip install -q git+https://github.com/antmicro/renode-run.git
-! pip install -q git+https://github.com/antmicro/pyrenode.git
-! renode-run download
+! pip install -q git+https://github.com/antmicro/pyrenode3.git
+! renode-run download --renode-variant dotnet-portable
 
 # %% [markdown]
 """## Start Renode"""
 
 # %%
-from pyrenode import connect_renode, get_keywords
-connect_renode()
-get_keywords()
+import os
+from renode_run import get_default_renode_path
+from renode_run.utils import RenodeVariant
+
+os.environ['PYRENODE_RUNTIME'] = 'coreclr'
+os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+
+from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
+from Antmicro.Renode.Peripherals.UART import UARTBackend
+from Antmicro.Renode.Analyzers import LoggingUartAnalyzer
+from System import String
+
+currentDirectory = os.getcwd()
+emulation = Emulation()
+monitor = Monitor()
+emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 
 # %% [markdown]
 """## Setup a script"""
 
 # %%
 %%writefile script.resc
+logFile $ORIGIN/synchronization-renode.log True
+
+$name?="qemu_riscv32_qemu_virt_riscv32_smp"
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/932e9a426982694a60d280b82e036f73abb0fd11/qemu_riscv32_qemu_virt_riscv32_smp/synchronization/synchronization.elf
+$repl?=$ORIGIN/synchronization.repl
 
 using sysbus
-$name?="qemu_riscv32_qemu_virt_riscv32_smp"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f9e3b65d3a9794ee2233aa88172346f887b48d04/1cfe00236a5b1483a5f4de2cf6fa5ca79cc05a7b/qemu_riscv32_qemu_virt_riscv32_smp/synchronization/synchronization.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/932e9a426982694a60d280b82e036f73abb0fd11/b163fd27af064bcec5768ee663f587e2e53332f4/qemu_riscv32_qemu_virt_riscv32_smp/synchronization/synchronization.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
-showAnalyzer sysbus.uart0
-sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
+
+
+showAnalyzer uart0
+
+uart0 RecordToAsciinema $ORIGIN/synchronization-asciinema
+set osPanicHook
+"""
+self.ErrorLog("OS Panicked")
+"""
+cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
+
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/f9e3b65d3a9794ee2233aa88172346f887b48d04/qemu_riscv32_qemu_virt_riscv32_smp/synchronization/synchronization.elf
-    cpu1 IsHalted true
-    cpu2 IsHalted true
-    cpu3 IsHalted true
-    cpu4 IsHalted true
-    cpu5 IsHalted true
-    cpu6 IsHalted true
-    cpu7 IsHalted true
+    sysbus LoadELF $bin 
+    cpu0 EnableZephyrMode
 """
 
 runMacro $reset
@@ -58,23 +78,23 @@ runMacro $reset
 """## Run the sample"""
 
 # %%
-ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.uart0", timeout=5)
-StartEmulation()
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("qemu_riscv32_qemu_virt_riscv32_smp")
+terminalTester = TerminalTester(machine.sysbus.uart0, 5)
 
-WaitForLineOnUart(r"thread_a: Hello World from cpu \d on qemu_riscv32_qemu_virt_riscv32_smp", treatAsRegex=True)
-WaitForLineOnUart(r"thread_b: Hello World from cpu \d on qemu_riscv32_qemu_virt_riscv32_smp", treatAsRegex=True)
-WaitForLineOnUart(r"thread_a: Hello World from cpu \d on qemu_riscv32_qemu_virt_riscv32_smp", treatAsRegex=True)
-WaitForLineOnUart(r"thread_b: Hello World from cpu \d on qemu_riscv32_qemu_virt_riscv32_smp", treatAsRegex=True)
+terminalTester.WaitFor(String(r"thread_a: Hello World from cpu \d on qemu_riscv32_qemu_virt_riscv32_smp"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String(r"thread_b: Hello World from cpu \d on qemu_riscv32_qemu_virt_riscv32_smp"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String(r"thread_a: Hello World from cpu \d on qemu_riscv32_qemu_virt_riscv32_smp"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String(r"thread_b: Hello World from cpu \d on qemu_riscv32_qemu_virt_riscv32_smp"), treatAsRegex=True, pauseEmulation=True)
 
-ResetEmulation()
+emulation.Dispose()
 
 # %% [markdown]
 """## UART output"""
 
 # %%
 from renode_colab_tools import asciinema
-asciinema.display_asciicast('output.asciinema')
+asciinema.display_asciicast('synchronization-asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""

@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="chagall--tegra30-pegatron-chagall"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/76d62273bc8a5dc126ed79ed0fb65e5a97359577/chagall--tegra30-pegatron-chagall/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/5ca1a73c7d3064582498a8aa96c29e714402a6d3/chagall--tegra30-pegatron-chagall/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/76d62273bc8a5dc126ed79ed0fb65e5a97359577/16d8fbb8508b99641d2c7b424d22a32ce114dfc4/chagall--tegra30-pegatron-chagall/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/5ca1a73c7d3064582498a8aa96c29e714402a6d3/78ef6f6efe5ba5e989c45cfee74d42534c9d7ac9/chagall--tegra30-pegatron-chagall/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
