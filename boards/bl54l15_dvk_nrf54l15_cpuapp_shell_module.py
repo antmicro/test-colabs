@@ -45,20 +45,20 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/shell_module-renode.log True
 
 $name?="bl54l15_dvk_nrf54l15_cpuapp"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/932e9a426982694a60d280b82e036f73abb0fd11/bl54l15_dvk_nrf54l15_cpuapp/shell_module/shell_module.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/dc0256972a7c7d70624bbcebc8dd0f1eb3ab02ce/bl54l15_dvk_nrf54l15_cpuapp/shell_module/shell_module.elf
 $repl?=$ORIGIN/shell_module.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/932e9a426982694a60d280b82e036f73abb0fd11/b163fd27af064bcec5768ee663f587e2e53332f4/bl54l15_dvk_nrf54l15_cpuapp/shell_module/shell_module.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/dc0256972a7c7d70624bbcebc8dd0f1eb3ab02ce/2edf93358f7ef8d172881ae769e53297d04b123a/bl54l15_dvk_nrf54l15_cpuapp/shell_module/shell_module.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
 
-showAnalyzer uart20
+showAnalyzer uart30
 
-uart20 RecordToAsciinema $ORIGIN/shell_module-asciinema
+uart30 RecordToAsciinema $ORIGIN/shell_module-asciinema
 set osPanicHook
 """
 self.ErrorLog("OS Panicked")
@@ -82,7 +82,7 @@ runMacro $reset
 # %%
 monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("bl54l15_dvk_nrf54l15_cpuapp")
-terminalTester = TerminalTester(machine.sysbus.uart20, 10)
+terminalTester = TerminalTester(machine.sysbus.uart30, 10)
 
 terminalTester.WaitFor(String("uart:~$"), pauseEmulation=True)
 terminalTester.WriteLine("")
