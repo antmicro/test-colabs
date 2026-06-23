@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="phycore_pcl063--imx6ul-phytec-segin-ff-rdk-nand"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/5ca1a73c7d3064582498a8aa96c29e714402a6d3/phycore_pcl063--imx6ul-phytec-segin-ff-rdk-nand/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/922cf29dd8045f7348ce0f20145f46e8235faf21/phycore_pcl063--imx6ul-phytec-segin-ff-rdk-nand/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/5ca1a73c7d3064582498a8aa96c29e714402a6d3/78ef6f6efe5ba5e989c45cfee74d42534c9d7ac9/phycore_pcl063--imx6ul-phytec-segin-ff-rdk-nand/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/922cf29dd8045f7348ce0f20145f46e8235faf21/dc52b24c118a8a53b59b619636004ce16a57c68e/phycore_pcl063--imx6ul-phytec-segin-ff-rdk-nand/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
