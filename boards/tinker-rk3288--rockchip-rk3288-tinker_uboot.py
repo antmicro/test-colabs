@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="tinker-rk3288--rockchip-rk3288-tinker"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/922cf29dd8045f7348ce0f20145f46e8235faf21/tinker-rk3288--rockchip-rk3288-tinker/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/6902fb4c17faa375003124c451c2550deab5463d/tinker-rk3288--rockchip-rk3288-tinker/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/922cf29dd8045f7348ce0f20145f46e8235faf21/dc52b24c118a8a53b59b619636004ce16a57c68e/tinker-rk3288--rockchip-rk3288-tinker/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/6902fb4c17faa375003124c451c2550deab5463d/23b222d52d05f623d4056e3c7d9c9d8f27df0fc0/tinker-rk3288--rockchip-rk3288-tinker/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -77,7 +77,7 @@ macro reset
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/922cf29dd8045f7348ce0f20145f46e8235faf21/tinker-rk3288--rockchip-rk3288-tinker/uboot/uboot.dtb 0x01091460
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/6902fb4c17faa375003124c451c2550deab5463d/tinker-rk3288--rockchip-rk3288-tinker/uboot/uboot.dtb 0x01091470
 """
 
 runMacro $reset

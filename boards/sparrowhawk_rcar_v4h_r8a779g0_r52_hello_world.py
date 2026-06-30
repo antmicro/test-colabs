@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/hello_world-renode.log True
 
 $name?="sparrowhawk_rcar_v4h_r8a779g0_r52"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/dc0256972a7c7d70624bbcebc8dd0f1eb3ab02ce/sparrowhawk_rcar_v4h_r8a779g0_r52/hello_world/hello_world.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/769c4f2846db675bc5c584b6d35551ad239c72da/sparrowhawk_rcar_v4h_r8a779g0_r52/hello_world/hello_world.elf
 $repl?=$ORIGIN/hello_world.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/dc0256972a7c7d70624bbcebc8dd0f1eb3ab02ce/2edf93358f7ef8d172881ae769e53297d04b123a/sparrowhawk_rcar_v4h_r8a779g0_r52/hello_world/hello_world.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/769c4f2846db675bc5c584b6d35551ad239c72da/69ac352227821ca8b29c15396709038725064d8a/sparrowhawk_rcar_v4h_r8a779g0_r52/hello_world/hello_world.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

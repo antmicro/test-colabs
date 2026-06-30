@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="starfive_visionfive2--starfive-jh7110-deepcomputing-fml13v01"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/922cf29dd8045f7348ce0f20145f46e8235faf21/starfive_visionfive2--starfive-jh7110-deepcomputing-fml13v01/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/6902fb4c17faa375003124c451c2550deab5463d/starfive_visionfive2--starfive-jh7110-deepcomputing-fml13v01/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/922cf29dd8045f7348ce0f20145f46e8235faf21/dc52b24c118a8a53b59b619636004ce16a57c68e/starfive_visionfive2--starfive-jh7110-deepcomputing-fml13v01/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/6902fb4c17faa375003124c451c2550deab5463d/23b222d52d05f623d4056e3c7d9c9d8f27df0fc0/starfive_visionfive2--starfive-jh7110-deepcomputing-fml13v01/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -81,7 +81,7 @@ macro reset
     cpu0 PC 0x80000000
 
     cpu0 SetRegister "A0" 0x1                           # hart number
-    cpu0 SetRegister "A1" 0x00000000402a47c0                # fdt location
+    cpu0 SetRegister "A1" 0x00000000402a4820                # fdt location
     cpu0 SetRegister "A2" 0x80100000                    # struct fw_dynamic_info address
 
     # struct fw_dynamic_info
