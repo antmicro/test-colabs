@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/hello_world-renode.log True
 
 $name?="mpfs_icicle_polarfire_u54"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/769c4f2846db675bc5c584b6d35551ad239c72da/mpfs_icicle_polarfire_u54/hello_world/hello_world.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/34f8f2defd7487ace37bcfd2590b6eb95daaa4d6/mpfs_icicle_polarfire_u54/hello_world/hello_world.elf
 $repl?=$ORIGIN/hello_world.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/769c4f2846db675bc5c584b6d35551ad239c72da/69ac352227821ca8b29c15396709038725064d8a/mpfs_icicle_polarfire_u54/hello_world/hello_world.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/34f8f2defd7487ace37bcfd2590b6eb95daaa4d6/2f38330776ed8394dfffbd33bdbd858255ca7bdd/mpfs_icicle_polarfire_u54/hello_world/hello_world.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -70,9 +70,6 @@ macro reset
 """
     sysbus LoadELF $bin 
     cpu0 EnableZephyrMode
-    cpu1 IsHalted true
-    cpu2 IsHalted true
-    cpu3 IsHalted true
     cpu0 EnableProfilerCollapsedStack $ORIGIN/hello_world-profile true 62914560 maximumNestedContexts=10
 """
 
