@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="ba10_tv_box--allwinner-sun4i-a10-ba10-tvbox"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/780084d7c07f511da4a39b43277c573156ed42e0/ba10_tv_box--allwinner-sun4i-a10-ba10-tvbox/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/ece349ade2973e220f524ce59e59711cc919263f/ba10_tv_box--allwinner-sun4i-a10-ba10-tvbox/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/780084d7c07f511da4a39b43277c573156ed42e0/2f38330776ed8394dfffbd33bdbd858255ca7bdd/ba10_tv_box--allwinner-sun4i-a10-ba10-tvbox/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ece349ade2973e220f524ce59e59711cc919263f/055280b5970d3fcb7f731e3dc88d9b83b670f64f/ba10_tv_box--allwinner-sun4i-a10-ba10-tvbox/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="beaglev_fire--microchip-mpfs-beaglev-fire"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/780084d7c07f511da4a39b43277c573156ed42e0/beaglev_fire--microchip-mpfs-beaglev-fire/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/ece349ade2973e220f524ce59e59711cc919263f/beaglev_fire--microchip-mpfs-beaglev-fire/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/780084d7c07f511da4a39b43277c573156ed42e0/2f38330776ed8394dfffbd33bdbd858255ca7bdd/beaglev_fire--microchip-mpfs-beaglev-fire/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ece349ade2973e220f524ce59e59711cc919263f/055280b5970d3fcb7f731e3dc88d9b83b670f64f/beaglev_fire--microchip-mpfs-beaglev-fire/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -81,7 +81,7 @@ macro reset
     cpu0 PC 0x80000000
 
     cpu0 SetRegister "A0" 0x1                           # hart number
-    cpu0 SetRegister "A1" 0x000000008025ea50                # fdt location
+    cpu0 SetRegister "A1" 0x000000008025e8e0                # fdt location
     cpu0 SetRegister "A2" 0x80100000                    # struct fw_dynamic_info address
 
     # struct fw_dynamic_info

@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="vyasa-rk3288--rockchip-rk3288-vyasa"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/780084d7c07f511da4a39b43277c573156ed42e0/vyasa-rk3288--rockchip-rk3288-vyasa/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/ece349ade2973e220f524ce59e59711cc919263f/vyasa-rk3288--rockchip-rk3288-vyasa/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/780084d7c07f511da4a39b43277c573156ed42e0/2f38330776ed8394dfffbd33bdbd858255ca7bdd/vyasa-rk3288--rockchip-rk3288-vyasa/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ece349ade2973e220f524ce59e59711cc919263f/055280b5970d3fcb7f731e3dc88d9b83b670f64f/vyasa-rk3288--rockchip-rk3288-vyasa/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -77,7 +77,7 @@ macro reset
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/780084d7c07f511da4a39b43277c573156ed42e0/vyasa-rk3288--rockchip-rk3288-vyasa/uboot/uboot.dtb 0x00184d38
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/ece349ade2973e220f524ce59e59711cc919263f/vyasa-rk3288--rockchip-rk3288-vyasa/uboot/uboot.dtb 0x00184d30
 """
 
 runMacro $reset

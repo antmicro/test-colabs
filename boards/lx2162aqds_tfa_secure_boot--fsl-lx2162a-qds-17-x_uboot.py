@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="lx2162aqds_tfa_secure_boot--fsl-lx2162a-qds-17-x"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/780084d7c07f511da4a39b43277c573156ed42e0/lx2162aqds_tfa_secure_boot--fsl-lx2162a-qds-17-x/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/ece349ade2973e220f524ce59e59711cc919263f/lx2162aqds_tfa_secure_boot--fsl-lx2162a-qds-17-x/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/780084d7c07f511da4a39b43277c573156ed42e0/2f38330776ed8394dfffbd33bdbd858255ca7bdd/lx2162aqds_tfa_secure_boot--fsl-lx2162a-qds-17-x/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ece349ade2973e220f524ce59e59711cc919263f/055280b5970d3fcb7f731e3dc88d9b83b670f64f/lx2162aqds_tfa_secure_boot--fsl-lx2162a-qds-17-x/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
