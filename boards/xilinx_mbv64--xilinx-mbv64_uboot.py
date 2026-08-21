@@ -25,7 +25,7 @@ from renode_run import get_default_renode_path
 from renode_run.utils import RenodeVariant
 
 os.environ['PYRENODE_RUNTIME'] = 'coreclr'
-os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+os.environ['PYRENODE_PATH'] = str(get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE))
 
 from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
 from Antmicro.Renode.Peripherals.UART import UARTBackend
@@ -45,14 +45,15 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="xilinx_mbv64--xilinx-mbv64"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/xilinx_mbv64--xilinx-mbv64/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/527115ef6783cec49e5610c523c124b399011361/xilinx_mbv64--xilinx-mbv64/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/17012e3068d047ad71460f039eeb0c3be63f82a0/620bf6ac483da090947d50639d6ea88e97c34f35/xilinx_mbv64--xilinx-mbv64/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/527115ef6783cec49e5610c523c124b399011361/1a7a8b98a93b37b4537c0f7810cd17eb2bb55ae4/xilinx_mbv64--xilinx-mbv64/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
+
 
 
 showAnalyzer uart0
@@ -68,11 +69,8 @@ cpu0 AddSymbolHook "panic" $osPanicHook
 
 macro reset
 """
-    sysbus LoadELF $bin
+    sysbus LoadELF $bin 
     cpu0 EnableUbootMode
-    cpu0 EnableZephyrMode
-    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/xilinx_mbv64--xilinx-mbv64/uboot/uboot.elf textAddress=0x00000000bff9c000
-    cpu0 EnableProfilerCollapsedStack $ORIGIN/uboot-profile true 62914560 maximumNestedContexts=10
 """
 
 runMacro $reset

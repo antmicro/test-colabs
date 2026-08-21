@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="nitrogen6dl--imx6dl-nitrogen6x"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/ece349ade2973e220f524ce59e59711cc919263f/nitrogen6dl--imx6dl-nitrogen6x/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/527115ef6783cec49e5610c523c124b399011361/nitrogen6dl--imx6dl-nitrogen6x/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ece349ade2973e220f524ce59e59711cc919263f/a485ae40b718e1a0d180ca7de8604a708ad02c59/nitrogen6dl--imx6dl-nitrogen6x/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/527115ef6783cec49e5610c523c124b399011361/1a7a8b98a93b37b4537c0f7810cd17eb2bb55ae4/nitrogen6dl--imx6dl-nitrogen6x/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -73,7 +73,6 @@ macro reset
     cpu0 EnableUbootMode
     cpu1 EnableUbootMode
     cpu1 IsHalted true
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/ece349ade2973e220f524ce59e59711cc919263f/nitrogen6dl--imx6dl-nitrogen6x/uboot/uboot.dtb 0x178815e8
 """
 
 runMacro $reset

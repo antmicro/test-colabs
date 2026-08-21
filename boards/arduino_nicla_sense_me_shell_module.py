@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/shell_module-renode.log True
 
 $name?="arduino_nicla_sense_me"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/d7a825dc89201dff5389b66bf35bd733bef7c936/arduino_nicla_sense_me/shell_module/shell_module.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/c5dffcb7c9da611b40a828f79fc6a8405416c1ed/arduino_nicla_sense_me/shell_module/shell_module.elf
 $repl?=$ORIGIN/shell_module.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/d7a825dc89201dff5389b66bf35bd733bef7c936/a0cc4bb841b05903a39a8a644d88e981f0f5c79e/arduino_nicla_sense_me/shell_module/shell_module.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/c5dffcb7c9da611b40a828f79fc6a8405416c1ed/ca819552dcd6627e19c44b25cfd1df9dbc17be42/arduino_nicla_sense_me/shell_module/shell_module.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

@@ -25,7 +25,7 @@ from renode_run import get_default_renode_path
 from renode_run.utils import RenodeVariant
 
 os.environ['PYRENODE_RUNTIME'] = 'coreclr'
-os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+os.environ['PYRENODE_PATH'] = str(get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE))
 
 from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
 from Antmicro.Renode.Peripherals.UART import UARTBackend
@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/zephyr-lang-rust-hello-world-renode.log True
 
 $name?="qemu_riscv64_qemu_virt_riscv64_smp"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/d3943eac8869e4c97718cda77d9ab5ef10daddfc/qemu_riscv64_qemu_virt_riscv64_smp/zephyr-lang-rust-hello-world/zephyr-lang-rust-hello-world.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/c5dffcb7c9da611b40a828f79fc6a8405416c1ed/qemu_riscv64_qemu_virt_riscv64_smp/zephyr-lang-rust-hello-world/zephyr-lang-rust-hello-world.elf
 $repl?=$ORIGIN/zephyr-lang-rust-hello-world.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/d3943eac8869e4c97718cda77d9ab5ef10daddfc/4b2c5edd4c1596ec068bd1487a7b4577cfea900f/qemu_riscv64_qemu_virt_riscv64_smp/zephyr-lang-rust-hello-world/zephyr-lang-rust-hello-world.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/c5dffcb7c9da611b40a828f79fc6a8405416c1ed/ca819552dcd6627e19c44b25cfd1df9dbc17be42/qemu_riscv64_qemu_virt_riscv64_smp/zephyr-lang-rust-hello-world/zephyr-lang-rust-hello-world.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

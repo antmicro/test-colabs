@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/philosophers-renode.log True
 
 $name?="orangepi_5_ultra_rk3588"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/d7a825dc89201dff5389b66bf35bd733bef7c936/orangepi_5_ultra_rk3588/philosophers/philosophers.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/c5dffcb7c9da611b40a828f79fc6a8405416c1ed/orangepi_5_ultra_rk3588/philosophers/philosophers.elf
 $repl?=$ORIGIN/philosophers.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/d7a825dc89201dff5389b66bf35bd733bef7c936/a0cc4bb841b05903a39a8a644d88e981f0f5c79e/orangepi_5_ultra_rk3588/philosophers/philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/c5dffcb7c9da611b40a828f79fc6a8405416c1ed/ca819552dcd6627e19c44b25cfd1df9dbc17be42/orangepi_5_ultra_rk3588/philosophers/philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -74,6 +74,10 @@ macro reset
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
+    cpu4 IsHalted true
+    cpu5 IsHalted true
+    cpu6 IsHalted true
+    cpu7 IsHalted true
     cpu0 EnableProfilerCollapsedStack $ORIGIN/philosophers-profile true 62914560 maximumNestedContexts=10
 """
 

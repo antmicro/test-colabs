@@ -25,7 +25,7 @@ from renode_run import get_default_renode_path
 from renode_run.utils import RenodeVariant
 
 os.environ['PYRENODE_RUNTIME'] = 'coreclr'
-os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+os.environ['PYRENODE_PATH'] = str(get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE))
 
 from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
 from Antmicro.Renode.Peripherals.UART import UARTBackend
@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/rust-app-renode.log True
 
 $name?="olimex_stm32_e407"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/34f8f2defd7487ace37bcfd2590b6eb95daaa4d6/olimex_stm32_e407/rust-app/rust-app.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/c5dffcb7c9da611b40a828f79fc6a8405416c1ed/olimex_stm32_e407/rust-app/rust-app.elf
 $repl?=$ORIGIN/rust-app.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/34f8f2defd7487ace37bcfd2590b6eb95daaa4d6/2f38330776ed8394dfffbd33bdbd858255ca7bdd/olimex_stm32_e407/rust-app/rust-app.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/c5dffcb7c9da611b40a828f79fc6a8405416c1ed/ca819552dcd6627e19c44b25cfd1df9dbc17be42/olimex_stm32_e407/rust-app/rust-app.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -84,7 +84,7 @@ monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("olimex_stm32_e407")
 terminalTester = TerminalTester(machine.sysbus.usart1, 5)
 
-terminalTester.WaitFor(String("*** Booting Zephyr OS build 34f8f2defd74 ***"), pauseEmulation=True)
+terminalTester.WaitFor(String("*** Booting Zephyr OS build c5dffcb7c9da ***"), pauseEmulation=True)
 terminalTester.WaitFor(String("Next call will crash if userspace is working"), pauseEmulation=True)
 terminalTester.WaitFor(String(r".*ZEPHYR FATAL ERROR.*"), treatAsRegex=True, pauseEmulation=True)
 

@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/blinky-renode.log True
 
 $name?="nrf9151dk_nrf9151_ns"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/d7a825dc89201dff5389b66bf35bd733bef7c936/nrf9151dk_nrf9151_ns/blinky/blinky.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/c5dffcb7c9da611b40a828f79fc6a8405416c1ed/nrf9151dk_nrf9151_ns/blinky/blinky.elf
 $repl?=$ORIGIN/blinky.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/d7a825dc89201dff5389b66bf35bd733bef7c936/a0cc4bb841b05903a39a8a644d88e981f0f5c79e/nrf9151dk_nrf9151_ns/blinky/blinky.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/c5dffcb7c9da611b40a828f79fc6a8405416c1ed/ca819552dcd6627e19c44b25cfd1df9dbc17be42/nrf9151dk_nrf9151_ns/blinky/blinky.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

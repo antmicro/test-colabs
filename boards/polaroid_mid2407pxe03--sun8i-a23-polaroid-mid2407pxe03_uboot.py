@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="polaroid_mid2407pxe03--sun8i-a23-polaroid-mid2407pxe03"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/ece349ade2973e220f524ce59e59711cc919263f/polaroid_mid2407pxe03--sun8i-a23-polaroid-mid2407pxe03/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/527115ef6783cec49e5610c523c124b399011361/polaroid_mid2407pxe03--sun8i-a23-polaroid-mid2407pxe03/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ece349ade2973e220f524ce59e59711cc919263f/a485ae40b718e1a0d180ca7de8604a708ad02c59/polaroid_mid2407pxe03--sun8i-a23-polaroid-mid2407pxe03/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/527115ef6783cec49e5610c523c124b399011361/1a7a8b98a93b37b4537c0f7810cd17eb2bb55ae4/polaroid_mid2407pxe03--sun8i-a23-polaroid-mid2407pxe03/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/tensorflow_lite_micro-renode.log True
 
 $name?="pic64gx_curiosity_kit_pic64gx1000_e51"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/d7a825dc89201dff5389b66bf35bd733bef7c936/pic64gx_curiosity_kit_pic64gx1000_e51/tensorflow_lite_micro/tensorflow_lite_micro.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/c5dffcb7c9da611b40a828f79fc6a8405416c1ed/pic64gx_curiosity_kit_pic64gx1000_e51/tensorflow_lite_micro/tensorflow_lite_micro.elf
 $repl?=$ORIGIN/tensorflow_lite_micro.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/d7a825dc89201dff5389b66bf35bd733bef7c936/a0cc4bb841b05903a39a8a644d88e981f0f5c79e/pic64gx_curiosity_kit_pic64gx1000_e51/tensorflow_lite_micro/tensorflow_lite_micro.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/c5dffcb7c9da611b40a828f79fc6a8405416c1ed/ca819552dcd6627e19c44b25cfd1df9dbc17be42/pic64gx_curiosity_kit_pic64gx1000_e51/tensorflow_lite_micro/tensorflow_lite_micro.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

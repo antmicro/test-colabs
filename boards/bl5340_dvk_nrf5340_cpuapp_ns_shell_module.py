@@ -25,7 +25,7 @@ from renode_run import get_default_renode_path
 from renode_run.utils import RenodeVariant
 
 os.environ['PYRENODE_RUNTIME'] = 'coreclr'
-os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+os.environ['PYRENODE_PATH'] = str(get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE))
 
 from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
 from Antmicro.Renode.Peripherals.UART import UARTBackend
@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/shell_module-renode.log True
 
 $name?="bl5340_dvk_nrf5340_cpuapp_ns"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/f39ad09bd21c5bf409e13e6420e5b396d56d2ae8/bl5340_dvk_nrf5340_cpuapp_ns/shell_module/shell_module.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/c5dffcb7c9da611b40a828f79fc6a8405416c1ed/bl5340_dvk_nrf5340_cpuapp_ns/shell_module/shell_module.elf
 $repl?=$ORIGIN/shell_module.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f39ad09bd21c5bf409e13e6420e5b396d56d2ae8/b5b87e7c9d965134393b39d8bc42e4699948cde7/bl5340_dvk_nrf5340_cpuapp_ns/shell_module/shell_module.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/c5dffcb7c9da611b40a828f79fc6a8405416c1ed/ca819552dcd6627e19c44b25cfd1df9dbc17be42/bl5340_dvk_nrf5340_cpuapp_ns/shell_module/shell_module.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

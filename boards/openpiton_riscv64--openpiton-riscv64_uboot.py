@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="openpiton_riscv64--openpiton-riscv64"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/ece349ade2973e220f524ce59e59711cc919263f/openpiton_riscv64--openpiton-riscv64/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/527115ef6783cec49e5610c523c124b399011361/openpiton_riscv64--openpiton-riscv64/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ece349ade2973e220f524ce59e59711cc919263f/a485ae40b718e1a0d180ca7de8604a708ad02c59/openpiton_riscv64--openpiton-riscv64/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/527115ef6783cec49e5610c523c124b399011361/1a7a8b98a93b37b4537c0f7810cd17eb2bb55ae4/openpiton_riscv64--openpiton-riscv64/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -77,7 +77,7 @@ macro reset
     cpu0 PC 0x80000000
 
     cpu0 SetRegister "A0" 0x1                           # hart number
-    cpu0 SetRegister "A1" 0x0000000080231640                # fdt location
+    cpu0 SetRegister "A1" 0x00000000802316c0                # fdt location
     cpu0 SetRegister "A2" 0x80100000                    # struct fw_dynamic_info address
 
     # struct fw_dynamic_info

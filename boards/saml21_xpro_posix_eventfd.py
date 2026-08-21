@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/posix_eventfd-renode.log True
 
 $name?="saml21_xpro"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/d7a825dc89201dff5389b66bf35bd733bef7c936/saml21_xpro/posix_eventfd/posix_eventfd.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/c5dffcb7c9da611b40a828f79fc6a8405416c1ed/saml21_xpro/posix_eventfd/posix_eventfd.elf
 $repl?=$ORIGIN/posix_eventfd.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/d7a825dc89201dff5389b66bf35bd733bef7c936/a0cc4bb841b05903a39a8a644d88e981f0f5c79e/saml21_xpro/posix_eventfd/posix_eventfd.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/c5dffcb7c9da611b40a828f79fc6a8405416c1ed/ca819552dcd6627e19c44b25cfd1df9dbc17be42/saml21_xpro/posix_eventfd/posix_eventfd.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
