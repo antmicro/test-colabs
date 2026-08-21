@@ -25,7 +25,7 @@ from renode_run import get_default_renode_path
 from renode_run.utils import RenodeVariant
 
 os.environ['PYRENODE_RUNTIME'] = 'coreclr'
-os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+os.environ['PYRENODE_PATH'] = str(get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE))
 
 from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
 from Antmicro.Renode.Peripherals.UART import UARTBackend
@@ -45,14 +45,15 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="phycore-imx8mp--freescale-imx8mp-phyboard-pollux-rdk"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/phycore-imx8mp--freescale-imx8mp-phyboard-pollux-rdk/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/527115ef6783cec49e5610c523c124b399011361/phycore-imx8mp--freescale-imx8mp-phyboard-pollux-rdk/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/17012e3068d047ad71460f039eeb0c3be63f82a0/620bf6ac483da090947d50639d6ea88e97c34f35/phycore-imx8mp--freescale-imx8mp-phyboard-pollux-rdk/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/527115ef6783cec49e5610c523c124b399011361/06854d4d1def596a9a88aa841030c600df2249d3/phycore-imx8mp--freescale-imx8mp-phyboard-pollux-rdk/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
+
 
 
 showAnalyzer uart1
@@ -66,27 +67,48 @@ cpu0 AddSymbolHook "hang" $osPanicHook
 cpu0 AddSymbolHook "panic" $osPanicHook
 
 
-sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/phycore-imx8mp--freescale-imx8mp-phyboard-pollux-rdk/uboot/uboot.elf
-set hook
+# Spoof the i.MX8M boot ROM: get_boot_device() calls query_boot_infor() through
+# the ROM function table at 0x980 (arch/arm/mach-imx/romapi.c).
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/527115ef6783cec49e5610c523c124b399011361/06854d4d1def596a9a88aa841030c600df2249d3/phycore-imx8mp--freescale-imx8mp-phyboard-pollux-rdk/uboot/uboot.repl
+machine EnableProfiler $ORIGIN/metrics.dump
+
+# query_boot_infor(info_type=w0, info=x1, xor=w2); w2 is unused, so use it as scratch.
+cpu0 AssembleBlock 0x800 """
+  movz w2, #1, lsl #16;   // boot_type = BT_DEV_TYPE_SD, boot_instance = 0
+  str  w2, [x1];          // *info = boot
+  movz w0, #0xf0;         // return ROM_API_OKAY
+  ret
 """
-self.SetRegisterUlong(0, 6) # SD1_BOOT
-self.PC = self.GetRegisterUlong(30)
+
+# download_image() is SPL-only, but keep the pointer valid.
+cpu0 AssembleBlock 0x900 """
+  movz w0, #0xf0;
+  ret
 """
-cpu0 AddSymbolHook "get_boot_device" $hook # romapi.c:get_boot_device
+
+sysbus WriteQuadWord 0x988 0x900   # struct rom_api.download_image
+sysbus WriteQuadWord 0x990 0x800   # struct rom_api.query_boot_infor
+
+cpu0 AddCustomPSCIHandler 0xbf00ff01 # OPTEE_SMC_CALLS_UID
+"""
+self.SetRegisterUlong(0, 0x0)
+"""
 
 macro reset
 """
+    cpu0 PSCIEmulationMethod SMC
+    # i2c probes of absent PMICs/expanders otherwise burn the host timeout
     cpu0 EnableTimeSkip "mxc_i2c_xfer" 0
     cpu0 EnableTimeSkip "mxc_i2c_probe_chip" 0
-    sysbus LoadELF $bin
+    sysbus LoadELF $bin 
     cpu0 EnableUbootMode
-    cpu0 EnableZephyrMode
+    cpu1 EnableUbootMode
+    cpu2 EnableUbootMode
+    cpu3 EnableUbootMode
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
-    sysbus LoadSymbolsFrom @https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/phycore-imx8mp--freescale-imx8mp-phyboard-pollux-rdk/uboot/uboot.elf textAddress=0x00000000fff01000
-    cpu0 EnableProfilerCollapsedStack $ORIGIN/uboot-profile true 62914560 maximumNestedContexts=10
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/17012e3068d047ad71460f039eeb0c3be63f82a0/phycore-imx8mp--freescale-imx8mp-phyboard-pollux-rdk/uboot/uboot.dtb 0x00000000402e5868
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/527115ef6783cec49e5610c523c124b399011361/phycore-imx8mp--freescale-imx8mp-phyboard-pollux-rdk/uboot/uboot.dtb 0x000000004032f2e8
 """
 
 runMacro $reset

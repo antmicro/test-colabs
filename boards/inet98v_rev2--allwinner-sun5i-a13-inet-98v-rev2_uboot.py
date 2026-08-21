@@ -51,7 +51,7 @@ $repl?=$ORIGIN/uboot.repl
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/527115ef6783cec49e5610c523c124b399011361/1a7a8b98a93b37b4537c0f7810cd17eb2bb55ae4/inet98v_rev2--allwinner-sun5i-a13-inet-98v-rev2/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/527115ef6783cec49e5610c523c124b399011361/06854d4d1def596a9a88aa841030c600df2249d3/inet98v_rev2--allwinner-sun5i-a13-inet-98v-rev2/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
