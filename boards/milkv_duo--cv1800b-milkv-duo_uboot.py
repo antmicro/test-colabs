@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="milkv_duo--cv1800b-milkv-duo"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/527115ef6783cec49e5610c523c124b399011361/milkv_duo--cv1800b-milkv-duo/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/6073c36b2c8d39afe3ecc789b281667a3ddebc70/milkv_duo--cv1800b-milkv-duo/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/527115ef6783cec49e5610c523c124b399011361/06854d4d1def596a9a88aa841030c600df2249d3/milkv_duo--cv1800b-milkv-duo/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/6073c36b2c8d39afe3ecc789b281667a3ddebc70/33e77808c5a2f861607beb9199d2e21e6aae4632/milkv_duo--cv1800b-milkv-duo/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -82,7 +82,7 @@ cpu0 InstallCustomInstructionHandlerFromString "00000001100100000000000000001011
     cpu0 PC 0x80000000
 
     cpu0 SetRegister "A0" 0x1                           # hart number
-    cpu0 SetRegister "A1" 0x0000000080252830                # fdt location
+    cpu0 SetRegister "A1" 0x0000000080252840                # fdt location
     cpu0 SetRegister "A2" 0x80100000                    # struct fw_dynamic_info address
 
     # struct fw_dynamic_info

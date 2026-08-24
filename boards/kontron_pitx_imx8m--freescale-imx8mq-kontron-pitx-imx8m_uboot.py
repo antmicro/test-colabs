@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="kontron_pitx_imx8m--freescale-imx8mq-kontron-pitx-imx8m"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/527115ef6783cec49e5610c523c124b399011361/kontron_pitx_imx8m--freescale-imx8mq-kontron-pitx-imx8m/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/6073c36b2c8d39afe3ecc789b281667a3ddebc70/kontron_pitx_imx8m--freescale-imx8mq-kontron-pitx-imx8m/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/527115ef6783cec49e5610c523c124b399011361/06854d4d1def596a9a88aa841030c600df2249d3/kontron_pitx_imx8m--freescale-imx8mq-kontron-pitx-imx8m/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/6073c36b2c8d39afe3ecc789b281667a3ddebc70/33e77808c5a2f861607beb9199d2e21e6aae4632/kontron_pitx_imx8m--freescale-imx8mq-kontron-pitx-imx8m/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -77,7 +77,7 @@ macro reset
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/527115ef6783cec49e5610c523c124b399011361/kontron_pitx_imx8m--freescale-imx8mq-kontron-pitx-imx8m/uboot/uboot.dtb 0x00000000402cc710
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/6073c36b2c8d39afe3ecc789b281667a3ddebc70/kontron_pitx_imx8m--freescale-imx8mq-kontron-pitx-imx8m/uboot/uboot.dtb 0x00000000402cc710
 """
 
 runMacro $reset

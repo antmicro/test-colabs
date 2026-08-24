@@ -25,7 +25,7 @@ from renode_run import get_default_renode_path
 from renode_run.utils import RenodeVariant
 
 os.environ['PYRENODE_RUNTIME'] = 'coreclr'
-os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+os.environ['PYRENODE_PATH'] = str(get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE))
 
 from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
 from Antmicro.Renode.Peripherals.UART import UARTBackend
@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="mk808--rockchip-rk3066a-mk808"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/6902fb4c17faa375003124c451c2550deab5463d/mk808--rockchip-rk3066a-mk808/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/6073c36b2c8d39afe3ecc789b281667a3ddebc70/mk808--rockchip-rk3066a-mk808/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/6902fb4c17faa375003124c451c2550deab5463d/23b222d52d05f623d4056e3c7d9c9d8f27df0fc0/mk808--rockchip-rk3066a-mk808/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/6073c36b2c8d39afe3ecc789b281667a3ddebc70/33e77808c5a2f861607beb9199d2e21e6aae4632/mk808--rockchip-rk3066a-mk808/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -73,7 +73,7 @@ macro reset
     cpu0 EnableUbootMode
     cpu1 EnableUbootMode
     cpu1 IsHalted true
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/6902fb4c17faa375003124c451c2550deab5463d/mk808--rockchip-rk3066a-mk808/uboot/uboot.dtb 0x604702a0
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/6073c36b2c8d39afe3ecc789b281667a3ddebc70/mk808--rockchip-rk3066a-mk808/uboot/uboot.dtb 0x60470480
 """
 
 runMacro $reset

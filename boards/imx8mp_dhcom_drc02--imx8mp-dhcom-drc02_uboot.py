@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="imx8mp_dhcom_drc02--imx8mp-dhcom-drc02"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/527115ef6783cec49e5610c523c124b399011361/imx8mp_dhcom_drc02--imx8mp-dhcom-drc02/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/6073c36b2c8d39afe3ecc789b281667a3ddebc70/imx8mp_dhcom_drc02--imx8mp-dhcom-drc02/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/527115ef6783cec49e5610c523c124b399011361/06854d4d1def596a9a88aa841030c600df2249d3/imx8mp_dhcom_drc02--imx8mp-dhcom-drc02/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/6073c36b2c8d39afe3ecc789b281667a3ddebc70/33e77808c5a2f861607beb9199d2e21e6aae4632/imx8mp_dhcom_drc02--imx8mp-dhcom-drc02/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -69,7 +69,7 @@ cpu0 AddSymbolHook "panic" $osPanicHook
 
 # Spoof the i.MX8M boot ROM: get_boot_device() calls query_boot_infor() through
 # the ROM function table at 0x980 (arch/arm/mach-imx/romapi.c).
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/527115ef6783cec49e5610c523c124b399011361/06854d4d1def596a9a88aa841030c600df2249d3/imx8mp_dhcom_drc02--imx8mp-dhcom-drc02/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/6073c36b2c8d39afe3ecc789b281667a3ddebc70/33e77808c5a2f861607beb9199d2e21e6aae4632/imx8mp_dhcom_drc02--imx8mp-dhcom-drc02/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 # query_boot_infor(info_type=w0, info=x1, xor=w2); w2 is unused, so use it as scratch.
@@ -108,7 +108,7 @@ macro reset
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/527115ef6783cec49e5610c523c124b399011361/imx8mp_dhcom_drc02--imx8mp-dhcom-drc02/uboot/uboot.dtb 0x000000004031df48
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/6073c36b2c8d39afe3ecc789b281667a3ddebc70/imx8mp_dhcom_drc02--imx8mp-dhcom-drc02/uboot/uboot.dtb 0x000000004031df48
 """
 
 runMacro $reset

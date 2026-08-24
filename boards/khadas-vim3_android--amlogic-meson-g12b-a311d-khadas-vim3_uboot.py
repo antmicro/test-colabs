@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="khadas-vim3_android--amlogic-meson-g12b-a311d-khadas-vim3"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/527115ef6783cec49e5610c523c124b399011361/khadas-vim3_android--amlogic-meson-g12b-a311d-khadas-vim3/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/6073c36b2c8d39afe3ecc789b281667a3ddebc70/khadas-vim3_android--amlogic-meson-g12b-a311d-khadas-vim3/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/527115ef6783cec49e5610c523c124b399011361/06854d4d1def596a9a88aa841030c600df2249d3/khadas-vim3_android--amlogic-meson-g12b-a311d-khadas-vim3/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/6073c36b2c8d39afe3ecc789b281667a3ddebc70/33e77808c5a2f861607beb9199d2e21e6aae4632/khadas-vim3_android--amlogic-meson-g12b-a311d-khadas-vim3/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
