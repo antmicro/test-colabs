@@ -24,7 +24,7 @@ build:
     - source /opt/venv/bin/activate
     - ./generate_demos.sh
     - pushd boards
-    - find . -type f -name "*.py" | parallel -j 100% "jupytext --update-metadata '$jupytext_metadata' --update --to ipynb"
+    - find . -type f -name "*.py" | parallel -j 100% -X -n 100 "jupytext --update-metadata '$jupytext_metadata' --update --to ipynb"
     - popd
     - git checkout -b $CI_COMMIT_REF_NAME
     - git add boards
