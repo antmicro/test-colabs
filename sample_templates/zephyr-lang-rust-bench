@@ -1,0 +1,7 @@
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("{{platform}}")
+terminalTester = TerminalTester(machine.sysbus.{{uart_name}}, 60)
+
+terminalTester.WaitFor(String("Done with all tests"), pauseEmulation=True)
+
+emulation.Dispose()
