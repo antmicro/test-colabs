@@ -48,23 +48,37 @@ generate_demos() {
         uart_names=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .uart_name' "$tmp"/results-"${demo}"-all.json))
         gpio_led_names=( $(jq -r ' .[] | select(.status | contains("PASSED")) | .peripherals["gpio-led"] | (.name + "." + .led_name)' "$tmp"/results-"${demo}"-all.json))
         readarray -t dts_chain < <(jq -r ' .[] | select(.status | contains("PASSED")) | .dts_include_chain | join(",")' "$tmp"/results-"${demo}"-all.json)
-        for j in "${!board_paths[@]}"
+        # Render boards in parallel: one background worker per CPU, worker w takes every board with j % workers == w.
+        workers=$(nproc)
+        pids=()
+        for w in $(seq 0 $((workers - 1)))
         do
-            platform="${board_names[j]}"
-            platform_original="${original_names[j]}"
-            echo "${demo} ${platform}"
+            (
+                for j in "${!board_paths[@]}"
+                do
+                    (( j % workers == w )) || continue
+                    platform="${board_names[j]}"
+                    platform_original="${original_names[j]}"
+                    echo "${demo} ${platform}"
 
-            board_path="boards/${platform}"
-            repl="${!dashboard}/${platform}/${demo}/${demo}.repl"
-            elf="${!build_dashboard}/${platform}/${demo}/${demo}.elf"
-            
-            resc_path="$tmp/${1}/$platform-$demo.resc"
-            script=$(cat $resc_path | sed -e "/machine LoadPlatformDescription/c\machine LoadPlatformDescription @${repl}\nmachine EnableProfiler \$ORIGIN/metrics.dump")
+                    board_path="boards/${platform}"
+                    repl="${!dashboard}/${platform}/${demo}/${demo}.repl"
+                    elf="${!build_dashboard}/${platform}/${demo}/${demo}.elf"
 
-            # First we replace Jinja templates in the demo-specific input. We'll use it later to fill out the Python template file
-            jinja -D platform ${platform} -D platform_original ${platform_original} -D uart_name ${uart_names[j]} -D gpio_led_name ${gpio_led_names[j]} -D software_version "${!version}" -o "$tmp/${platform}_${demo}" sample_templates/${demo}
-            sample=`cat "${tmp}"/${platform}_${demo}`
-            jinja -D sample_name ${demo} -D sample "${sample}" -D platform ${platform} -D platform_original ${platform_original} -D board_path ${board_path} -D uart_name ${uart_names[j]} -D script "$script" -D software_version "${!version}" -D repl "$repl" -D elf "$elf" -o "${board_path}"_"${demo}".py template.py
+                    resc_path="$tmp/${1}/$platform-$demo.resc"
+                    script=$(cat $resc_path | sed -e "/machine LoadPlatformDescription/c\machine LoadPlatformDescription @${repl}\nmachine EnableProfiler \$ORIGIN/metrics.dump")
+
+                    # First we replace Jinja templates in the demo-specific input. We'll use it later to fill out the Python template file
+                    jinja -D platform ${platform} -D platform_original ${platform_original} -D uart_name ${uart_names[j]} -D gpio_led_name ${gpio_led_names[j]} -D software_version "${!version}" -o "$tmp/${platform}_${demo}" sample_templates/${demo}
+                    sample=`cat "${tmp}"/${platform}_${demo}`
+                    jinja -D sample_name ${demo} -D sample "${sample}" -D platform ${platform} -D platform_original ${platform_original} -D board_path ${board_path} -D uart_name ${uart_names[j]} -D script "$script" -D software_version "${!version}" -D repl "$repl" -D elf "$elf" -o "${board_path}"_"${demo}".py template.py
+                done
+            ) &
+            pids+=($!)
+        done
+        for pid in "${pids[@]}"
+        do
+            wait "$pid"
         done
     done
 }
