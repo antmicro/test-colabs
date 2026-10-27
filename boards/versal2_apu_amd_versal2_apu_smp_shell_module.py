@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/shell_module-renode.log True
 
 $name?="versal2_apu_amd_versal2_apu_smp"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/5442dabdbbeac2e628f12ca768729cdfca45a76e/versal2_apu_amd_versal2_apu_smp/shell_module/shell_module.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/f78c4deb4523a58eca057cc59b33532b80c20843/versal2_apu_amd_versal2_apu_smp/shell_module/shell_module.elf
 $repl?=$ORIGIN/shell_module.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/5442dabdbbeac2e628f12ca768729cdfca45a76e/d946d6ef3b1b3ea53f9dbd1bd9cb641aa075d6db/versal2_apu_amd_versal2_apu_smp/shell_module/shell_module.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f78c4deb4523a58eca057cc59b33532b80c20843/bdd0eb0b0fb313502b3ecf587e2b25a184959e60/versal2_apu_amd_versal2_apu_smp/shell_module/shell_module.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

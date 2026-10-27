@@ -13,37 +13,64 @@
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
 ! pip install -q git+https://github.com/antmicro/renode-run.git
-! pip install -q git+https://github.com/antmicro/pyrenode.git
-! renode-run download
+! pip install -q git+https://github.com/antmicro/pyrenode3.git
+! renode-run download --renode-variant dotnet-portable
 
 # %% [markdown]
 """## Start Renode"""
 
 # %%
-from pyrenode import connect_renode, get_keywords
-connect_renode()
-get_keywords()
+import os
+from renode_run import get_default_renode_path
+from renode_run.utils import RenodeVariant
+
+os.environ['PYRENODE_RUNTIME'] = 'coreclr'
+os.environ['PYRENODE_PATH'] = str(get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE))
+
+from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
+from Antmicro.Renode.Peripherals.UART import UARTBackend
+from Antmicro.Renode.Analyzers import LoggingUartAnalyzer
+from System import String
+
+currentDirectory = os.getcwd()
+emulation = Emulation()
+monitor = Monitor()
+emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 
 # %% [markdown]
 """## Setup a script"""
 
 # %%
 %%writefile script.resc
+logFile $ORIGIN/shell_module-renode.log True
+
+$name?="opentitan_earlgrey"
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/f78c4deb4523a58eca057cc59b33532b80c20843/opentitan_earlgrey/shell_module/shell_module.elf
+$repl?=$ORIGIN/shell_module.repl
 
 using sysbus
-$name?="opentitan_earlgrey"
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f9e3b65d3a9794ee2233aa88172346f887b48d04/1cfe00236a5b1483a5f4de2cf6fa5ca79cc05a7b/opentitan_earlgrey/shell_module/shell_module.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f78c4deb4523a58eca057cc59b33532b80c20843/bdd0eb0b0fb313502b3ecf587e2b25a184959e60/opentitan_earlgrey/shell_module/shell_module.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
-showAnalyzer sysbus.uart0
-sysbus.uart0 RecordToAsciinema $ORIGIN/output.asciinema
+
+
+showAnalyzer uart0
+
+uart0 RecordToAsciinema $ORIGIN/shell_module-asciinema
+set osPanicHook
+"""
+self.ErrorLog("OS Panicked")
+"""
+cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
+
 
 macro reset
 """
-    sysbus LoadELF @https://zephyr-dashboard.renode.io/zephyr/f9e3b65d3a9794ee2233aa88172346f887b48d04/opentitan_earlgrey/shell_module/shell_module.elf
-    
+    sysbus LoadELF $bin 
+    cpu0 EnableZephyrMode
+    cpu0 EnableProfilerCollapsedStack $ORIGIN/shell_module-profile true 62914560 maximumNestedContexts=10
 """
 
 runMacro $reset
@@ -52,24 +79,24 @@ runMacro $reset
 """## Run the sample"""
 
 # %%
-ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.uart0", timeout=5)
-StartEmulation()
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("opentitan_earlgrey")
+terminalTester = TerminalTester(machine.sysbus.uart0, 10)
 
-WaitForPromptOnUart("uart:~$")
-WriteLineToUart("")
-WaitForPromptOnUart("uart:~$")
-WriteLineToUart("demo board")
-WaitForLineOnUart("opentitan_earlgrey")
+terminalTester.WaitFor(String("uart:~$"), pauseEmulation=True)
+terminalTester.WriteLine("")
+terminalTester.WaitFor(String("uart:~$"), pauseEmulation=True)
+terminalTester.WriteLine("demo board")
+terminalTester.WaitFor(String("opentitan_earlgrey"), pauseEmulation=True)
 
-ResetEmulation()
+emulation.Dispose()
 
 # %% [markdown]
 """## UART output"""
 
 # %%
 from renode_colab_tools import asciinema
-asciinema.display_asciicast('output.asciinema')
+asciinema.display_asciicast('shell_module-asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""

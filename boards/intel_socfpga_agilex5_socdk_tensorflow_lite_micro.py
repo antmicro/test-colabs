@@ -25,7 +25,7 @@ from renode_run import get_default_renode_path
 from renode_run.utils import RenodeVariant
 
 os.environ['PYRENODE_RUNTIME'] = 'coreclr'
-os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+os.environ['PYRENODE_PATH'] = str(get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE))
 
 from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
 from Antmicro.Renode.Peripherals.UART import UARTBackend
@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/tensorflow_lite_micro-renode.log True
 
 $name?="intel_socfpga_agilex5_socdk"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/6182bc08c9d72e9e9aed8f5cf05a406fbfd25dd8/intel_socfpga_agilex5_socdk/tensorflow_lite_micro/tensorflow_lite_micro.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/f78c4deb4523a58eca057cc59b33532b80c20843/intel_socfpga_agilex5_socdk/tensorflow_lite_micro/tensorflow_lite_micro.elf
 $repl?=$ORIGIN/tensorflow_lite_micro.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/6182bc08c9d72e9e9aed8f5cf05a406fbfd25dd8/e81fbe7399d54d0434f52ddd1047fb48b37980d5/intel_socfpga_agilex5_socdk/tensorflow_lite_micro/tensorflow_lite_micro.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f78c4deb4523a58eca057cc59b33532b80c20843/bdd0eb0b0fb313502b3ecf587e2b25a184959e60/intel_socfpga_agilex5_socdk/tensorflow_lite_micro/tensorflow_lite_micro.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

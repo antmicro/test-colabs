@@ -25,7 +25,7 @@ from renode_run import get_default_renode_path
 from renode_run.utils import RenodeVariant
 
 os.environ['PYRENODE_RUNTIME'] = 'coreclr'
-os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+os.environ['PYRENODE_PATH'] = str(get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE))
 
 from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
 from Antmicro.Renode.Peripherals.UART import UARTBackend
@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/kenning-zephyr-runtime-microtvm-renode.log True
 
 $name?="intel_socfpga_agilex5_socdk"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/6182bc08c9d72e9e9aed8f5cf05a406fbfd25dd8/intel_socfpga_agilex5_socdk/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/f78c4deb4523a58eca057cc59b33532b80c20843/intel_socfpga_agilex5_socdk/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.elf
 $repl?=$ORIGIN/kenning-zephyr-runtime-microtvm.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/6182bc08c9d72e9e9aed8f5cf05a406fbfd25dd8/e81fbe7399d54d0434f52ddd1047fb48b37980d5/intel_socfpga_agilex5_socdk/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f78c4deb4523a58eca057cc59b33532b80c20843/bdd0eb0b0fb313502b3ecf587e2b25a184959e60/intel_socfpga_agilex5_socdk/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -94,7 +94,7 @@ monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("intel_socfpga_agilex5_socdk")
 terminalTester = TerminalTester(machine.sysbus.uart0, 5)
 
-terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+6182bc08c9d7 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+f78c4deb4523 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
 
 terminalTester.WaitFor(String("I: model output: [wing: 1.000000, ring: 0.000000, slope: 0.000000, negative: 0.000000]"), pauseEmulation=True)
 terminalTester.WaitFor(String("I: model output: [wing: 0.000000, ring: 0.000000, slope: 0.000000, negative: 1.000000]"), pauseEmulation=True)

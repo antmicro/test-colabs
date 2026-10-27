@@ -25,7 +25,7 @@ from renode_run import get_default_renode_path
 from renode_run.utils import RenodeVariant
 
 os.environ['PYRENODE_RUNTIME'] = 'coreclr'
-os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+os.environ['PYRENODE_PATH'] = str(get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE))
 
 from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
 from Antmicro.Renode.Peripherals.UART import UARTBackend
@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/hello_world_user-renode.log True
 
 $name?="mimxrt700_evk_mimxrt798s_cm33_cpu0"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/3deeffb422071c6320b601796cf98e761abd662a/mimxrt700_evk_mimxrt798s_cm33_cpu0/hello_world_user/hello_world_user.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/f78c4deb4523a58eca057cc59b33532b80c20843/mimxrt700_evk_mimxrt798s_cm33_cpu0/hello_world_user/hello_world_user.elf
 $repl?=$ORIGIN/hello_world_user.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/3deeffb422071c6320b601796cf98e761abd662a/aadba26ac052f0e522abcb035a1b99315f49eda8/mimxrt700_evk_mimxrt798s_cm33_cpu0/hello_world_user/hello_world_user.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f78c4deb4523a58eca057cc59b33532b80c20843/bdd0eb0b0fb313502b3ecf587e2b25a184959e60/mimxrt700_evk_mimxrt798s_cm33_cpu0/hello_world_user/hello_world_user.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

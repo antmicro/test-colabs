@@ -45,20 +45,20 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/philosophers-renode.log True
 
 $name?="arduino_uno_r4_wifi"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/5442dabdbbeac2e628f12ca768729cdfca45a76e/arduino_uno_r4_wifi/philosophers/philosophers.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/f78c4deb4523a58eca057cc59b33532b80c20843/arduino_uno_r4_wifi/philosophers/philosophers.elf
 $repl?=$ORIGIN/philosophers.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/5442dabdbbeac2e628f12ca768729cdfca45a76e/d946d6ef3b1b3ea53f9dbd1bd9cb641aa075d6db/arduino_uno_r4_wifi/philosophers/philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f78c4deb4523a58eca057cc59b33532b80c20843/bdd0eb0b0fb313502b3ecf587e2b25a184959e60/arduino_uno_r4_wifi/philosophers/philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
 
-showAnalyzer uart2
+showAnalyzer uart9
 
-uart2 RecordToAsciinema $ORIGIN/philosophers-asciinema
+uart9 RecordToAsciinema $ORIGIN/philosophers-asciinema
 set osPanicHook
 """
 self.ErrorLog("OS Panicked")
@@ -82,7 +82,7 @@ runMacro $reset
 # %%
 monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("arduino_uno_r4_wifi")
-terminalTester = TerminalTester(machine.sysbus.uart2, 10)
+terminalTester = TerminalTester(machine.sysbus.uart9, 10)
 
 terminalTester.WaitFor(String("Philosopher 0.*THINKING"), treatAsRegex=True, pauseEmulation=True)
 terminalTester.WaitFor(String("Philosopher 0.*HOLDING"), treatAsRegex=True, pauseEmulation=True)

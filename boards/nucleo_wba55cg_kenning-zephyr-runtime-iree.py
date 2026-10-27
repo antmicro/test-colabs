@@ -25,7 +25,7 @@ from renode_run import get_default_renode_path
 from renode_run.utils import RenodeVariant
 
 os.environ['PYRENODE_RUNTIME'] = 'coreclr'
-os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+os.environ['PYRENODE_PATH'] = str(get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE))
 
 from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
 from Antmicro.Renode.Peripherals.UART import UARTBackend
@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/kenning-zephyr-runtime-iree-renode.log True
 
 $name?="nucleo_wba55cg"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/d3943eac8869e4c97718cda77d9ab5ef10daddfc/nucleo_wba55cg/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/f78c4deb4523a58eca057cc59b33532b80c20843/nucleo_wba55cg/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.elf
 $repl?=$ORIGIN/kenning-zephyr-runtime-iree.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/d3943eac8869e4c97718cda77d9ab5ef10daddfc/4b2c5edd4c1596ec068bd1487a7b4577cfea900f/nucleo_wba55cg/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f78c4deb4523a58eca057cc59b33532b80c20843/bdd0eb0b0fb313502b3ecf587e2b25a184959e60/nucleo_wba55cg/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -83,7 +83,7 @@ monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("nucleo_wba55cg")
 terminalTester = TerminalTester(machine.sysbus.usart1, 5)
 
-terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+d3943eac8869 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+f78c4deb4523 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
 
 terminalTester.WaitFor(String("I: model output: [wing: 213.957657, ring: 80.423126, slope: 113.229385, negative: 158.669312]"), pauseEmulation=True)
 terminalTester.WaitFor(String("I: model output: [wing: 162.148727, ring: 140.959763, slope: 149.957062, negative: 236.156754]"), pauseEmulation=True)

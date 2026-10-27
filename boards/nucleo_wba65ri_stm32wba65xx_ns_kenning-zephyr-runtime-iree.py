@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/kenning-zephyr-runtime-iree-renode.log True
 
 $name?="nucleo_wba65ri_stm32wba65xx_ns"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/c5dffcb7c9da611b40a828f79fc6a8405416c1ed/nucleo_wba65ri_stm32wba65xx_ns/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/f78c4deb4523a58eca057cc59b33532b80c20843/nucleo_wba65ri_stm32wba65xx_ns/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.elf
 $repl?=$ORIGIN/kenning-zephyr-runtime-iree.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/c5dffcb7c9da611b40a828f79fc6a8405416c1ed/ca819552dcd6627e19c44b25cfd1df9dbc17be42/nucleo_wba65ri_stm32wba65xx_ns/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f78c4deb4523a58eca057cc59b33532b80c20843/bdd0eb0b0fb313502b3ecf587e2b25a184959e60/nucleo_wba65ri_stm32wba65xx_ns/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -83,7 +83,7 @@ monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("nucleo_wba65ri_stm32wba65xx_ns")
 terminalTester = TerminalTester(machine.sysbus.usart1, 5)
 
-terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+c5dffcb7c9da \*\*\*"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+f78c4deb4523 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
 
 terminalTester.WaitFor(String("I: model output: [wing: 213.957657, ring: 80.423126, slope: 113.229385, negative: 158.669312]"), pauseEmulation=True)
 terminalTester.WaitFor(String("I: model output: [wing: 162.148727, ring: 140.959763, slope: 149.957062, negative: 236.156754]"), pauseEmulation=True)

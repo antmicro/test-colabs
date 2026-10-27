@@ -25,7 +25,7 @@ from renode_run import get_default_renode_path
 from renode_run.utils import RenodeVariant
 
 os.environ['PYRENODE_RUNTIME'] = 'coreclr'
-os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+os.environ['PYRENODE_PATH'] = str(get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE))
 
 from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
 from Antmicro.Renode.Peripherals.UART import UARTBackend
@@ -45,14 +45,15 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/philosophers-renode.log True
 
 $name?="thingy52_nrf52832"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/2f2eaf7b6f7fcdae72031da50567e7ae81cb0264/thingy52_nrf52832/philosophers/philosophers.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/f78c4deb4523a58eca057cc59b33532b80c20843/thingy52_nrf52832/philosophers/philosophers.elf
 $repl?=$ORIGIN/philosophers.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/2f2eaf7b6f7fcdae72031da50567e7ae81cb0264/08e83a23c4e0976dde65c502d15c8c965105c943/thingy52_nrf52832/philosophers/philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f78c4deb4523a58eca057cc59b33532b80c20843/bdd0eb0b0fb313502b3ecf587e2b25a184959e60/thingy52_nrf52832/philosophers/philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
+
 
 
 showAnalyzer uart0
@@ -67,7 +68,7 @@ cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
 
 macro reset
 """
-    sysbus LoadELF $bin
+    sysbus LoadELF $bin 
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
     cpu0 EnableZephyrMode
     cpu0 EnableProfilerCollapsedStack $ORIGIN/philosophers-profile true 62914560 maximumNestedContexts=10

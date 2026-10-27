@@ -45,20 +45,20 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/synchronization-renode.log True
 
 $name?="arduino_uno_r4_wifi"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/5442dabdbbeac2e628f12ca768729cdfca45a76e/arduino_uno_r4_wifi/synchronization/synchronization.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/f78c4deb4523a58eca057cc59b33532b80c20843/arduino_uno_r4_wifi/synchronization/synchronization.elf
 $repl?=$ORIGIN/synchronization.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/5442dabdbbeac2e628f12ca768729cdfca45a76e/d946d6ef3b1b3ea53f9dbd1bd9cb641aa075d6db/arduino_uno_r4_wifi/synchronization/synchronization.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f78c4deb4523a58eca057cc59b33532b80c20843/bdd0eb0b0fb313502b3ecf587e2b25a184959e60/arduino_uno_r4_wifi/synchronization/synchronization.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
 
-showAnalyzer uart2
+showAnalyzer uart9
 
-uart2 RecordToAsciinema $ORIGIN/synchronization-asciinema
+uart9 RecordToAsciinema $ORIGIN/synchronization-asciinema
 set osPanicHook
 """
 self.ErrorLog("OS Panicked")
@@ -81,7 +81,7 @@ runMacro $reset
 # %%
 monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("arduino_uno_r4_wifi")
-terminalTester = TerminalTester(machine.sysbus.uart2, 5)
+terminalTester = TerminalTester(machine.sysbus.uart9, 5)
 
 terminalTester.WaitFor(String(r"thread_a: Hello World from cpu \d on arduino_uno_r4_wifi"), treatAsRegex=True, pauseEmulation=True)
 terminalTester.WaitFor(String(r"thread_b: Hello World from cpu \d on arduino_uno_r4_wifi"), treatAsRegex=True, pauseEmulation=True)

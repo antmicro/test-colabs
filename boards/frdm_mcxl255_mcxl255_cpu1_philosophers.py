@@ -25,7 +25,7 @@ from renode_run import get_default_renode_path
 from renode_run.utils import RenodeVariant
 
 os.environ['PYRENODE_RUNTIME'] = 'coreclr'
-os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+os.environ['PYRENODE_PATH'] = str(get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE))
 
 from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
 from Antmicro.Renode.Peripherals.UART import UARTBackend
@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/philosophers-renode.log True
 
 $name?="frdm_mcxl255_mcxl255_cpu1"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/f39ad09bd21c5bf409e13e6420e5b396d56d2ae8/frdm_mcxl255_mcxl255_cpu1/philosophers/philosophers.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/f78c4deb4523a58eca057cc59b33532b80c20843/frdm_mcxl255_mcxl255_cpu1/philosophers/philosophers.elf
 $repl?=$ORIGIN/philosophers.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f39ad09bd21c5bf409e13e6420e5b396d56d2ae8/b5b87e7c9d965134393b39d8bc42e4699948cde7/frdm_mcxl255_mcxl255_cpu1/philosophers/philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f78c4deb4523a58eca057cc59b33532b80c20843/bdd0eb0b0fb313502b3ecf587e2b25a184959e60/frdm_mcxl255_mcxl255_cpu1/philosophers/philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

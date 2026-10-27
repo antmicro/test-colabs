@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/posix_eventfd-renode.log True
 
 $name?="stm32wba65i_dk1_stm32wba65xx_ns"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/5442dabdbbeac2e628f12ca768729cdfca45a76e/stm32wba65i_dk1_stm32wba65xx_ns/posix_eventfd/posix_eventfd.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/f78c4deb4523a58eca057cc59b33532b80c20843/stm32wba65i_dk1_stm32wba65xx_ns/posix_eventfd/posix_eventfd.elf
 $repl?=$ORIGIN/posix_eventfd.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/5442dabdbbeac2e628f12ca768729cdfca45a76e/d946d6ef3b1b3ea53f9dbd1bd9cb641aa075d6db/stm32wba65i_dk1_stm32wba65xx_ns/posix_eventfd/posix_eventfd.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f78c4deb4523a58eca057cc59b33532b80c20843/bdd0eb0b0fb313502b3ecf587e2b25a184959e60/stm32wba65i_dk1_stm32wba65xx_ns/posix_eventfd/posix_eventfd.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
