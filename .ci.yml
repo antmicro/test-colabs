@@ -6,8 +6,8 @@ image: debian:bookworm
 build:
   stage: build
   variables:
-    SCALENODE_CPU: 4
-    SCALENODE_RAM: 2048
+    SCALENODE_CPU: 8
+    SCALENODE_RAM: 4096
     SCALENODE_DISK: 5
     BGS_JUPYTEXT_VERSION: "1.19.6"
     BGS_JINJA_CLI_VERSION: "1.2.2"
