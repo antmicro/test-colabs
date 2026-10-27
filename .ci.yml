@@ -9,17 +9,19 @@ build:
     SCALENODE_CPU: 4
     SCALENODE_RAM: 2048
     SCALENODE_DISK: 5
+    BGS_JUPYTEXT_VERSION: "1.19.6"
+    BGS_JINJA_CLI_VERSION: "1.2.2"
     jupytext_metadata: '{ "jupytext": { "cell_metadata_filter": "-all", "main_language": "python", "notebook_metadata_filter": "-all" }, "language_info": { "name": "python" }, "kernelspec": { "name": "python3", "display_name": "Python 3" } }'
+  before_get_sources:
+    - apt-get update -qq
+    - apt-get install -qqy python3-venv python3 python3-pip jq curl wget tar git parallel > /dev/null
+    - python3 -m venv /opt/venv
+    - /opt/venv/bin/pip install jupytext==$BGS_JUPYTEXT_VERSION jinja-cli==$BGS_JINJA_CLI_VERSION
   before_script:
-    - apt update -y > /dev/null
-    - apt install -y python3-venv python3 python3-pip jq curl wget tar git parallel > /dev/null
-    - python3 -m venv .venv/
-    - source .venv/bin/activate
-    - pip install jupytext jinja-cli
     - git config --global user.name "RenodeBot"
     - git config --global user.email "renode-bot@antmicro.com"
   script:
-    - source .venv/bin/activate
+    - source /opt/venv/bin/activate
     - ./generate_demos.sh
     - pushd boards
     - find . -type f -name "*.py" | parallel -j 100% "jupytext --update-metadata '$jupytext_metadata' --update --to ipynb"
