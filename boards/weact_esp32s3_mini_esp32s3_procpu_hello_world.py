@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/hello_world-renode.log True
 
 $name?="weact_esp32s3_mini_esp32s3_procpu"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/f78c4deb4523a58eca057cc59b33532b80c20843/weact_esp32s3_mini_esp32s3_procpu/hello_world/hello_world.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/bc5d59d1b6657cfeef30124b818c8fbd69da68ac/weact_esp32s3_mini_esp32s3_procpu/hello_world/hello_world.elf
 $repl?=$ORIGIN/hello_world.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f78c4deb4523a58eca057cc59b33532b80c20843/bdd0eb0b0fb313502b3ecf587e2b25a184959e60/weact_esp32s3_mini_esp32s3_procpu/hello_world/hello_world.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/bc5d59d1b6657cfeef30124b818c8fbd69da68ac/03e7bf4e259b85bdc1bf5dc63c4053dcc7c54680/weact_esp32s3_mini_esp32s3_procpu/hello_world/hello_world.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -72,8 +72,8 @@ macro reset
     cpu0 EnableZephyrMode
     sysbus LoadBinary @https://dl.antmicro.com/projects/renode/esp32s3_rev0_rom.bin-s_393216-d5d2d95ffbd551d79b82b923ef597b4730835d60 0x40000000
     sysbus LoadBinary @https://dl.antmicro.com/projects/renode/esp32s3_rev0_rom.bin-s_393216-d5d2d95ffbd551d79b82b923ef597b4730835d60 0x3ff00000 offset=0x40000
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/zephyr/f78c4deb4523a58eca057cc59b33532b80c20843/weact_esp32s3_mini_esp32s3_procpu/hello_world/hello_world.bin 0x3dff0000
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/zephyr/f78c4deb4523a58eca057cc59b33532b80c20843/weact_esp32s3_mini_esp32s3_procpu/hello_world/hello_world.bin 0x3c800000
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/zephyr/bc5d59d1b6657cfeef30124b818c8fbd69da68ac/weact_esp32s3_mini_esp32s3_procpu/hello_world/hello_world.bin 0x3dff0000
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/zephyr/bc5d59d1b6657cfeef30124b818c8fbd69da68ac/weact_esp32s3_mini_esp32s3_procpu/hello_world/hello_world.bin 0x3c800000
     cpu0 PC 0x40000400
     cpu1 IsHalted true
 """

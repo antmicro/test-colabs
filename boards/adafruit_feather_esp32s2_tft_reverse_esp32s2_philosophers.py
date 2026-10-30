@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/philosophers-renode.log True
 
 $name?="adafruit_feather_esp32s2_tft_reverse_esp32s2"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/f78c4deb4523a58eca057cc59b33532b80c20843/adafruit_feather_esp32s2_tft_reverse_esp32s2/philosophers/philosophers.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/bc5d59d1b6657cfeef30124b818c8fbd69da68ac/adafruit_feather_esp32s2_tft_reverse_esp32s2/philosophers/philosophers.elf
 $repl?=$ORIGIN/philosophers.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f78c4deb4523a58eca057cc59b33532b80c20843/bdd0eb0b0fb313502b3ecf587e2b25a184959e60/adafruit_feather_esp32s2_tft_reverse_esp32s2/philosophers/philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/bc5d59d1b6657cfeef30124b818c8fbd69da68ac/03e7bf4e259b85bdc1bf5dc63c4053dcc7c54680/adafruit_feather_esp32s2_tft_reverse_esp32s2/philosophers/philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -72,8 +72,8 @@ macro reset
     cpu0 EnableZephyrMode
     sysbus LoadELF @https://dl.antmicro.com/projects/renode/esp32s2_rom.elf-s_292128-c7d210c90d927c2a787363077029bf2854bd3200 useVirtualAddress=true
     sysbus LoadBinary @https://dl.antmicro.com/projects/renode/esp32s2_romdata.bin-s_1696-5c05f62c50d2f4c1cfbab35b5a5b760ce5962b09 0x4001bed4
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/zephyr/f78c4deb4523a58eca057cc59b33532b80c20843/adafruit_feather_esp32s2_tft_reverse_esp32s2/philosophers/philosophers.bin 0x1000
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/zephyr/f78c4deb4523a58eca057cc59b33532b80c20843/adafruit_feather_esp32s2_tft_reverse_esp32s2/philosophers/philosophers.bin 0x3f371000
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/zephyr/bc5d59d1b6657cfeef30124b818c8fbd69da68ac/adafruit_feather_esp32s2_tft_reverse_esp32s2/philosophers/philosophers.bin 0x1000
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/zephyr/bc5d59d1b6657cfeef30124b818c8fbd69da68ac/adafruit_feather_esp32s2_tft_reverse_esp32s2/philosophers/philosophers.bin 0x3f371000
     cpu0 PC 0x40000400
 """
 
