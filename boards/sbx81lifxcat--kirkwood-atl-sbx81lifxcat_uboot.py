@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="sbx81lifxcat--kirkwood-atl-sbx81lifxcat"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/f97bb5c1ad78e95856917b92c7270c82d4b11e21/sbx81lifxcat--kirkwood-atl-sbx81lifxcat/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/ce38023f5d06527541ab6e99ec6fdbc89534ac7b/sbx81lifxcat--kirkwood-atl-sbx81lifxcat/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/f97bb5c1ad78e95856917b92c7270c82d4b11e21/04cafbb29ea64a1547cd3bd1232f8c126bf7f755/sbx81lifxcat--kirkwood-atl-sbx81lifxcat/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ce38023f5d06527541ab6e99ec6fdbc89534ac7b/fd69eb42c02b0389b4705d20502fde68f0abca9b/sbx81lifxcat--kirkwood-atl-sbx81lifxcat/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="imx8mp_dhcom_pdk2--freescale-imx8mp-dhcom-pdk2"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/f97bb5c1ad78e95856917b92c7270c82d4b11e21/imx8mp_dhcom_pdk2--freescale-imx8mp-dhcom-pdk2/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/ce38023f5d06527541ab6e99ec6fdbc89534ac7b/imx8mp_dhcom_pdk2--freescale-imx8mp-dhcom-pdk2/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/f97bb5c1ad78e95856917b92c7270c82d4b11e21/04cafbb29ea64a1547cd3bd1232f8c126bf7f755/imx8mp_dhcom_pdk2--freescale-imx8mp-dhcom-pdk2/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ce38023f5d06527541ab6e99ec6fdbc89534ac7b/fd69eb42c02b0389b4705d20502fde68f0abca9b/imx8mp_dhcom_pdk2--freescale-imx8mp-dhcom-pdk2/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -69,7 +69,7 @@ cpu0 AddSymbolHook "panic" $osPanicHook
 
 # Spoof the i.MX8M boot ROM: get_boot_device() calls query_boot_infor() through
 # the ROM function table at 0x980 (arch/arm/mach-imx/romapi.c).
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/f97bb5c1ad78e95856917b92c7270c82d4b11e21/04cafbb29ea64a1547cd3bd1232f8c126bf7f755/imx8mp_dhcom_pdk2--freescale-imx8mp-dhcom-pdk2/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ce38023f5d06527541ab6e99ec6fdbc89534ac7b/fd69eb42c02b0389b4705d20502fde68f0abca9b/imx8mp_dhcom_pdk2--freescale-imx8mp-dhcom-pdk2/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 # query_boot_infor(info_type=w0, info=x1, xor=w2); w2 is unused, so use it as scratch.
@@ -108,7 +108,7 @@ macro reset
     cpu1 IsHalted true
     cpu2 IsHalted true
     cpu3 IsHalted true
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/f97bb5c1ad78e95856917b92c7270c82d4b11e21/imx8mp_dhcom_pdk2--freescale-imx8mp-dhcom-pdk2/uboot/uboot.dtb 0x0000000040322128
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/ce38023f5d06527541ab6e99ec6fdbc89534ac7b/imx8mp_dhcom_pdk2--freescale-imx8mp-dhcom-pdk2/uboot/uboot.dtb 0x0000000040322170
 """
 
 runMacro $reset
