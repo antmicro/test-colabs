@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/philosophers-renode.log True
 
 $name?="lolin32_lite_esp32_procpu"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/bc5d59d1b6657cfeef30124b818c8fbd69da68ac/lolin32_lite_esp32_procpu/philosophers/philosophers.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/decee24b4fbc5aa221194cde98bb183639840de8/lolin32_lite_esp32_procpu/philosophers/philosophers.elf
 $repl?=$ORIGIN/philosophers.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/bc5d59d1b6657cfeef30124b818c8fbd69da68ac/03e7bf4e259b85bdc1bf5dc63c4053dcc7c54680/lolin32_lite_esp32_procpu/philosophers/philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/decee24b4fbc5aa221194cde98bb183639840de8/48220ab50dc62605ceabef40120d82c86d2f0715/lolin32_lite_esp32_procpu/philosophers/philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -72,9 +72,9 @@ macro reset
     cpu0 EnableZephyrMode
     sysbus LoadBinary @https://dl.antmicro.com/projects/renode/esp32-v3-rom.bin-s_455722-c76e96d5bbab3cf190dbecd777fe84b75256da9e 0x40000000
     sysbus LoadBinary @https://dl.antmicro.com/projects/renode/esp32-v3-rom.bin-s_455722-c76e96d5bbab3cf190dbecd777fe84b75256da9e 0x3ff90000 offset=0x60000
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/zephyr/bc5d59d1b6657cfeef30124b818c8fbd69da68ac/lolin32_lite_esp32_procpu/philosophers/philosophers.bin 0x3f401000
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/zephyr/bc5d59d1b6657cfeef30124b818c8fbd69da68ac/lolin32_lite_esp32_procpu/philosophers/philosophers.bin 0x1000
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/zephyr/bc5d59d1b6657cfeef30124b818c8fbd69da68ac/lolin32_lite_esp32_procpu/philosophers/philosophers.bin 0x3f721000
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/zephyr/decee24b4fbc5aa221194cde98bb183639840de8/lolin32_lite_esp32_procpu/philosophers/philosophers.bin 0x3f401000
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/zephyr/decee24b4fbc5aa221194cde98bb183639840de8/lolin32_lite_esp32_procpu/philosophers/philosophers.bin 0x1000
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/zephyr/decee24b4fbc5aa221194cde98bb183639840de8/lolin32_lite_esp32_procpu/philosophers/philosophers.bin 0x3f721000
     cpu0 PC 0x40000400
     cpu1 IsHalted true
 """

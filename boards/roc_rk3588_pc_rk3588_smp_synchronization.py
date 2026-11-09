@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/synchronization-renode.log True
 
 $name?="roc_rk3588_pc_rk3588_smp"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/bc5d59d1b6657cfeef30124b818c8fbd69da68ac/roc_rk3588_pc_rk3588_smp/synchronization/synchronization.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/decee24b4fbc5aa221194cde98bb183639840de8/roc_rk3588_pc_rk3588_smp/synchronization/synchronization.elf
 $repl?=$ORIGIN/synchronization.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/bc5d59d1b6657cfeef30124b818c8fbd69da68ac/03e7bf4e259b85bdc1bf5dc63c4053dcc7c54680/roc_rk3588_pc_rk3588_smp/synchronization/synchronization.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/decee24b4fbc5aa221194cde98bb183639840de8/48220ab50dc62605ceabef40120d82c86d2f0715/roc_rk3588_pc_rk3588_smp/synchronization/synchronization.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -81,6 +81,18 @@ macro reset
     cpu3 PSCIEmulationMethod SMC
     cpu3 IsHalted true
     cpu3 EnableZephyrMode
+    cpu4 PSCIEmulationMethod SMC
+    cpu4 IsHalted true
+    cpu4 EnableZephyrMode
+    cpu5 PSCIEmulationMethod SMC
+    cpu5 IsHalted true
+    cpu5 EnableZephyrMode
+    cpu6 PSCIEmulationMethod SMC
+    cpu6 IsHalted true
+    cpu6 EnableZephyrMode
+    cpu7 PSCIEmulationMethod SMC
+    cpu7 IsHalted true
+    cpu7 EnableZephyrMode
 """
 
 runMacro $reset

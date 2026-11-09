@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="emlid_neutis_n5_devboard--sun50i-h5-emlid-neutis-n5-devboard"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/ce38023f5d06527541ab6e99ec6fdbc89534ac7b/emlid_neutis_n5_devboard--sun50i-h5-emlid-neutis-n5-devboard/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/feb8913982e4462c01fd914271f92254a25dc101/emlid_neutis_n5_devboard--sun50i-h5-emlid-neutis-n5-devboard/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ce38023f5d06527541ab6e99ec6fdbc89534ac7b/fd69eb42c02b0389b4705d20502fde68f0abca9b/emlid_neutis_n5_devboard--sun50i-h5-emlid-neutis-n5-devboard/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/feb8913982e4462c01fd914271f92254a25dc101/48220ab50dc62605ceabef40120d82c86d2f0715/emlid_neutis_n5_devboard--sun50i-h5-emlid-neutis-n5-devboard/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
