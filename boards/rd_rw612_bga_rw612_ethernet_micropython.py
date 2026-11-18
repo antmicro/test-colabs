@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/micropython-renode.log True
 
 $name?="rd_rw612_bga_rw612_ethernet"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/decee24b4fbc5aa221194cde98bb183639840de8/rd_rw612_bga_rw612_ethernet/micropython/micropython.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/29d3d75b7ef638a5323815fa94f78af54c96d1a5/rd_rw612_bga_rw612_ethernet/micropython/micropython.elf
 $repl?=$ORIGIN/micropython.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/decee24b4fbc5aa221194cde98bb183639840de8/48220ab50dc62605ceabef40120d82c86d2f0715/rd_rw612_bga_rw612_ethernet/micropython/micropython.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/29d3d75b7ef638a5323815fa94f78af54c96d1a5/fa0dba5a67963a6fbb9125a82a3b376616630ddb/rd_rw612_bga_rw612_ethernet/micropython/micropython.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

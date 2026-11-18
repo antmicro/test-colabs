@@ -13,37 +13,67 @@
 # %%
 ! pip install -q git+https://github.com/antmicro/renode-colab-tools.git
 ! pip install -q git+https://github.com/antmicro/renode-run.git
-! pip install -q git+https://github.com/antmicro/pyrenode.git
-! renode-run download
+! pip install -q git+https://github.com/antmicro/pyrenode3.git
+! renode-run download --renode-variant dotnet-portable
 
 # %% [markdown]
 """## Start Renode"""
 
 # %%
-from pyrenode import connect_renode, get_keywords
-connect_renode()
-get_keywords()
+import os
+from renode_run import get_default_renode_path
+from renode_run.utils import RenodeVariant
+
+os.environ['PYRENODE_RUNTIME'] = 'coreclr'
+os.environ['PYRENODE_PATH'] = str(get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE))
+
+from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
+from Antmicro.Renode.Peripherals.UART import UARTBackend
+from Antmicro.Renode.Analyzers import LoggingUartAnalyzer
+from System import String
+
+currentDirectory = os.getcwd()
+emulation = Emulation()
+monitor = Monitor()
+emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 
 # %% [markdown]
 """## Setup a script"""
 
 # %%
 %%writefile script.resc
+logFile $ORIGIN/uboot-renode.log True
+
+$name?="sam9x60_curiosity_mmc1--at91-sam9x60_curiosity"
+$bin?=@https://zephyr-dashboard.renode.io/uboot/6487c50b8a40f2668ab98a892b9300ad5c181f38/sam9x60_curiosity_mmc1--at91-sam9x60_curiosity/uboot/uboot.elf
+$repl?=$ORIGIN/uboot.repl
 
 using sysbus
-$name?="sam9x60_curiosity_mmc1--at91-sam9x60_curiosity"
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/34820924edbc4ec7803eb89d9852f4b870fa760a/a690bcb2b437c2f152d4e99d91daaf7c2fceeff8/sam9x60_curiosity_mmc1--at91-sam9x60_curiosity/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/6487c50b8a40f2668ab98a892b9300ad5c181f38/8e500459aeb089ca3f538ebc640676bbdcc19e44/sam9x60_curiosity_mmc1--at91-sam9x60_curiosity/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
-showAnalyzer sysbus.dbgu
-sysbus.dbgu RecordToAsciinema $ORIGIN/output.asciinema
+
+
+showAnalyzer dbgu
+
+dbgu RecordToAsciinema $ORIGIN/uboot-asciinema
+set osPanicHook
+"""
+self.ErrorLog("OS Panicked")
+"""
+cpu0 AddSymbolHook "hang" $osPanicHook
+cpu0 AddSymbolHook "panic" $osPanicHook
+
+
+# the PMC is not modelled, so U-Boot computes a baud rate divider of 0 and the UART would drop all output
+sysbus SetHookBeforePeripheralWrite dbgu "if offset == 0x20 and value == 0: value = 1"
 
 macro reset
 """
-    sysbus LoadELF @https://u-boot-dashboard.renode.io/uboot/34820924edbc4ec7803eb89d9852f4b870fa760a/sam9x60_curiosity_mmc1--at91-sam9x60_curiosity/uboot/uboot.elf
-    
+    sysbus LoadELF $bin 
+    cpu0 EnableUbootMode
 """
 
 runMacro $reset
@@ -52,24 +82,25 @@ runMacro $reset
 """## Run the sample"""
 
 # %%
-ExecuteScript("script.resc")
-CreateTerminalTester("sysbus.dbgu", timeout=5)
-StartEmulation()
+monitor.execute_script(currentDirectory + "/script.resc")
+machine = emulation.get_mach("sam9x60_curiosity_mmc1--at91-sam9x60_curiosity")
+terminalTester = TerminalTester(machine.sysbus.dbgu, 5)
 
-WaitForPromptOnUart("Hit any key to stop autoboot")
-SendKeyToUart(ord('a'))
-WaitForPromptOnUart(">")
-WriteLineToUart("version")
-WaitForLineOnUart("U-Boot")
+terminalTester.WaitFor(String("Hit any key to stop autoboot"), includeUnfinishedLine=True, pauseEmulation=True)
+terminalTester.Write("\n")
+terminalTester.WaitFor(String(">"), includeUnfinishedLine=True, pauseEmulation=True)
+terminalTester.WriteLine("version")
+terminalTester.WaitFor(String("U-Boot"), pauseEmulation=True)
+terminalTester.WaitFor(String(">"), includeUnfinishedLine=True, pauseEmulation=True)
 
-ResetEmulation()
+emulation.Dispose()
 
 # %% [markdown]
 """## UART output"""
 
 # %%
 from renode_colab_tools import asciinema
-asciinema.display_asciicast('output.asciinema')
+asciinema.display_asciicast('uboot-asciinema')
 
 # %% [markdown]
 """## Renode metrics analysis"""

@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="pinebook-pro-rk3399--rockchip-rk3399-pinebook-pro"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/feb8913982e4462c01fd914271f92254a25dc101/pinebook-pro-rk3399--rockchip-rk3399-pinebook-pro/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/6487c50b8a40f2668ab98a892b9300ad5c181f38/pinebook-pro-rk3399--rockchip-rk3399-pinebook-pro/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/feb8913982e4462c01fd914271f92254a25dc101/48220ab50dc62605ceabef40120d82c86d2f0715/pinebook-pro-rk3399--rockchip-rk3399-pinebook-pro/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/6487c50b8a40f2668ab98a892b9300ad5c181f38/8e500459aeb089ca3f538ebc640676bbdcc19e44/pinebook-pro-rk3399--rockchip-rk3399-pinebook-pro/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

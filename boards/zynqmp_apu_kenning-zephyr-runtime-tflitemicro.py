@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/kenning-zephyr-runtime-tflitemicro-renode.log True
 
 $name?="zynqmp_apu"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/decee24b4fbc5aa221194cde98bb183639840de8/zynqmp_apu/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/29d3d75b7ef638a5323815fa94f78af54c96d1a5/zynqmp_apu/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.elf
 $repl?=$ORIGIN/kenning-zephyr-runtime-tflitemicro.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/decee24b4fbc5aa221194cde98bb183639840de8/48220ab50dc62605ceabef40120d82c86d2f0715/zynqmp_apu/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/29d3d75b7ef638a5323815fa94f78af54c96d1a5/fa0dba5a67963a6fbb9125a82a3b376616630ddb/zynqmp_apu/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -83,7 +83,7 @@ monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("zynqmp_apu")
 terminalTester = TerminalTester(machine.sysbus.uart0, 5)
 
-terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+decee24b4fbc \*\*\*"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+29d3d75b7ef6 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
 
 terminalTester.WaitFor(String("I: model output: [wing: 1.000000, ring: 0.000000, slope: 0.000000, negative: 0.000000]"), pauseEmulation=True)
 terminalTester.WaitFor(String("I: model output: [wing: 0.000000, ring: 0.000000, slope: 0.000000, negative: 1.000000]"), pauseEmulation=True)

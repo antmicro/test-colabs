@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/blinky-renode.log True
 
 $name?="hifive1_revb"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/f78c4deb4523a58eca057cc59b33532b80c20843/hifive1_revb/blinky/blinky.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/29d3d75b7ef638a5323815fa94f78af54c96d1a5/hifive1_revb/blinky/blinky.elf
 $repl?=$ORIGIN/blinky.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/f78c4deb4523a58eca057cc59b33532b80c20843/bdd0eb0b0fb313502b3ecf587e2b25a184959e60/hifive1_revb/blinky/blinky.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/29d3d75b7ef638a5323815fa94f78af54c96d1a5/fa0dba5a67963a6fbb9125a82a3b376616630ddb/hifive1_revb/blinky/blinky.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -70,7 +70,7 @@ macro reset
 """
     sysbus LoadELF $bin 
     cpu0 EnableZephyrMode
-    cpu0 EnableProfilerCollapsedStack $ORIGIN/blinky-profile true 62914560 maximumNestedContexts=10
+    cpu0 EnableProfilerCollapsedStack $ORIGIN/blinky-profile false 62914560 maximumNestedContexts=10
 """
 
 runMacro $reset

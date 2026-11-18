@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/kenning-zephyr-runtime-microtvm-renode.log True
 
 $name?="mimxrt1170_evk_b_mimxrt1176_cm7"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/d7a825dc89201dff5389b66bf35bd733bef7c936/mimxrt1170_evk_b_mimxrt1176_cm7/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/29d3d75b7ef638a5323815fa94f78af54c96d1a5/mimxrt1170_evk_b_mimxrt1176_cm7/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.elf
 $repl?=$ORIGIN/kenning-zephyr-runtime-microtvm.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/d7a825dc89201dff5389b66bf35bd733bef7c936/a0cc4bb841b05903a39a8a644d88e981f0f5c79e/mimxrt1170_evk_b_mimxrt1176_cm7/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/29d3d75b7ef638a5323815fa94f78af54c96d1a5/fa0dba5a67963a6fbb9125a82a3b376616630ddb/mimxrt1170_evk_b_mimxrt1176_cm7/kenning-zephyr-runtime-microtvm/kenning-zephyr-runtime-microtvm.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -71,7 +71,7 @@ macro reset
     sysbus LoadELF $bin 
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
     cpu0 EnableZephyrMode
-    cpu0 EnableProfilerCollapsedStack $ORIGIN/kenning-zephyr-runtime-microtvm-profile true 62914560 maximumNestedContexts=10
+    cpu0 EnableProfilerCollapsedStack $ORIGIN/kenning-zephyr-runtime-microtvm-profile false 62914560 maximumNestedContexts=10
 """
 
 runMacro $reset
@@ -84,7 +84,7 @@ monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("mimxrt1170_evk_b_mimxrt1176_cm7")
 terminalTester = TerminalTester(machine.sysbus.lpuart1, 5)
 
-terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+d7a825dc8920 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+29d3d75b7ef6 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
 
 terminalTester.WaitFor(String("I: model output: [wing: 1.000000, ring: 0.000000, slope: 0.000000, negative: 0.000000]"), pauseEmulation=True)
 terminalTester.WaitFor(String("I: model output: [wing: 0.000000, ring: 0.000000, slope: 0.000000, negative: 1.000000]"), pauseEmulation=True)

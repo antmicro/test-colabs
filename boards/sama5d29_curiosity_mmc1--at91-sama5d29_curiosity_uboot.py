@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="sama5d29_curiosity_mmc1--at91-sama5d29_curiosity"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/feb8913982e4462c01fd914271f92254a25dc101/sama5d29_curiosity_mmc1--at91-sama5d29_curiosity/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/6487c50b8a40f2668ab98a892b9300ad5c181f38/sama5d29_curiosity_mmc1--at91-sama5d29_curiosity/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/feb8913982e4462c01fd914271f92254a25dc101/48220ab50dc62605ceabef40120d82c86d2f0715/sama5d29_curiosity_mmc1--at91-sama5d29_curiosity/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/6487c50b8a40f2668ab98a892b9300ad5c181f38/8e500459aeb089ca3f538ebc640676bbdcc19e44/sama5d29_curiosity_mmc1--at91-sama5d29_curiosity/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -71,7 +71,7 @@ macro reset
 """
     sysbus LoadELF $bin 
     cpu0 EnableUbootMode
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/feb8913982e4462c01fd914271f92254a25dc101/sama5d29_curiosity_mmc1--at91-sama5d29_curiosity/uboot/uboot.dtb 0x26f5f620
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/uboot/6487c50b8a40f2668ab98a892b9300ad5c181f38/sama5d29_curiosity_mmc1--at91-sama5d29_curiosity/uboot/uboot.dtb 0x26f5f6a8
 """
 
 runMacro $reset

@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/philosophers-renode.log True
 
 $name?="qemu_xtensa_dc233c"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/bc5d59d1b6657cfeef30124b818c8fbd69da68ac/qemu_xtensa_dc233c/philosophers/philosophers.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/29d3d75b7ef638a5323815fa94f78af54c96d1a5/qemu_xtensa_dc233c/philosophers/philosophers.elf
 $repl?=$ORIGIN/philosophers.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/bc5d59d1b6657cfeef30124b818c8fbd69da68ac/03e7bf4e259b85bdc1bf5dc63c4053dcc7c54680/qemu_xtensa_dc233c/philosophers/philosophers.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/29d3d75b7ef638a5323815fa94f78af54c96d1a5/fa0dba5a67963a6fbb9125a82a3b376616630ddb/qemu_xtensa_dc233c/philosophers/philosophers.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 

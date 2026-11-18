@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/blinky-renode.log True
 
 $name?="max78002evkit_max78002_m4"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/bc5d59d1b6657cfeef30124b818c8fbd69da68ac/max78002evkit_max78002_m4/blinky/blinky.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/29d3d75b7ef638a5323815fa94f78af54c96d1a5/max78002evkit_max78002_m4/blinky/blinky.elf
 $repl?=$ORIGIN/blinky.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/bc5d59d1b6657cfeef30124b818c8fbd69da68ac/03e7bf4e259b85bdc1bf5dc63c4053dcc7c54680/max78002evkit_max78002_m4/blinky/blinky.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/29d3d75b7ef638a5323815fa94f78af54c96d1a5/fa0dba5a67963a6fbb9125a82a3b376616630ddb/max78002evkit_max78002_m4/blinky/blinky.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -72,7 +72,7 @@ macro reset
     cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
     cpu0 EnableZephyrMode
     cpu1 IsHalted true
-    cpu0 EnableProfilerCollapsedStack $ORIGIN/blinky-profile true 62914560 maximumNestedContexts=10
+    cpu0 EnableProfilerCollapsedStack $ORIGIN/blinky-profile false 62914560 maximumNestedContexts=10
 """
 
 runMacro $reset

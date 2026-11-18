@@ -25,7 +25,7 @@ from renode_run import get_default_renode_path
 from renode_run.utils import RenodeVariant
 
 os.environ['PYRENODE_RUNTIME'] = 'coreclr'
-os.environ['PYRENODE_BIN'] = get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE)
+os.environ['PYRENODE_PATH'] = str(get_default_renode_path(variant=RenodeVariant.DOTNET_PORTABLE))
 
 from pyrenode3.wrappers import Emulation, Monitor, TerminalTester, LEDTester
 from Antmicro.Renode.Peripherals.UART import UARTBackend
@@ -45,14 +45,15 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="tqma6s_mba6_spi--nxp-imx-imx6dl-mba6b"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/ff498a3c5efb424accc1d825cc45cede2540ca13/tqma6s_mba6_spi--nxp-imx-imx6dl-mba6b/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/6487c50b8a40f2668ab98a892b9300ad5c181f38/tqma6s_mba6_spi--nxp-imx-imx6dl-mba6b/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/ff498a3c5efb424accc1d825cc45cede2540ca13/d228058428cec4d6b66916cf4133bcbab372011b/tqma6s_mba6_spi--nxp-imx-imx6dl-mba6b/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/6487c50b8a40f2668ab98a892b9300ad5c181f38/8e500459aeb089ca3f538ebc640676bbdcc19e44/tqma6s_mba6_spi--nxp-imx-imx6dl-mba6b/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
+
 
 
 showAnalyzer uart2
@@ -70,7 +71,7 @@ macro reset
 """
     sysbus LoadELF $bin 
     cpu0 EnableUbootMode
-    cpu0 EnableZephyrMode
+    cpu1 EnableUbootMode
     cpu1 IsHalted true
 """
 

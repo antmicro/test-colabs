@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/hello_world-renode.log True
 
 $name?="esp32s3_box3_esp32s3_procpu"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/decee24b4fbc5aa221194cde98bb183639840de8/esp32s3_box3_esp32s3_procpu/hello_world/hello_world.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/29d3d75b7ef638a5323815fa94f78af54c96d1a5/esp32s3_box3_esp32s3_procpu/hello_world/hello_world.elf
 $repl?=$ORIGIN/hello_world.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/decee24b4fbc5aa221194cde98bb183639840de8/48220ab50dc62605ceabef40120d82c86d2f0715/esp32s3_box3_esp32s3_procpu/hello_world/hello_world.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/29d3d75b7ef638a5323815fa94f78af54c96d1a5/fa0dba5a67963a6fbb9125a82a3b376616630ddb/esp32s3_box3_esp32s3_procpu/hello_world/hello_world.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -72,8 +72,9 @@ macro reset
     cpu0 EnableZephyrMode
     sysbus LoadBinary @https://dl.antmicro.com/projects/renode/esp32s3_rev0_rom.bin-s_393216-d5d2d95ffbd551d79b82b923ef597b4730835d60 0x40000000
     sysbus LoadBinary @https://dl.antmicro.com/projects/renode/esp32s3_rev0_rom.bin-s_393216-d5d2d95ffbd551d79b82b923ef597b4730835d60 0x3ff00000 offset=0x40000
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/zephyr/decee24b4fbc5aa221194cde98bb183639840de8/esp32s3_box3_esp32s3_procpu/hello_world/hello_world.bin 0x3dff0000
-    sysbus LoadBinary @https://zephyr-dashboard.renode.io/zephyr/decee24b4fbc5aa221194cde98bb183639840de8/esp32s3_box3_esp32s3_procpu/hello_world/hello_world.bin 0x3c800000
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/zephyr/29d3d75b7ef638a5323815fa94f78af54c96d1a5/esp32s3_box3_esp32s3_procpu/hello_world/hello_world.bin 0x0
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/zephyr/29d3d75b7ef638a5323815fa94f78af54c96d1a5/esp32s3_box3_esp32s3_procpu/hello_world/hello_world.bin 0x3dff0000
+    sysbus LoadBinary @https://zephyr-dashboard.renode.io/zephyr/29d3d75b7ef638a5323815fa94f78af54c96d1a5/esp32s3_box3_esp32s3_procpu/hello_world/hello_world.bin 0x3c800000
     cpu0 PC 0x40000400
     cpu1 IsHalted true
 """

@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/kenning-zephyr-runtime-iree-renode.log True
 
 $name?="twr_ke18f"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/decee24b4fbc5aa221194cde98bb183639840de8/twr_ke18f/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/29d3d75b7ef638a5323815fa94f78af54c96d1a5/twr_ke18f/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.elf
 $repl?=$ORIGIN/kenning-zephyr-runtime-iree.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/decee24b4fbc5aa221194cde98bb183639840de8/48220ab50dc62605ceabef40120d82c86d2f0715/twr_ke18f/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/29d3d75b7ef638a5323815fa94f78af54c96d1a5/fa0dba5a67963a6fbb9125a82a3b376616630ddb/twr_ke18f/kenning-zephyr-runtime-iree/kenning-zephyr-runtime-iree.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -83,7 +83,7 @@ monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("twr_ke18f")
 terminalTester = TerminalTester(machine.sysbus.lpuart0, 5)
 
-terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+decee24b4fbc \*\*\*"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+29d3d75b7ef6 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
 
 terminalTester.WaitFor(String("I: model output: [wing: 213.957657, ring: 80.423126, slope: 113.229385, negative: 158.669312]"), pauseEmulation=True)
 terminalTester.WaitFor(String("I: model output: [wing: 162.148727, ring: 140.959763, slope: 149.957062, negative: 236.156754]"), pauseEmulation=True)

@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/kenning-zephyr-runtime-tflitemicro-renode.log True
 
 $name?="arduino_portenta_h7_stm32h747xx_m4"
-$bin?=@https://zephyr-dashboard.renode.io/zephyr/bc5d59d1b6657cfeef30124b818c8fbd69da68ac/arduino_portenta_h7_stm32h747xx_m4/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.elf
+$bin?=@https://zephyr-dashboard.renode.io/zephyr/29d3d75b7ef638a5323815fa94f78af54c96d1a5/arduino_portenta_h7_stm32h747xx_m4/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.elf
 $repl?=$ORIGIN/kenning-zephyr-runtime-tflitemicro.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/bc5d59d1b6657cfeef30124b818c8fbd69da68ac/03e7bf4e259b85bdc1bf5dc63c4053dcc7c54680/arduino_portenta_h7_stm32h747xx_m4/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.repl
+machine LoadPlatformDescription @https://zephyr-dashboard.renode.io/zephyr_sim/29d3d75b7ef638a5323815fa94f78af54c96d1a5/fa0dba5a67963a6fbb9125a82a3b376616630ddb/arduino_portenta_h7_stm32h747xx_m4/kenning-zephyr-runtime-tflitemicro/kenning-zephyr-runtime-tflitemicro.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
@@ -83,7 +83,7 @@ monitor.execute_script(currentDirectory + "/script.resc")
 machine = emulation.get_mach("arduino_portenta_h7_stm32h747xx_m4")
 terminalTester = TerminalTester(machine.sysbus.usart1, 5)
 
-terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+bc5d59d1b665 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
+terminalTester.WaitFor(String("\*\*\* Booting Zephyr OS build.+29d3d75b7ef6 \*\*\*"), treatAsRegex=True, pauseEmulation=True)
 
 terminalTester.WaitFor(String("I: model output: [wing: 1.000000, ring: 0.000000, slope: 0.000000, negative: 0.000000]"), pauseEmulation=True)
 terminalTester.WaitFor(String("I: model output: [wing: 0.000000, ring: 0.000000, slope: 0.000000, negative: 1.000000]"), pauseEmulation=True)

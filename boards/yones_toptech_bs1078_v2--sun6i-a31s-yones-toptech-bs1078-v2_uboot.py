@@ -45,13 +45,13 @@ emulation.BackendManager.SetPreferredAnalyzer(UARTBackend, LoggingUartAnalyzer)
 logFile $ORIGIN/uboot-renode.log True
 
 $name?="yones_toptech_bs1078_v2--sun6i-a31s-yones-toptech-bs1078-v2"
-$bin?=@https://zephyr-dashboard.renode.io/uboot/feb8913982e4462c01fd914271f92254a25dc101/yones_toptech_bs1078_v2--sun6i-a31s-yones-toptech-bs1078-v2/uboot/uboot.elf
+$bin?=@https://zephyr-dashboard.renode.io/uboot/6487c50b8a40f2668ab98a892b9300ad5c181f38/yones_toptech_bs1078_v2--sun6i-a31s-yones-toptech-bs1078-v2/uboot/uboot.elf
 $repl?=$ORIGIN/uboot.repl
 
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/feb8913982e4462c01fd914271f92254a25dc101/48220ab50dc62605ceabef40120d82c86d2f0715/yones_toptech_bs1078_v2--sun6i-a31s-yones-toptech-bs1078-v2/uboot/uboot.repl
+machine LoadPlatformDescription @https://u-boot-dashboard.renode.io/uboot_sim/6487c50b8a40f2668ab98a892b9300ad5c181f38/8e500459aeb089ca3f538ebc640676bbdcc19e44/yones_toptech_bs1078_v2--sun6i-a31s-yones-toptech-bs1078-v2/uboot/uboot.repl
 machine EnableProfiler $ORIGIN/metrics.dump
 
 
